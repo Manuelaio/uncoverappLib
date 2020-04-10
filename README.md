@@ -15,7 +15,7 @@ Read more about unCOVERApp [here](https://www.biorxiv.org/content/10.1101/2020.0
 This app requires following dependencies:
 - samtools v.1.9
 - R v.3.5.1 or RStudio
-- annotation files that can be downloaded at the following link.
+- annotation files that can be downloaded on Zenodo at the following link https://zenodo.org/record/3747448#.XpBmnVMzbOR
 
 ## Installation
 
