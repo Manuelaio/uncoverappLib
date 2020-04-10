@@ -15,7 +15,7 @@ Read more about unCOVERApp [here](https://www.biorxiv.org/content/10.1101/2020.0
 This app requires following dependencies:
 - samtools v.1.9
 - R v.3.5.1 or RStudio
-- annotation files that can be downloaded on Zenodo at the following link https://zenodo.org/record/3747448#.XpBmnVMzbOR
+- annotation files that can be downloaded on Zenodo at the following link https://zenodo.org/record/3747448#.XpBmnVMzbOR and stored in a user folder. 
 
 ## Installation
 
@@ -50,10 +50,10 @@ unCOVERApp highlights low coverage genomic positions, according to the coverage 
 To associate low-coverage sites with functional and clinical annotations, unCOVERApp uses dbNSFP version 4.0 stored in two file:
 
 
-* `sorted.bed.gz`: a genomically-sorted, TABIX-indexed, BGZipped BED file containing selected columns from dbNSFP version  v4.0. Only following columns from chromosome-specific dbNSFP files were be selected (in that specific order): $1,$9,$9,$3,$4,$7,$13,$16,$2,$2,$39,$48,$78,$104,$229,$365,$370,$371 and merged into a single file. The resulting file (i.e. db_all.bed) were be then sorted, BGZipped as below. The output of these commands were be redirected to file "sorted.bed.gz" and TABIX-indexed. 
+* `sorted.bed.gz`: a genomically-sorted, TABIX-indexed, BGZipped BED file containing selected columns from dbNSFP version  v4.0. Only following columns from chromosome-specific dbNSFP files were be selected (in that specific order): $1,$9,$9,$3,$4,$7,$13,$16,$2,$2,$39,$48,$78,$104,$229,$365,$370,$371 and merged into a single file. The resulting file (i.e. db_all.bed) were be then sorted, BGZipped as below. The output of these commands were be redirected to file "sorted.bed.gz" and TABIX-indexed.  This file is available on Zenodo [here](https://zenodo.org/record/3747448#.XpBmnVMzbOR)
 
 
-* `sorted.bed.gz.tbi`: TABIX-indexed file
+* `sorted.bed.gz.tbi`: TABIX-indexed file. This file is available on Zenodo [here](https://zenodo.org/record/3747448#.XpBmnVMzbOR)
 
 
 In the home page, unCOVERApp serves following static files in order to prepare input file to load on application.  

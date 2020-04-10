@@ -31,13 +31,15 @@ unCOVERApp allows:
 
 - calculation and definition of maximum credible allele frequency (http://cardiodb.org/allelefrequencyapp/) to be used as allele frequency filtering threshold (` Calculate AF by allele frequency app ` page).
 
-- calculation of binomial probability, for somatic variants, that position coverage is adequate to detect variant allele provided the expected allelic fraction and the required number of variant reads  (` Binomial distribution` page).
+- for somatic variants calculation of binomial probability that position coverage is adequate to detect variant allele provided the expected allelic fraction and the required number of variant reads (` Binomial distribution` page).
 
 
 # Installation and example
 
-Install the latest version of `uncoverappLib` using `BiocManager`. Make sure you have the newest version of R, and other dependancies. 
-`uncoverappLib` requires you to have at least R version 3.5.
+Install the latest version of `uncoverappLib` using `BiocManager`. 
+
+`uncoverappLib` requires you to have at least R version 3.5. The annotation files must be downloaded on [Zenodo](https://zenodo.org/record/3747448#.XpBmnVMzbOR) and stored in a folder.
+Those files must be loaded in users R environment before launching app, as in following example. 
 
 
 ```{r setup}
@@ -45,7 +47,6 @@ Install the latest version of `uncoverappLib` using `BiocManager`. Make sure you
 #install.packages("BiocManager")
 #BiocManager::install("uncoverappLib")
 library(uncoverappLib)
-
 ```
 
 
@@ -55,7 +56,10 @@ Alternatively, it can be installed from GitHub using:
 
 #library(devtools)
 #install_github("Manuelaio/uncoverappLib")
-library(uncoverappLib)
+#library(uncoverappLib)
+#file.name='../path/sorted.bed.gz'
+#tbi='.../path/sorted.bed.gz.tbi'
+#run.uncoverapp()
 
 ```
 
