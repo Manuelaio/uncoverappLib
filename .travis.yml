@@ -5,5 +5,6 @@ cache: packages
 addons:
    apt:
      packages:
-       - libgsl0-dev # for topicmodels
+       - pandoc
+       - libgsl0-dev
        - libxml2-dev # for XML, a dependency of quanteda
