@@ -18,16 +18,23 @@ data <- reactive({
 uncover_maxaf <- reactive ({
 
   condformat(intBED()) %>%
-    rule_fill_discrete(ClinVar, expression= ClinVar !=".", colours= c("TRUE"="red", "FALSE"="green")) %>%
-    rule_fill_discrete(MutationAssessor, expression= MutationAssessor =='H', colours= c("TRUE"="red", "FALSE"="green")) %>%
+    rule_fill_discrete(ClinVar, expression= ClinVar !=".",
+                       colours= c("TRUE"="red", "FALSE"="green")) %>%
+    rule_fill_discrete(MutationAssessor, expression= MutationAssessor =='H',
+                       colours= c("TRUE"="red", "FALSE"="green")) %>%
     rule_fill_discrete(c(M_CAP, AF_gnomAD),
                        expression= M_CAP > 0.025 & AF_gnomAD <0.05,
                        colours= c("TRUE"= "red", "FALSE"= "green")) %>%
     rule_fill_discrete(c(start, end),
-                       expression= MutationAssessor =='H' & ClinVar !="." & M_CAP != "TRUE" & AF_gnomAD < (signif(data()[[1]],3)) ,
+                       expression= MutationAssessor =='H' &
+                         ClinVar !="." & M_CAP != "TRUE" &
+                         AF_gnomAD < (signif(data()[[1]],3)) ,
                        colours= c("TRUE"= "yellow", "FALSE"= ""))%>%
     rule_css(c(start, end),
-             expression= ifelse(grepl("H|M", MutationAssessor) & ClinVar !="." & M_CAP != "TRUE" &  AF_gnomAD < (signif(data()[[1]],3)), "red", "green"), #& CADD_PHED > 20
+             expression= ifelse(grepl("H|M", MutationAssessor) &
+                                  ClinVar !="." & M_CAP != "TRUE" &
+                                  AF_gnomAD < (signif(data()[[1]],3)),
+                                "red", "green"), #& CADD_PHED > 20
              css_field = "color")
 
 })

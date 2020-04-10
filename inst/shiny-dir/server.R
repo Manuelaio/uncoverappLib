@@ -19,7 +19,8 @@ server <- function (input, output, session){
 
   output$instructionsScript= downloadHandler(filename="make_bed.sh",
                                              content=function(file){
-                                               file.copy(script1,file) # download static file
+                                               file.copy(script1,file)
+                                               # download static file
                                              })
   output$dependence = downloadHandler(filename="preprocessing.R",
                                       content=function(file){
@@ -39,25 +40,30 @@ server <- function (input, output, session){
       mydata()})
 
   output$text_cv <- DT::renderDataTable({
-    validate(need(input$Gene_name != "" & input$Sample !="", "Please select all required input: Gene, Chromosome, Coverage threshold and Sample"))
+    validate(need(input$Gene_name != "" & input$Sample !="",
+                  "Please select all required input: Gene, Chromosome,
+                  Coverage threshold and Sample"))
     filtered_low()})
 
   #source script to reactive gene and exon table
   source('server-tables.R', local= TRUE)
 
-  #source script to plot all gene coverage obteined by gviz plot and to table low coverage position in each exon
+  #source script to plot all gene coverage obteined by gviz
+  plot and to table low coverage position in each exon
   source('server-plots.R', local=TRUE)
 
   output$all_gene<- renderPlot({
     validate(
-      need(ncol(mydata()) != "0", "Unrecognized data set: Please upload your file")
-    )  # check error message
+      need(ncol(mydata()) != "0", "Unrecognized data set: Please
+           upload your file"))  # check error message
     options(shiny.sanitize.errors = TRUE)
     progress <- shiny::Progress$new()
     on.exit(progress$close())
-    progress$set(message = "Please wait a few minutes: Making plot", detail = 'This may take a while', value = 0)
+    progress$set(message = "Please wait a few minutes: Making plot",
+                 detail = 'This may take a while', value = 0)
     for (i in 1:40) {
-      progress$set(message = "Please wait a few minutes: Making plot", detail = 'This may take a while', value = i)
+      progress$set(message = "Please wait a few minutes: Making plot",
+                   detail = 'This may take a while', value = i)
       Sys.sleep(1.0)
     }
     Sys.sleep(0.1)
@@ -71,13 +77,17 @@ server <- function (input, output, session){
 
   output$sequence<- renderPlot({
     validate(
-      need(ncol(mydata()) != "0", "Unrecognized data set: Please load your file"))
+      need(ncol(mydata()) != "0",
+           "Unrecognized data set: Please load your file"))
     validate(
-      need(input$Start_genomicPosition < input$end_genomicPosition, "Please selct the right genomic position: end position is lower than start "))
+      need(input$Start_genomicPosition < input$end_genomicPosition,
+           "Please selct the right genomic position: end position is
+           lower than start "))
     options(shiny.sanitize.errors = TRUE)
     progress <- shiny::Progress$new()
     for (i in 1:40) {
-      progress$set(message = "Please wait a few minutes: Making plot", detail = 'This may take a while', value = i)
+      progress$set(message = "Please wait a few minutes: Making plot",
+                   detail = 'This may take a while', value = i)
       Sys.sleep(1.0)}
     on.exit(progress$close())
     Sys.sleep(0.1)
@@ -88,19 +98,24 @@ server <- function (input, output, session){
   source('server-annotation.R', local=TRUE)
   output$tabExon<- DT::renderDataTable({
     validate(
-      need(input$Gene_name != "" & input$Sample != "", "Please select all required input: Gene, Chromosome, Coverage threshold and Sample")
+      need(input$Gene_name != "" & input$Sample != "",
+           "Please select all required input: Gene, Chromosome,
+           Coverage threshold and Sample")
     )
     validate(
-      need(try(!is.null(intBED())),'Unrecognized coordinates: Please change exon number input and be sure that input box "Region coordinates" is filled.
-           Please check your R environment has annotation file loaded.')
-    )
+      need(try(!is.null(intBED())),'Unrecognized coordinates:
+      Please change exon number input and be sure that input box
+      "Region coordinates" is filled.
+           Please check your R environment has annotation file loaded.'))
     #print(try(is.null(intBED())))
     if (is.null(intBED()))
       return(NULL)
     a= intBED() %>%
       dplyr::select(MutationAssessor,  ClinVar)
-    df=data.frame(length(which(a$ClinVar!='.')), length(which(grepl("H|M", a$MutationAssessor))))
-    colnames(df)= c('Low coverage positions in ClinVar', 'Low coverage positions with High or Medium impact')
+    df=data.frame(length(which(a$ClinVar!='.')),
+                  length(which(grepl("H|M", a$MutationAssessor))))
+    colnames(df)= c('Low coverage positions in ClinVar',
+                    'Low coverage positions with High or Medium impact')
     return(df)
 
   })
@@ -113,19 +128,24 @@ server <- function (input, output, session){
     progress$set(message = "table construction in progress", value = 0)
     Sys.sleep(0.1)
     validate(
-      need(input$Gene_name != "" & input$Sample != "", "Please select all required input: Gene, Chromosome, Coverage threshold and Sample")
-    )
+      need(input$Gene_name != "" & input$Sample != "",
+           "Please select all required input: Gene, Chromosome,
+           Coverage threshold and Sample"))
     validate(
-      need(try(!is.null(intBED())),'Unrecognized coordinates: Please change exon number input and be sure that input box "Region coordinates" is filled.
+      need(try(!is.null(intBED())),'Unrecognized coordinates:
+      Please change exon number input and be sure that input box
+      "Region coordinates" is filled.
            Please check your R environment has annotation file loaded.')
     )
     if(is.null(condform_table()))
       return(NULL)
     print(head(condform_table()))
     condform_table() %>%
-      dplyr::select(seqnames, start, end, value, REF, ALT, dbsnp, GENENAME, PROTEIN_ensembl,  MutationAssessor,SIFT,Polyphen2,M_CAP,CADD_PHED,AF_gnomAD,
-                    ClinVar,clinvar_MedGen_id,clinvar_OMIM_id,HGVSc_VEP,HGVSp_VEP)
-  })
+      dplyr::select(seqnames, start, end, value, REF, ALT,
+                    dbsnp, GENENAME, PROTEIN_ensembl,  MutationAssessor,SIFT,
+                    Polyphen2,M_CAP,CADD_PHED,AF_gnomAD,
+                    ClinVar,clinvar_MedGen_id,clinvar_OMIM_id,HGVSc_VEP,
+                    HGVSp_VEP)})
 
   #download data wiht conditionalFormatting
 
@@ -139,17 +159,34 @@ server <- function (input, output, session){
       negStyle <- createStyle(fontColour = "#9C0006", bgFill = "#FFC7CE")
       posStyle <- createStyle(fontColour = "#006100", bgFill = "#C6EFCE")
       highlighted<-createStyle (fgFill = "yellow")
-      hs <- createStyle(textDecoration = "BOLD", fontColour = "#FFFFFF", fontSize=12,
+      hs <- createStyle(textDecoration = "BOLD", fontColour = "#FFFFFF",
+                        fontSize=12,
                         fontName="Arial Narrow", fgFill = "#4F80BD")
       writeData(wb, "Sheet1",condform_table(), headerStyle = hs)
-      conditionalFormatting(wb, "Sheet1",cols=19, rows=(1:nrow(condform_table())+1),rule='$S2=="H"', style =negStyle)
-      conditionalFormatting(wb, "Sheet1",cols=19, rows=(1:nrow(condform_table())+1),rule='$S2!="H"', style =posStyle)
-      conditionalFormatting(wb, "Sheet1",cols=22, rows=(1:nrow(condform_table())+1),rule='$V2=="D"', style =negStyle)
-      conditionalFormatting(wb, "Sheet1",cols=22, rows=(1:nrow(condform_table())+1),rule='$V2!="D"', style =posStyle)
-      conditionalFormatting(wb, "Sheet1", cols=23, rows=(1:nrow(condform_table())+1), rule=">=20", style = negStyle)
-      conditionalFormatting(wb, "Sheet1", cols=23, rows=(1:nrow(condform_table())+1), rule="<20", style = posStyle)
-      conditionalFormatting(wb, "Sheet1", cols=24, rows=(1:nrow(condform_table())+1), rule="<=0.05", style = negStyle)
-      conditionalFormatting(wb, "Sheet1", cols=25, rows=(1:nrow(condform_table())+1), rule='!="."', style = negStyle)
+      conditionalFormatting(wb, "Sheet1",cols=19,
+                            rows=(1:nrow(condform_table())+1),rule='$S2=="H"',
+                            style =negStyle)
+      conditionalFormatting(wb, "Sheet1",cols=19,
+                            rows=(1:nrow(condform_table())+1),
+                            rule='$S2!="H"', style =posStyle)
+      conditionalFormatting(wb, "Sheet1",cols=22,
+                            rows=(1:nrow(condform_table())+1),
+                            rule='$V2=="D"', style =negStyle)
+      conditionalFormatting(wb, "Sheet1",cols=22,
+                            rows=(1:nrow(condform_table())+1),
+                            rule='$V2!="D"', style =posStyle)
+      conditionalFormatting(wb, "Sheet1", cols=23,
+                            rows=(1:nrow(condform_table())+1),
+                            rule=">=20", style = negStyle)
+      conditionalFormatting(wb, "Sheet1", cols=23,
+                            rows=(1:nrow(condform_table())+1),
+                            rule="<20", style = posStyle)
+      conditionalFormatting(wb, "Sheet1", cols=24,
+                            rows=(1:nrow(condform_table())+1),
+                            rule="<=0.05", style = negStyle)
+      conditionalFormatting(wb, "Sheet1", cols=25,
+                            rows=(1:nrow(condform_table())+1),
+                            rule='!="."', style = negStyle)
       openxlsx::saveWorkbook(wb, file, overwrite = TRUE)
     }
   )
@@ -161,11 +198,16 @@ server <- function (input, output, session){
   output$maxAF <- renderText({signif(data()[[1]],3)})
   output$uncoverPosition <- renderCondformat ({
     validate(
-      need(ncol(mydata()) != "0", "Unrecognized data set: Please load your file"),
-      need(input$Gene_name != "" & input$Sample != "", "Please select all required input: Gene, Chromosome, Coverage threshold and Sample")
+      need(ncol(mydata()) != "0",
+           "Unrecognized data set: Please load your file"),
+      need(input$Gene_name != "" &
+             input$Sample != "", "Please select all required input: Gene,
+           Chromosome, Coverage threshold and Sample")
     )
     validate(
-      need(try(!is.null(uncover_maxaf())),'Unrecognized coordinates: Please change exon number input and be sure that input box "Region coordinates" is filled')
+      need(try(!is.null(uncover_maxaf())),
+           'Unrecognized coordinates: Please change exon number input and
+           be sure that input box "Region coordinates" is filled')
     )
     uncover_maxaf()
     progress <- shiny::Progress$new()
@@ -173,8 +215,11 @@ server <- function (input, output, session){
     progress$set(message = "table construction in progress", value = 0)
     Sys.sleep(0.1)
     uncover_maxaf() %>%
-      dplyr::select(seqnames, start, end, value, REF, ALT, dbsnp, GENENAME, PROTEIN_ensembl, MutationAssessor,SIFT,Polyphen2,M_CAP,CADD_PHED,AF_gnomAD,
-                    ClinVar,clinvar_MedGen_id,clinvar_OMIM_id,HGVSc_VEP,HGVSp_VEP)
+      dplyr::select(seqnames, start, end, value, REF,
+                    ALT, dbsnp, GENENAME, PROTEIN_ensembl, MutationAssessor,
+                    SIFT,Polyphen2,M_CAP,CADD_PHED,AF_gnomAD,
+                    ClinVar,clinvar_MedGen_id,clinvar_OMIM_id,
+                    HGVSc_VEP,HGVSp_VEP)
   })
 
   ###download excel with maxAF###
@@ -189,17 +234,34 @@ server <- function (input, output, session){
       negStyle <- createStyle(fontColour = "#9C0006", bgFill = "#FFC7CE")
       posStyle <- createStyle(fontColour = "#006100", bgFill = "#C6EFCE")
       highlighted<-createStyle (fgFill = "yellow")
-      hs <- createStyle(textDecoration = "BOLD", fontColour = "#FFFFFF", fontSize=12,
+      hs <- createStyle(textDecoration = "BOLD", fontColour = "#FFFFFF",
+                        fontSize=12,
                         fontName="Arial Narrow", fgFill = "#4F80BD")
       writeData(wb1, "Sheet2",uncover_maxaf(), headerStyle = hs)
-      conditionalFormatting(wb1, "Sheet2",cols=19, rows=(1:nrow(uncover_maxaf())+1),rule='$S2=="H"', style =negStyle)
-      conditionalFormatting(wb1, "Sheet2",cols=19, rows=(1:nrow(uncover_maxaf())+1),rule='$S2!="H"', style =posStyle)
-      conditionalFormatting(wb1, "Sheet2",cols=22, rows=(1:nrow(uncover_maxaf())+1),rule='$V2=="D"', style =negStyle)
-      conditionalFormatting(wb1, "Sheet2",cols=22, rows=(1:nrow(uncover_maxaf())+1),rule='$V2!="D"', style =posStyle)
-      conditionalFormatting(wb1, "Sheet2", cols=23, rows=(1:nrow(uncover_maxaf())+1), rule=">=20", style = negStyle)
-      conditionalFormatting(wb1, "Sheet2", cols=23, rows=(1:nrow(uncover_maxaf())+1), rule="<20", style = posStyle)
-      conditionalFormatting(wb1, "Sheet2", cols=24, rows=(1:nrow(uncover_maxaf())+1), rule="<=0.05", style = negStyle)
-      conditionalFormatting(wb1, "Sheet2", cols=25, rows=(1:nrow(uncover_maxaf())+1), rule='!="."', style = negStyle)
+      conditionalFormatting(wb1, "Sheet2",cols=19,
+                            rows=(1:nrow(uncover_maxaf())+1),
+                            rule='$S2=="H"', style =negStyle)
+      conditionalFormatting(wb1, "Sheet2",cols=19,
+                            rows=(1:nrow(uncover_maxaf())+1),
+                            rule='$S2!="H"', style =posStyle)
+      conditionalFormatting(wb1, "Sheet2",cols=22,
+                            rows=(1:nrow(uncover_maxaf())+1),
+                            rule='$V2=="D"', style =negStyle)
+      conditionalFormatting(wb1, "Sheet2",cols=22,
+                            rows=(1:nrow(uncover_maxaf())+1),
+                            rule='$V2!="D"', style =posStyle)
+      conditionalFormatting(wb1, "Sheet2", cols=23,
+                            rows=(1:nrow(uncover_maxaf())+1),
+                            rule=">=20", style = negStyle)
+      conditionalFormatting(wb1, "Sheet2", cols=23,
+                            rows=(1:nrow(uncover_maxaf())+1),
+                            rule="<20", style = posStyle)
+      conditionalFormatting(wb1, "Sheet2", cols=24,
+                            rows=(1:nrow(uncover_maxaf())+1),
+                            rule="<=0.05", style = negStyle)
+      conditionalFormatting(wb1, "Sheet2", cols=25,
+                            rows=(1:nrow(uncover_maxaf())+1),
+                            rule='!="."', style = negStyle)
       openxlsx::saveWorkbook(wb1, file, overwrite = TRUE)
       #condformat2excel(condform_table(), file, sheet_name = "Sheet1",
       #                overwrite_wb = F, overwrite_sheet = T)
@@ -214,7 +276,8 @@ server <- function (input, output, session){
     p=seq(0,1,by=0.0001)
 
     ic<-qbinom(p = c(0.025, 0.975), size = df_subset(), prob =input$p)
-    barplot(dbinom(x=1:df_subset(), size=df_subset(), p= input$p) ,main = paste(ic))
+    barplot(dbinom(x=1:df_subset(), size=df_subset(), p= input$p) ,
+            main = paste(ic))
   })
 
   output$pbinom<- renderPlot({
@@ -230,7 +293,9 @@ server <- function (input, output, session){
     if (is.na(npro)){
       txt= "under threshold"}
     else{
-      txt= paste("the probability of detecting more of", input$num_all, "reads wiht variant alleles would be:", leg, "%")
+      txt= paste("the probability of detecting more of",
+                 input$num_all, "reads wiht variant alleles would be:",
+                 leg, "%")
     }
     plot(1:df_subset(), Fx, type='h',xlab= "number of trials",
          main= txt)
@@ -246,11 +311,15 @@ server <- function (input, output, session){
     thr= as.numeric(df_subset())
     # if (thr < input$coverage_co) {
     if (number2 < input$num_all) {
-      print(paste("<span style=\"color:red\">According to binomial probability model there is 95% probability that your variant is supported by: </span>", number, number2,
+      print(paste("<span style=\"color:red\">According to binomial
+                  probability model there is 95% probability that your
+                  variant is supported by: </span>", number, number2,
                   "<span style=\"color:red\"> reads </span>"))
 
     }else{
-      print(paste("<span style=\"color:blue\">According to binomial probability model there is 95% probability that your variant is supported by: </span>", number, number2,
+      print(paste("<span style=\"color:blue\">According to binomial
+                  probability model there is 95% probability that your
+                  variant is supported by: </span>", number, number2,
                   "<span style=\"color:blue\"> reads </span>"))
     }
   })

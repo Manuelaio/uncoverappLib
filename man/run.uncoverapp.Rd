@@ -2,7 +2,7 @@
 % Please edit documentation in R/run.uncoverapp.R
 \name{run.uncoverapp}
 \alias{run.uncoverapp}
-\title{uncoverappLib.run}
+\title{run.uncoverapp}
 \usage{
 run.uncoverapp()
 }
@@ -13,11 +13,11 @@ This return `Shiny` App. The is no value
 This function launches \code{unCOVERApp}, a \code{Shiny} application for clinical assessment of sequence coverage.
 }
 \examples{
-#to run unCOVERApp use uncoverappLib.run() function.
+#to run unCOVERApp use run.uncoverapp() function.
 
-#run.uncoverapp()
+run.uncoverapp()
 
-#After running `uncoverappLib.run()`, users use *unCOVERApp*
+#After running `run.uncoverapp()`, users use *unCOVERApp*
 }
 \author{
 Emanuela Iovino

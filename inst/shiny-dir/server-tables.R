@@ -3,10 +3,14 @@ coord= eventReactive(input$button1,{
   disable("button1")
   shinyjs::show("text1")
   Sys.sleep(0.1)
-  my_gene_name=OrganismDbi::select(org.Hs.eg.db, key= input$Gene_name, columns=c("ENTREZID","GENENAME", "ENSEMBL"), keytype="ALIAS")
+  my_gene_name=OrganismDbi::select(org.Hs.eg.db,
+                                   key= input$Gene_name,
+                                   columns=c("ENTREZID","GENENAME", "ENSEMBL"),
+                                   keytype="ALIAS")
   ID=my_gene_name$ENTREZID
   all_gene= data.frame(genes(txdb()))
-  pre= do.call(rbind, lapply(ID, function(x) data.frame(subset(all_gene, all_gene$gene_id == x), stringsAsFactors = FALSE)))
+  pre= do.call(rbind, lapply(ID, function(x) data.frame(
+    subset(all_gene, all_gene$gene_id == x), stringsAsFactors = FALSE)))
   colnames(pre)[6]= 'ENTREZID'
   info= merge(pre, my_gene_name)
   shinyjs::enable("button1")
@@ -21,10 +25,12 @@ observeEvent(input$button1, {
     progress$set(message = "Running", detail = 'This may take a while')
     on.exit(progress$close())
     validate(
-      need(input$Gene_name != "", "Unrecognized gene name: Please select HGNC gene name \n Click apply"))
+      need(input$Gene_name != "",
+        "Unrecognized gene name: Please select HGNC gene name \n Click apply"))
     HGNC_org <- keys(org.Hs.eg.db, keytype = "SYMBOL")
     validate(
-      need(HGNC_org[HGNC_org %in% input$Gene_name], "incorrect HGNC Gene symbol"))
+      need(HGNC_org[HGNC_org %in% input$Gene_name],
+           "incorrect HGNC Gene symbol"))
     coord()
   })
 })
@@ -47,7 +53,8 @@ exon_gp<-eventReactive(input$button1,{
     edb = EnsDb.Hsapiens.v75}
   else{
     edb= EnsDb.Hsapiens.v86}
-  eid <- OrganismDbi::select(org.Hs.eg.db,gname, "ENTREZID", "SYMBOL")[["ENTREZID"]]
+  eid <- OrganismDbi::select(org.Hs.eg.db,gname,
+                             "ENTREZID", "SYMBOL")[["ENTREZID"]]
   print(head(eid))
   txid <- OrganismDbi::select(txdb(), eid, "TXNAME", "GENEID")[["TXNAME"]]
   cds <- cdsBy(txdb(), by="tx", use.names=TRUE)
@@ -56,7 +63,9 @@ exon_gp<-eventReactive(input$button1,{
   print(head(exon_Id))
   exon_table=exon_Id  %>%
     dplyr::select(1:6,8,10)
-  colnames(exon_table)=c("number_of_transcript","type_of_transcript", "chrom", "start","end", "length_of_exon", "cds_id", "exon_rank")
+  colnames(exon_table)=c("number_of_transcript",
+                         "type_of_transcript", "chrom", "start","end",
+                         "length_of_exon", "cds_id", "exon_rank")
   return(exon_table)
   print(head(exon_table))
 })
@@ -72,7 +81,8 @@ observeEvent(input$button1, {
 
     HGNC_org <- keys(org.Hs.eg.db, keytype = "SYMBOL")
     validate(
-      need(HGNC_org[HGNC_org %in% input$Gene_name], "incorrect HGNC Gene symbol"))
+      need(HGNC_org[HGNC_org %in% input$Gene_name],
+           "incorrect HGNC Gene symbol"))
     exon_gp()
   })
 })
@@ -104,7 +114,9 @@ tryObserve({
   if (is.null(exon_gp()))
     return(NULL)
   exon_df= as.data.frame(exon_gp())
-  one=subset(exon_df,exon_df$exon_rank == input$exon_number & exon_df$number_of_transcript == input$transcript_id)
+  one=subset(exon_df,
+             exon_df$exon_rank == input$exon_number &
+               exon_df$number_of_transcript == input$transcript_id)
   print(one)
   start_exon= as.numeric(one$start)
   end_exon= as.numeric(one$end)
@@ -113,7 +125,8 @@ tryObserve({
   updateTextInput(session, "id_t", value = trascript_name)
   updateTextInput(session, "Start_genomicPosition", value = start_exon)
   updateTextInput(session, "end_genomicPosition", value = end_exon)
-  updateTextInput(session, "query_Database", value = paste0(chr,":",start_exon,"-",end_exon))
+  updateTextInput(session, "query_Database",
+                  value = paste0(chr,":",start_exon,"-",end_exon))
 })
 
 #I define reactive START and END position

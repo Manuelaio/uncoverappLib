@@ -40,14 +40,17 @@ p1<- reactive ({
   gtrack <- Gviz::GenomeAxisTrack()
   #ylims <- extendrange(range(c(values(dtrack1()), values(dtrackHigh()))))
   ylims <- extendrange(range(c(dtrack1()@data), dtrackHigh()@data))
-  gr_ex_track <- Gviz::GeneRegionTrack(txdb(), chromosome = input$Chromosome, start = start_gene, end = end_gene,
+  gr_ex_track <- Gviz::GeneRegionTrack(txdb(),
+                                       chromosome = input$Chromosome,
+                                       start = start_gene, end = end_gene,
                                  showId = TRUE,
                                  name = "Gene Annotation")
   p1= Gviz::plotTracks(list(itrack(), gtrack, ot, gr_ex_track),
                  from = start_gene,
                  to=end_gene,reverseStrand = TRUE,
                  ylim=ylims,type = "histogram",baseline=input$coverage_co,
-                 col.baseline = "black",lwd.baseline=0.3, extend.left = 0.5, extend.right = 200)
+                 col.baseline = "black",lwd.baseline=0.3,
+                 extend.left = 0.5, extend.right = 200)
 
 })
 
@@ -58,9 +61,11 @@ p1<- reactive ({
   #options(shiny.sanitize.errors = T)
   #progress <- shiny::Progress$new()
   #on.exit(progress$close())
-  #progress$set(message = "Please wait a few minutes: Making plot", detail = 'This may take a while', value = 0)
+  #progress$set(message = "Please wait a few minutes:
+#Making plot", detail = 'This may take a while', value = 0)
   #for (i in 1:40) {
-   # progress$set(message = "Please wait a few minutes: Making plot", detail = 'This may take a while', value = i)
+   # progress$set(message = "Please wait a few minutes:
+#Making plot", detail = 'This may take a while', value = i)
   #  Sys.sleep(1.0)
   #}
   #Sys.sleep(0.1)
@@ -77,7 +82,8 @@ table1<- reactive({
     any(exon_gp()$start <= p & exon_gp()$end >= p)), "YES", "out")
   l.coverage= as.data.frame(f.low[f.low$new=='YES',])
   validate(
-    need(nrow(l.coverage) >0, "ALL EXONS ARE COVERED UNDER YOUR CHOOSE THRESHOLD"))
+    need(nrow(l.coverage) >0, "ALL EXONS ARE COVERED
+         UNDER YOUR CHOOSE THRESHOLD"))
 
   x= l.coverage$start
   getValue3 <- function(x, data) {
@@ -115,35 +121,43 @@ p2<- eventReactive(input$button5, {
   ylims <- extendrange(range(c(dtrack1()@data), dtrackHigh()@data))
   one_trascript= grtrack()[grtrack()@range$transcript== id()]
   print(head(one_trascript))
-  grtrack_symbol <- Gviz::GeneRegionTrack(one_trascript@range,chromosome = input$Chromosome,
+  grtrack_symbol <- Gviz::GeneRegionTrack(one_trascript@range,
+                                          chromosome = input$Chromosome,
                                     start = St(),
                                     end = En(),
                                     showId = TRUE, exonAnnotation="exon",
                                     name = "Gene Annotation & Symbol")
   grtrack_range <- grtrack_symbol@range
-  range_mapping <- OrganismDbi::select(Homo.sapiens,keys = mcols(grtrack_range)$symbol, keytype = "TXNAME",columns = c("ENTREZID", "SYMBOL"))
+  range_mapping <- OrganismDbi::select(Homo.sapiens,
+                                       keys = mcols(grtrack_range)$symbol,
+                                       keytype = "TXNAME",
+                                       columns = c("ENTREZID", "SYMBOL"))
   library(stringr)
   new_symbols <- with(range_mapping,str_c(SYMBOL, " (", TXNAME, ")", sep = ""))
   symbol(grtrack_symbol) <- new_symbols
   shinyjs::enable("button5")
   shinyjs::hide("text1")
-  p2=Gviz::plotTracks(list(itrack(), gtrack, ot, grtrack_symbol),ylim=ylims,xlim=NULL,exonAnnotation="exon1",
+  p2=Gviz::plotTracks(list(itrack(), gtrack, ot, grtrack_symbol),
+                      ylim=ylims,xlim=NULL,exonAnnotation="exon1",
                 from = St(), to = En(), reverseStrand = TRUE,
                 background.panel = "#FFFEDB", background.title = "darkblue",
                 baseline=input$coverage_co,
-                col.baseline = "black",lwd.baseline=0.3, extend.left = 0.5, extend.right = 100, main= paste0('exon',input$exon_number))
+                col.baseline = "black",lwd.baseline=0.3,
+                extend.left = 0.5, extend.right = 100,
+                main= paste0('exon',input$exon_number))
 
 })
 
 observeEvent(input$button5,{
   output$ens<- renderPlot({
     validate(
-      need(ncol(mydata()) != "0", "Unrecognized data set: Please load your file")
-    )
+      need(ncol(mydata()) != "0", "Unrecognized data set:
+           Please load your file"))
     options(shiny.sanitize.errors = TRUE)
     progress <- shiny::Progress$new()
     for (i in 1:40) {
-      progress$set(message = "Please wait a few minutes: Making plot", detail = 'This may take a while', value = i)
+      progress$set(message = "Please wait a few minutes:
+                   Making plot", detail = 'This may take a while', value = i)
       Sys.sleep(1.0)
     }
     on.exit(progress$close())
@@ -170,26 +184,12 @@ p3<- reactive({
   #strack<- SequenceTrack(homo, chromosome = input$Chromosome)
   p3=Gviz::plotTracks(list(itrack(), gtrack, ot,grtrack(), strack()),
                 from = as.numeric(input$Start_genomicPosition),
-                to=as.numeric(input$end_genomicPosition), reverseStrand = TRUE, cex = 0.8, ylim= ylims,
-                baseline=input$coverage_co, col.baseline = "black",lwd.baseline=0.5, extend.right = 100, extend.left = 0.5)
+                to=as.numeric(input$end_genomicPosition),
+                reverseStrand = TRUE, cex = 0.8, ylim= ylims,
+                baseline=input$coverage_co,
+                col.baseline = "black",lwd.baseline=0.5,
+                extend.right = 100, extend.left = 0.5)
 })
 
-#output$sequence<- renderPlot({
- # validate(
-#    need(input$file1 != "", "Unrecognized data set: Please load your file")
- # )
-#  validate(
- #   need(input$Start_genomicPosition < input$end_genomicPosition, "Please selct the right genomic position: end position is lower than start ")
-#  )
- # options(shiny.sanitize.errors = T)
-#  progress <- shiny::Progress$new()
- # for (i in 1:40) {
-  #  progress$set(message = "Please wait a few minutes: Making plot", detail = 'This may take a while', value = i)
-   # Sys.sleep(1.0)
-  #}
-  #on.exit(progress$close())
-  #Sys.sleep(0.1)
-  #p3()
 
-#})
 

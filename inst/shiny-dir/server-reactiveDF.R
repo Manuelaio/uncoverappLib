@@ -10,7 +10,8 @@ txdb= reactive({if (input$UCSC_Genome == "hg19"){
 mydata <- reactiveVal()
 observeEvent(input$file1, {
 
-  tmp <- read.table(input$file1$datapath, header = input$header, stringsAsFactors = FALSE)
+  tmp <- read.table(input$file1$datapath,
+                    header = input$header, stringsAsFactors = FALSE)
   colnames(tmp)[1:3]=c("chromosome","start","end")
   colnames(tmp)[-1:-3]=paste0("sample_", head(seq_along(tmp),-3))
   ## do whatever is needed to parse the data
@@ -63,7 +64,9 @@ filtered_high<- reactive ({
 
 #output$text_cv <- DT::renderDataTable({
  # validate(
-#    need(input$Gene_name != "" & input$Sample !="", "Please select all required input: Gene, Chromosome, Coverage threshold and Sample")
+#    need(input$Gene_name != "" & input$Sample !="",
+#"Please select all required input: Gene, Chromosome,
+#Coverage threshold and Sample")
 #  )
  # filtered_low()})
 

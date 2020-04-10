@@ -1,19 +1,18 @@
-#' @title uncoverappLib.run
+#' @title run.uncoverapp
 #'
 #' @description This function launches \code{unCOVERApp}, a \code{Shiny} application for clinical assessment of sequence coverage.
 #' @author Emanuela Iovino
 #'
 #'
-#' @keywords uncoverappLib
-#'
 #' @examples
-#' #to run unCOVERApp use uncoverappLib.run() function.
+#' to run unCOVERApp use run.uncoverapp() function.
 #'
-#' #run.uncoverapp()
+#' run.uncoverapp()
 #'
-#' #After running `uncoverappLib.run()`, users use *unCOVERApp*
+#'
+#' #After running `run.uncoverapp()`
 #' @return
-#'  This return `Shiny` App. The is no value
+#'  This return a Shiny App. The is no value
 #
 #' @import shiny
 #' @import shinyWidgets
@@ -37,8 +36,6 @@
 #'
 #' @export
 #'
-#'
-#
 
 run.uncoverapp <- function() {
 

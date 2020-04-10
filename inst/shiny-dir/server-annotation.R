@@ -14,7 +14,9 @@ intBED<- reactive({
   if (is.null(filtered_low()))
    return(NULL)
   bedA<- filtered_low()
-  #file.name = (ann.file) #ANNOTATION FILE IN THE FOLDER OF SHINY SCRITP !!!second and tirth columns are hg19 positions
+  #file.name = (ann.file)
+  #ANNOTATION FILEIN THE FOLDER OF SHINY SCRITP !!!
+  #second and tirth columns are hg19 positions
   query.regions <- c(input$query_Database)
   if (is.null(query.regions))
     return(NULL)
@@ -26,8 +28,12 @@ intBED<- reactive({
     err_msg <- 'no coordinates recognized'}
   #print(err_msg)
   #print(head(bedB))
-  colnames(bedB)<- c ('Chromo', 'start_hg19','end_hg19','REF','ALT','dbsnp','GENENAME', 'PROTEIN_ensembl', 'start_hg38','end_hg38',
-                      'MutationAssessor','SIFT','Polyphen2','M_CAP','CADD_PHED','AF_gnomAD','ClinVar','clinvar_MedGen_id','clinvar_OMIM_id','HGVSc_VEP',	'HGVSp_VEP')
+  colnames(bedB)<- c ('Chromo', 'start_hg19','end_hg19','REF','ALT',
+                      'dbsnp','GENENAME', 'PROTEIN_ensembl', 'start_hg38',
+                      'end_hg38','MutationAssessor','SIFT','Polyphen2',
+                      'M_CAP','CADD_PHED','AF_gnomAD','ClinVar',
+                      'clinvar_MedGen_id','clinvar_OMIM_id','HGVSc_VEP',
+                      'HGVSp_VEP')
   #print(head(bedB))
   str(bedB)
   if (input$UCSC_Genome == "hg19"){
@@ -39,8 +45,12 @@ intBED<- reactive({
     #print(head(bedB))
   }
   else{
-    bedB<- bedB[c("Chromo", "start_hg38","end_hg38","REF","ALT","dbsnp", "GENENAME", "PROTEIN_ensembl","start_hg19","end_hg19",'MutationAssessor','SIFT','Polyphen2','M_CAP','CADD_PHED','AF_gnomAD',
-                  'ClinVar','clinvar_MedGen_id','clinvar_OMIM_id','HGVSc_VEP',	'HGVSp_VEP')]
+    bedB<- bedB[c("Chromo", "start_hg38","end_hg38","REF",
+                  "ALT","dbsnp", "GENENAME", "PROTEIN_ensembl",
+                  "start_hg19","end_hg19",'MutationAssessor','SIFT',
+                  'Polyphen2','M_CAP','CADD_PHED','AF_gnomAD',
+                  'ClinVar','clinvar_MedGen_id','clinvar_OMIM_id',
+                  'HGVSc_VEP', 'HGVSp_VEP')]
     bedB<-bedB %>%
       dplyr::rename(
         start="start_hg38",
@@ -60,8 +70,10 @@ intBED<- reactive({
   intersectBedFiles.GR <- function(bed1,bed2) {
     require(GenomicRanges)
     require(IRanges)
-    bed1 <- makeGRangesFromDataFrame(bedA,ignore.strand = TRUE, keep.extra.columns = TRUE)
-    bed2 <- makeGRangesFromDataFrame(bedB,ignore.strand = TRUE, keep.extra.columns = TRUE)
+    bed1 <- makeGRangesFromDataFrame(bedA,ignore.strand = TRUE,
+                                     keep.extra.columns = TRUE)
+    bed2 <- makeGRangesFromDataFrame(bedB,ignore.strand = TRUE,
+                                     keep.extra.columns = TRUE)
     tp<- findOverlaps(query = bed1, subject = bed2, type="any")
     intersect_df = data.frame(bed1[queryHits(tp),], bed2[subjectHits(tp),])
     return(intersect_df)
@@ -76,22 +88,33 @@ intBED<- reactive({
 condform_table<- reactive ({
   progress <- shiny::Progress$new()
   on.exit(progress$close())
-  progress$set(message = "table construction in progress", detail = 'This may take a while', value = 0)
+  progress$set(message = "table construction in progress",
+               detail = 'This may take a while', value = 0)
   Sys.sleep(0.1)
   library(condformat)
   if (is.null(intBED()))
     return(NULL)
   condformat(intBED()) %>%
-    rule_fill_discrete(ClinVar, expression= ClinVar !=".", colours= c("TRUE"="red", "FALSE"="green")) %>%
-    rule_fill_discrete(CADD_PHED, expression= CADD_PHED > 20, colours= c("TRUE"="red", "FALSE"="green")) %>%
-    rule_fill_discrete(MutationAssessor, expression=  MutationAssessor =='H', colours= c("TRUE"="red", "FALSE"="green")) %>%
-    rule_fill_discrete(M_CAP, expression=  M_CAP =='D', colours= c("TRUE"="red", "FALSE"="green")) %>%
-    rule_fill_discrete(AF_gnomAD, expression= ifelse(is.na(AF_gnomAD) | AF_gnomAD < 0.5, 'TRUE','FALSE') , colours= c("TRUE"="red", "FALSE"="green")) %>%
+    rule_fill_discrete(ClinVar, expression= ClinVar !=".",
+                       colours= c("TRUE"="red", "FALSE"="green")) %>%
+    rule_fill_discrete(CADD_PHED, expression= CADD_PHED > 20,
+                       colours= c("TRUE"="red", "FALSE"="green")) %>%
+    rule_fill_discrete(MutationAssessor, expression=  MutationAssessor =='H',
+                       colours= c("TRUE"="red", "FALSE"="green")) %>%
+    rule_fill_discrete(M_CAP, expression=  M_CAP =='D',
+                       colours= c("TRUE"="red", "FALSE"="green")) %>%
+    rule_fill_discrete(AF_gnomAD, expression=
+                         ifelse(is.na(AF_gnomAD) | AF_gnomAD < 0.5,
+                                'TRUE','FALSE') ,
+                       colours= c("TRUE"="red", "FALSE"="green")) %>%
     rule_fill_discrete(c(start, end),
-                       expression = grepl("H|M", MutationAssessor) & ClinVar !="." &  AF_gnomAD < 0.5 ,
+                       expression = grepl("H|M", MutationAssessor) &
+                         ClinVar !="." &  AF_gnomAD < 0.5 ,
                        colours= c("TRUE"= "yellow", "FALSE"= ""))%>%
     rule_css(c(start, end),
-             expression = ifelse(grepl("H|M", MutationAssessor) & ClinVar !="." &  AF_gnomAD < 0.5, "red", "green"),
+             expression = ifelse(grepl("H|M", MutationAssessor) &
+                                   ClinVar !="." &  AF_gnomAD < 0.5,
+                                 "red", "green"),
              css_field = "color")
 })
 
