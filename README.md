@@ -5,7 +5,7 @@ Read more about unCOVERApp [here](https://www.biorxiv.org/content/10.1101/2020.0
 
 * [Prerequisites](#Prerequisites)
 * [Installation](#Installation)
-* [Input file preparation](#Input file preparation)
+* [Input_file_preparation](#Input_file_preparation)
 * [Usage](#Usage)
 
 
@@ -14,9 +14,18 @@ Read more about unCOVERApp [here](https://www.biorxiv.org/content/10.1101/2020.0
 
 This app requires following dependencies:
 - samtools v.1.9
-- R v.3.5.1 or RStudio, and run Rscript to set up the environment.
+- R v.3.5.1 or RStudio
+- annotation files that can be downloaded at the following link.
 
 ## Installation
+
+
+The development version can be installed directly from Github:
+
+``` {r}
+install.packages("devtools")
+devtools::install_github("Manuelaio/uncoverappLib")
+``` 
 
 To run locally, users need to install this library and run. It is mandatory to expliciatate absolute path of prevusly downloaded annotation files before run the app. 
 
@@ -36,7 +45,7 @@ unCOVERApp is an interactive web-application developmented for graphical inspect
 unCOVERApp highlights low coverage genomic positions, according to the coverage threshold specified by the user, providing dbNSFP-based annotations for clinical assessment of low coverage regions. It implements basic statistical tools such as binomial probability calculation that genomic positions are adequately covered, and [maximum credible allele frequency](http://cardiodb.org/allelefrequencyapp/). 
 
 
-# Input file preparation
+# Input_file_preparation
 
 To associate low-coverage sites with functional and clinical annotations, unCOVERApp uses dbNSFP version 4.0 stored in two file:
 
@@ -76,6 +85,7 @@ Bash script creates a new directory named with current date in users-defined loc
 
 # Usage
 
+Load library and set up R environment with annotation file as following. 
 The way to launchs unCOVERApp is *run.uncoverapp()* function. 
 
 ``` {r}

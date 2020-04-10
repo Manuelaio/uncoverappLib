@@ -19,3 +19,8 @@ import(stringr)
 importFrom(shinyjs,enable)
 importFrom(shinyjs,hidden)
 importFrom(shinyjs,useShinyjs)
+importFrom(Gviz, SequenceTrack, DataTrack, IdeogramTrack)
+importFrom(Gviz, GeneRegionTrack, OverlayTrack, GenomeAxisTracK)
+importFrom(Gviz, plotTracks)
+importFrom(grDevices, extendrange)
+
