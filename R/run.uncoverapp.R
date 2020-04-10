@@ -5,12 +5,12 @@
 #'
 #'
 #' @examples
+#' \dontrun{
+#' run.uncoverapp()
 #' to run unCOVERApp use run.uncoverapp() function.
 #'
-#' run.uncoverapp()
 #'
-#'
-#' #After running `run.uncoverapp()`
+#' #After running `run.uncoverapp()` the shiny app appears in your browser
 #' @return
 #'  This return a Shiny App. The is no value
 #
