@@ -7,19 +7,20 @@
 run.uncoverapp()
 }
 \value{
-This return `Shiny` App. The is no value
+This return a Shiny App. The is no value
 }
 \description{
 This function launches \code{unCOVERApp}, a \code{Shiny} application for clinical assessment of sequence coverage.
 }
 \examples{
-#to run unCOVERApp use run.uncoverapp() function.
-
+\dontrun{
 run.uncoverapp()
+to run unCOVERApp use run.uncoverapp() function.
+}
 
-#After running `run.uncoverapp()`, users use *unCOVERApp*
+
+#After running `run.uncoverapp()` the shiny app appears in your browser
 }
 \author{
 Emanuela Iovino
 }
-\keyword{uncoverappLib}

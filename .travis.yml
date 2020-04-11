@@ -7,4 +7,4 @@ addons:
      packages:
        - pandoc
        - libgsl0-dev
-       - libxml2-dev # for XML, a dependency of quanteda
+       - libxml2-dev

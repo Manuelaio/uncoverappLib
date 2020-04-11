@@ -8,6 +8,7 @@
 #' \dontrun{
 #' run.uncoverapp()
 #' to run unCOVERApp use run.uncoverapp() function.
+#' }
 #'
 #'
 #' #After running `run.uncoverapp()` the shiny app appears in your browser
@@ -25,13 +26,21 @@
 #' @import condformat
 #' @import bedr
 #' @import openxlsx
+#' @import readxl
+#' @import writexl
 #' @import TxDb.Hsapiens.UCSC.hg19.knownGene
 #' @import TxDb.Hsapiens.UCSC.hg38.knownGene
 #' @import EnsDb.Hsapiens.v75
 #' @import EnsDb.Hsapiens.v86
 #' @import EnsDb.Hsapiens.v86
 #' @import org.Hs.eg.db
-#'
+#' @import data.table
+#' @import OrganismDbi
+#' @importFrom Gviz SequenceTrack DataTrack IdeogramTrack
+#' @importFrom Gviz GeneRegionTrack OverlayTrack GenomeAxisTrack
+#' @importFrom Gviz plotTracks
+#' @importFrom grDevices extendrange
+#' @importFrom DT renderDataTable dataTableOutput
 #'
 #'
 #' @export
