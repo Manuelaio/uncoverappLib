@@ -22,8 +22,6 @@ matrix:
       - brew cask reinstall xquartz
       - brew install tcl-tk
       - brew link --overwrite --force tcl-tk; brew unlink tcl-tk
-      - sudo tlmgr update --self
-      - sudo tlmgr install framed titling
 
     script:
       - R CMD build . --compact-vignettes=gs+qpdf
