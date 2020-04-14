@@ -1,16 +1,8 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: r
-os:
-  - linux
-  - osx
-
 cache: packages
-before_install:
-      - brew update
-      - brew cask reinstall xquartz
-      - brew install tcl-tk
-      - R -e 'source("https://install-github.me/r-lib/remotes")'
+
 addons:
    apt:
      packages:

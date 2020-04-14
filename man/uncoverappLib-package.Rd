@@ -9,9 +9,6 @@
 \description{
 a Shiny application containing a suite of graphical and statistical tools to support clinical assessment of low coverage regions.It displays three web pages each providing a different analysis module: Coverage analysis, calculate AF by allele frequency app and binomial distribution.
 }
-\description{
-    a Shiny application containing a suite of graphical and statistical tools to support clinical assessment of low coverage regions.It displays three web pages each providing a different analysis module: Coverage analysis, calculate AF by allele frequency app and binomial distribution.
-}
 \seealso{
     Useful links:
         \itemize{

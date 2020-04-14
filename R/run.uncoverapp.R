@@ -41,6 +41,7 @@
 #' @import IRanges
 #' @import methods
 #' @import grid
+#' @import utils
 #' @import AnnotationFilter
 #' @import XVector
 #' @import Biostrings
@@ -68,8 +69,7 @@
 #' @importFrom DT renderDataTable dataTableOutput
 #' @importFrom BSgenome.Hsapiens.UCSC.hg19 Hsapiens
 #' @importFrom BSgenome.Hsapiens.UCSC.hg38 Hsapiens
-#' @importMethodsFrom GenomicFeatures, cdsBy, exonsBy, transcriptsBy, transcripts
-#' @importFrom graphics, par
+#' @importFrom graphics par
 #'
 #' @export
 #'

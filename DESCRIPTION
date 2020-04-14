@@ -7,9 +7,9 @@ Authors@R: c(
     person("Tommaso", "Pippucci", email = "tommaso.pippucci@unibo.it", role = "aut"))
 Imports:  BiocManager,ensembldb, AnnotationFilter,rtracklayer, Biostrings, 
           XVector, grDevices, openxlsx,readxl, writexl, bedr, condformat,
-          stringr, GO.db, OrganismDbi, GenomicFeatures, AnnotationDbi, 
+          stringr, GO.db, OrganismDbi, GenomicFeatures, AnnotationDbi, utils,
           Biobase, Gviz, GenomeInfoDb, BiocGenerics, dplyr, data.table, 
-          DT, markdown, shinyjs, shinyBS, shinyWidgets, shiny, 
+          DT, markdown, shinyjs, shinyBS, shinyWidgets, shiny, graphics,
           EnsDb.Hsapiens.v86, EnsDb.Hsapiens.v75, Homo.sapiens, org.Hs.eg.db,
           BSgenome.Hsapiens.UCSC.hg38, BSgenome.Hsapiens.UCSC.hg19, BSgenome,
           TxDb.Hsapiens.UCSC.hg19.knownGene,TxDb.Hsapiens.UCSC.hg38.knownGene
