@@ -20,6 +20,8 @@ matrix:
       - brew update
       - brew cask reinstall xquartz
       - brew install tcl-tk
+    before_install:
+    R -e 'source("https://install-github.me/r-lib/remotes")'
 
 
     script:

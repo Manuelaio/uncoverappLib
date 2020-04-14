@@ -5,14 +5,14 @@ Version: 0.99.0
 Authors@R: c(
     person("Emanuela","Iovino", email = "emanuela.iovino@unibo.it", role= "cre"),
     person("Tommaso", "Pippucci", email = "tommaso.pippucci@unibo.it", role = "aut"))
-Imports:  EnsDb.Hsapiens.v86, EnsDb.Hsapiens.v75, ensembldb, AnnotationFilter, 
-          BSgenome.Hsapiens.UCSC.hg38, BSgenome.Hsapiens.UCSC.hg19,
-          BSgenome, rtracklayer, Biostrings, XVector, grDevices,
-          openxlsx,readxl, writexl, bedr, condformat,stringr, Homo.sapiens, 
-          TxDb.Hsapiens.UCSC.hg19.knownGene,TxDb.Hsapiens.UCSC.hg38.knownGene,
-          org.Hs.eg.db, GO.db, OrganismDbi, GenomicFeatures, AnnotationDbi, 
+Imports:  BiocManager,ensembldb, AnnotationFilter,rtracklayer, Biostrings,
+          XVector, grDevices, openxlsx,readxl, writexl, bedr, condformat,
+          stringr, GO.db, OrganismDbi, GenomicFeatures, AnnotationDbi, 
           Biobase, Gviz, GenomeInfoDb, BiocGenerics, dplyr, data.table, 
-          DT, markdown, shinyjs, shinyBS, shinyWidgets, shiny 
+          DT, markdown, shinyjs, shinyBS, shinyWidgets, shiny, 
+          EnsDb.Hsapiens.v86, EnsDb.Hsapiens.v75, Homo.sapiens, org.Hs.eg.db,
+          BSgenome.Hsapiens.UCSC.hg38, BSgenome.Hsapiens.UCSC.hg19, BSgenome,
+          TxDb.Hsapiens.UCSC.hg19.knownGene,TxDb.Hsapiens.UCSC.hg38.knownGene
 Depends: R (>= 3.5.0), S4Vectors (>= 0.18.3), IRanges (>= 2.14.12), 
         GenomicRanges (>= 1.32.7), grid, methods
 Description: a Shiny application containing a suite of graphical and statistical tools to support clinical assessment of low coverage regions.It displays three web pages each providing a different analysis module: Coverage analysis, calculate AF by allele frequency app and binomial distribution. 
