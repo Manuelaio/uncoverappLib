@@ -54,3 +54,4 @@ importFrom(grDevices,extendrange)
 importFrom(shinyjs,enable)
 importFrom(shinyjs,hidden)
 importFrom(shinyjs,useShinyjs)
+

@@ -68,7 +68,8 @@
 #' @importFrom DT renderDataTable dataTableOutput
 #' @importFrom BSgenome.Hsapiens.UCSC.hg19 Hsapiens
 #' @importFrom BSgenome.Hsapiens.UCSC.hg38 Hsapiens
-#'
+#' @importMethodsFrom GenomicFeatures, cdsBy, exonsBy, transcriptsBy, transcripts
+#' @importFrom graphics, par
 #'
 #' @export
 #'

@@ -1,35 +1,24 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: r
-r:
-  - release
-  - devel
-  - bioc-devel
+os:
+  - linux
+  - osx
 
 cache: packages
+before_install:
+      - brew update
+      - brew cask reinstall xquartz
+      - brew install tcl-tk
+      - R -e 'source("https://install-github.me/r-lib/remotes")'
 addons:
    apt:
      packages:
        - pandoc
        - libgsl0-dev
        - libxml2-dev
-matrix:
-  include:
-  - r:
-    - release
+
     script:
       - R CMD build . --compact-vignettes=gs+qpdf
       - xvfb-run R CMD check *tar.gz --as-cran
-  - r:
-    - devel
-    os: osx
-    before_install:
-      - brew update
-      - brew cask reinstall xquartz
-      - brew install tcl-tk
-      - R -e 'source("https://install-github.me/r-lib/remotes")'
 
-
-    script:
-      - R CMD build . --compact-vignettes=gs+qpdf
-      - R CMD check *tar.gz --as-cran
