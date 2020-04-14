@@ -14,11 +14,15 @@ addons:
        - libxml2-dev
 matrix:
   include:
-  - r: release
+  - r:
+    - release
+    - devel
     script:
       - R CMD build . --compact-vignettes=gs+qpdf
       - xvfb-run R CMD check *tar.gz --as-cran
-  - r: release
+  - r:
+    - release
+    - devel
     os: osx
     before_install:
       - brew update
