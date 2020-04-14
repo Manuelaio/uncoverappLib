@@ -49,7 +49,7 @@ server <- function (input, output, session){
   source('server-tables.R', local= TRUE)
 
   #source script to plot all gene coverage obteined by gviz
-  plot and to table low coverage position in each exon
+  #plot and to table low coverage position in each exon
   source('server-plots.R', local=TRUE)
 
   output$all_gene<- renderPlot({

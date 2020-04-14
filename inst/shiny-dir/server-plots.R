@@ -1,8 +1,8 @@
 
 strack<- reactive({if (input$UCSC_Genome == "hg19"){
-  Gviz::SequenceTrack(Hsapiens, chromosome = input$Chromosome)}
+  Gviz::SequenceTrack(BSgenome.Hsapiens.UCSC.hg19::Hsapiens, chromosome = input$Chromosome)}
   else{
-    Gviz::SequenceTrack(Hsapiens, chromosome = input$Chromosome)}
+    Gviz::SequenceTrack(BSgenome.Hsapiens.UCSC.hg38::Hsapiens, chromosome = input$Chromosome)}
 })
 
 dtrack1<- reactive ({grcoverage <- filtered_low()
@@ -39,7 +39,7 @@ p1<- reactive ({
   ot <- Gviz::OverlayTrack(trackList = list(dtrack1(), dtrackHigh()))
   gtrack <- Gviz::GenomeAxisTrack()
   #ylims <- extendrange(range(c(values(dtrack1()), values(dtrackHigh()))))
-  ylims <- extendrange(range(c(dtrack1()@data), dtrackHigh()@data))
+  ylims <- grDevices::extendrange(range(c(dtrack1()@data), dtrackHigh()@data))
   gr_ex_track <- Gviz::GeneRegionTrack(txdb(),
                                        chromosome = input$Chromosome,
                                        start = start_gene, end = end_gene,
@@ -118,7 +118,7 @@ p2<- eventReactive(input$button5, {
   Sys.sleep(0.1)
   gtrack <- Gviz::GenomeAxisTrack()
   ot <- Gviz::OverlayTrack(trackList = list(dtrack1(), dtrackHigh()))
-  ylims <- extendrange(range(c(dtrack1()@data), dtrackHigh()@data))
+  ylims <- grDevices::extendrange(range(c(dtrack1()@data), dtrackHigh()@data))
   one_trascript= grtrack()[grtrack()@range$transcript== id()]
   print(head(one_trascript))
   grtrack_symbol <- Gviz::GeneRegionTrack(one_trascript@range,
@@ -180,7 +180,7 @@ observeEvent(input$btn_run,{
 p3<- reactive({
   ot <- Gviz::OverlayTrack(trackList = list(dtrack1(), dtrackHigh()))
   gtrack <- Gviz::GenomeAxisTrack()
-  ylims <- extendrange(range(c(dtrack1()@data), dtrackHigh()@data))
+  ylims <- grDevices::extendrange(range(c(dtrack1()@data), dtrackHigh()@data))
   #strack<- SequenceTrack(homo, chromosome = input$Chromosome)
   p3=Gviz::plotTracks(list(itrack(), gtrack, ot,grtrack(), strack()),
                 from = as.numeric(input$Start_genomicPosition),

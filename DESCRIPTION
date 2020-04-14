@@ -5,14 +5,16 @@ Version: 0.99.0
 Authors@R: c(
     person("Emanuela","Iovino", email = "emanuela.iovino@unibo.it", role= "cre"),
     person("Tommaso", "Pippucci", email = "tommaso.pippucci@unibo.it", role = "aut"))
-Imports: later, shiny, shinyWidgets, shinyBS, shinyjs, markdown, DT,
-        data.table, dplyr, Gviz, grDevices, Homo.sapiens, OrganismDbi,
-        stringr, condformat, bedr, readxl, writexl, openxlsx,
-        TxDb.Hsapiens.UCSC.hg19.knownGene,
-        TxDb.Hsapiens.UCSC.hg38.knownGene, BSgenome.Hsapiens.UCSC.hg19,
-        BSgenome.Hsapiens.UCSC.hg38, EnsDb.Hsapiens.v75,
-        EnsDb.Hsapiens.v86, org.Hs.eg.db
-Depends: R (>= 3.5.0)
+Imports:  EnsDb.Hsapiens.v86, EnsDb.Hsapiens.v75, ensembldb, AnnotationFilter, 
+          BSgenome.Hsapiens.UCSC.hg38, BSgenome.Hsapiens.UCSC.hg19,
+          BSgenome, rtracklayer, Biostrings, XVector, grDevices,
+          openxlsx,readxl, writexl, bedr, condformat,stringr, Homo.sapiens, 
+          TxDb.Hsapiens.UCSC.hg19.knownGene,TxDb.Hsapiens.UCSC.hg38.knownGene,
+          org.Hs.eg.db, GO.db, OrganismDbi, GenomicFeatures, AnnotationDbi, 
+          Biobase, Gviz, GenomeInfoDb, BiocGenerics, dplyr, data.table, 
+          DT, markdown, shinyjs, shinyBS, shinyWidgets, shiny 
+Depends: R (>= 3.5.0), S4Vectors (>= 0.18.3), IRanges (>= 2.14.12), 
+        GenomicRanges (>= 1.32.7), grid, methods
 Description: a Shiny application containing a suite of graphical and statistical tools to support clinical assessment of low coverage regions.It displays three web pages each providing a different analysis module: Coverage analysis, calculate AF by allele frequency app and binomial distribution. 
 License: MIT + file LICENSE
 Encoding: UTF-8

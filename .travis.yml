@@ -8,3 +8,26 @@ addons:
        - pandoc
        - libgsl0-dev
        - libxml2-dev
+matrix:
+  include:
+  - r: release
+    script:
+      - R CMD build . --compact-vignettes=gs+qpdf
+      - xvfb-run R CMD check *tar.gz --as-cran
+  - r: release
+    os: osx
+    osx_image: xcode9.2
+    before_install:
+      - brew update
+      - brew cask reinstall xquartz
+      - brew install tcl-tk
+      - brew link --overwrite --force tcl-tk; brew unlink tcl-tk
+      - sudo tlmgr update --self
+      - sudo tlmgr install framed titling
+
+    before_script:
+      - "export DISPLAY=:99.0"
+      - if [ "${TRAVIS_OS_NAME}" = "osx" ]; then ( sudo Xvfb :99 -ac -screen 0 1024x768x8; echo ok ) & fi
+    script:
+      - R CMD build . --compact-vignettes=gs+qpdf
+      - R CMD check *tar.gz --as-cran

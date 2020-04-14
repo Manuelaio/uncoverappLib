@@ -14,12 +14,19 @@ This function launches \code{unCOVERApp}, a \code{Shiny} application for clinica
 }
 \examples{
 \dontrun{
+file.name='../path/sorted.bed.gz'
+tbi='.../path/sorted.bed.gz.tbi'
 run.uncoverapp()
-to run unCOVERApp use run.uncoverapp() function.
 }
 
+## Only run this example in interactive R sessions
+
+if (interactive()) {
+run.uncoverapp()
+}
 
 #After running `run.uncoverapp()` the shiny app appears in your browser
+
 }
 \author{
 Emanuela Iovino
