@@ -16,9 +16,10 @@ matrix:
       - xvfb-run R CMD check *tar.gz --as-cran
   - r: release
     os: osx
-    osx_image: xcode9.2
     before_install:
-      - sudo tlmgr install framed titling
+      - brew update
+      - brew cask reinstall xquartz
+      - brew install tcl-tk
 
 
     script:
