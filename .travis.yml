@@ -1,7 +1,6 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: R
-
 cache: packages
 addons:
    apt:
@@ -18,7 +17,6 @@ matrix:
       - R CMD build . --compact-vignettes=gs+qpdf
       - xvfb-run R CMD check *tar.gz --as-cran
   - r:
-    - release
     - devel
     os: osx
     before_install:
