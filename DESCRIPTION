@@ -5,7 +5,7 @@ Version: 0.99.0
 Authors@R: c(
     person("Emanuela","Iovino", email = "emanuela.iovino@unibo.it", role= "cre"),
     person("Tommaso", "Pippucci", email = "tommaso.pippucci@unibo.it", role = "aut"))
-Imports:  BiocManager,ensembldb, AnnotationFilter,rtracklayer, Biostrings,
+Imports:  BiocManager,ensembldb, AnnotationFilter,rtracklayer, Biostrings, utils,
           XVector, grDevices, openxlsx,readxl, writexl, bedr, condformat,
           stringr, GO.db, OrganismDbi, GenomicFeatures, AnnotationDbi, 
           Biobase, Gviz, GenomeInfoDb, BiocGenerics, dplyr, data.table, 

@@ -27,6 +27,7 @@
 #' @import shinyBS
 #' @importFrom shinyjs useShinyjs hidden enable
 #' @import markdown
+#' @import utils
 #' @import S4Vectors
 #' @import ensembldb
 #' @import GenomeInfoDb
