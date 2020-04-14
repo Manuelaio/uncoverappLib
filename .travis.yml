@@ -18,8 +18,7 @@ matrix:
     os: osx
     osx_image: xcode9.2
     before_install:
-      - brew update
-      - brew cask reinstall xquartz
+      - sudo tlmgr install framed titling
 
 
     script:

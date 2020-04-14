@@ -1,7 +1,7 @@
 This repository is home of R packages uncoverappLib launching a *unCOVERApp*, a web application for clinical assessment and annotation of coverage gaps in target genes. 
 Read more about unCOVERApp [here](https://www.biorxiv.org/content/10.1101/2020.02.10.939769v1)
 
-[! [DOI] (https://zenodo.org/badge/254597958.svg)] (https://zenodo.org/badge/latestdoi/254597958)
+[![DOI](https://zenodo.org/badge/254597958.svg)](https://zenodo.org/badge/latestdoi/254597958)
 
 
 
