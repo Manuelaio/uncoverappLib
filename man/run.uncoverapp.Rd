@@ -10,7 +10,8 @@ run.uncoverapp()
 This return a Shiny App. The is no value
 }
 \description{
-This function launches \code{unCOVERApp}, a \code{Shiny} application for clinical assessment of sequence coverage.
+This function launches \code{unCOVERApp}, a
+\code{Shiny} application for clinical assessment of sequence coverage.
 }
 \examples{
 \dontrun{

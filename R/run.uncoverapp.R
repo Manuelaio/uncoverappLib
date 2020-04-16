@@ -1,6 +1,7 @@
 #' @title run.uncoverapp
 #'
-#' @description This function launches \code{unCOVERApp}, a \code{Shiny} application for clinical assessment of sequence coverage.
+#' @description This function launches \code{unCOVERApp}, a
+#' \code{Shiny} application for clinical assessment of sequence coverage.
 #' @author Emanuela Iovino
 #'
 #'
