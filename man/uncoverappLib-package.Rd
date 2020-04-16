@@ -12,12 +12,7 @@ support clinical assessment of low coverage regions.It displays three web pages
 each providing a different analysis module: Coverage analysis, calculate AF by
 allele frequency app and binomial distribution.
 }
-\seealso{
-Useful links:
-\itemize{
-  \item \url{https://github.com/Manuelaio/uncoverappLib}
-  \item Report bugs at \url{https://github.com/Manuelaio/uncoverappLib/issues}
-}
+
 \seealso{
     Useful links:
         \itemize{
