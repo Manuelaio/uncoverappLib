@@ -14,7 +14,7 @@ This function launches \code{unCOVERApp}, a
 \code{Shiny} application for clinical assessment of sequence coverage.
 }
 \examples{
-\dontrun{
+\donttest{
 file.name='../path/sorted.bed.gz'
 tbi='.../path/sorted.bed.gz.tbi'
 run.uncoverapp()

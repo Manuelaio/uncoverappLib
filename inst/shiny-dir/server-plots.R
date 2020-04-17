@@ -2,7 +2,7 @@
 strack<- reactive({if (input$UCSC_Genome == "hg19"){
   Gviz::SequenceTrack(BSgenome.Hsapiens.UCSC.hg19::Hsapiens, chromosome = input$Chromosome)}
   else{
-    Gviz::SequenceTrack(BSgenome.Hsapiens.UCSC.hg38::Hsapiens, chromosome = input$Chromosome)}
+    Gviz::SequenceTrack(BSgenome.Hsapiens.UCSC.hg19::Hsapiens, chromosome = input$Chromosome)}
 })
 
 dtrack1<- reactive ({grcoverage <- filtered_low()

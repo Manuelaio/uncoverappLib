@@ -18,7 +18,7 @@ Read more about unCOVERApp [here](https://www.biorxiv.org/content/10.1101/2020.0
 
 This app requires following dependencies:
 - samtools v.1.9
-- R v.3.5.1 or RStudio
+- R v.3.5.1 
 - annotation files that can be downloaded on Zenodo at the following link https://zenodo.org/record/3747448#.XpBmnVMzbOR and stored in a user folder. 
 
 ## Installation
@@ -34,6 +34,7 @@ devtools::install_github("Manuelaio/uncoverappLib")
 To run locally, users need to install this library and run. It is mandatory to expliciatate absolute path of prevusly downloaded annotation files before run the app. 
 
 ``` {r}
+library(dplyr)
 library(uncoverappLib)
 file.name='../path/sorted.bed.gz'
 tbi='.../path/sorted.bed.gz.tbi'
