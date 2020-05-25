@@ -232,18 +232,25 @@ unCOVERApp generates the following **outputs** :
 
 - information about POLG gene in ` UCSC gene ` table
 
+
 ```{r, echo = FALSE, out.width='100%', fig.align='center', fig.cap="Screenshot of output of UCSC gene table."}
 knitr::include_graphics("ucsc_info.png")
 
 ```
 
+
+
 - information about POLG exons in 
 ` Exon genomic coordinate positions from UCSC ` table
+
+
 
 ```{r, echo = FALSE, out.width='100%', fig.align='center', fig.cap="Screenshot of output of Exon genomic coordinate positions from UCSC table."}
 knitr::include_graphics("exon_info.png")
 
 ```
+
+
 
 - sequence gene coverage plot in ` Gene coverage `. 
 The plot displays chromosome ideogram, genomic location and gene annotations 
@@ -255,10 +262,13 @@ Processing time is few minutes. The table and the plot show that many genomic
 positions are uncovered in POLG gene.
 
 
+
 ```{r, echo = FALSE, out.width='100%', fig.align='center', fig.cap="Screenshot of output of gene coverage."}
 knitr::include_graphics("all_gene.png")
 
 ```
+
+
 
 - plot of a specific exon.  Choose exon 10 in sidebar  
 ` exon number `, push ` Make exon ` and view the plot in in ` Exon coverage `. 
