@@ -4,14 +4,10 @@
 \name{uncoverappLib}
 \alias{uncoverappLib}
 \alias{uncoverappLib-package}
-\title{uncoverappLib: Interactive graphical application for clinical
-        assessment of
+\title{uncoverappLib: Interactive graphical application for clinical assessment of
         sequence coverage at the base-pair level}
 \description{
-a Shiny application containing a suite of graphical and statistical
-tools to support clinical assessment of low coverage regions.It displays
-three web pages each providing a different analysis module: Coverage analysis,
-calculate AF by allele frequency app and binomial distribution.
+a Shiny application containing a suite of graphical and statistical tools to support clinical assessment of low coverage regions.It displays three web pages each providing a different analysis module: Coverage analysis, calculate AF by allele frequency app and binomial distribution.
 }
 \seealso{
 Useful links:

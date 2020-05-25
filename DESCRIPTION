@@ -1,12 +1,12 @@
 Package: uncoverappLib
 Title: Interactive graphical application for clinical assessment of
         sequence coverage at the base-pair level
-Version: 0.99.10
+Version: 0.99.11
 Authors@R: c(
     person("Emanuela","Iovino", email = "emanuela.iovino@unibo.it", role= c("cre", "aut")),
     person("Tommaso", "Pippucci", email = "tommaso.pippucci@unibo.it", role = "aut"))
 Imports: markdown, shiny, shinyjs, shinyBS, shinyWidgets,shinycssloaders, DT, 
-        Gviz,dplyr, Homo.sapiens, openxlsx, condformat, stringr, bedr, 
+        Gviz, Homo.sapiens, openxlsx, condformat, stringr, bedr, 
         org.Hs.eg.db, TxDb.Hsapiens.UCSC.hg38.knownGene, 
         TxDb.Hsapiens.UCSC.hg19.knownGene, rlist, 
         EnsDb.Hsapiens.v75, EnsDb.Hsapiens.v86, OrganismDbi,
@@ -19,7 +19,7 @@ RoxygenNote: 7.1.0
 URL: https://github.com/Manuelaio/uncoverappLib
 BugReports: https://github.com/Manuelaio/uncoverappLib/issues
 VignetteBuilder: knitr
-Suggests: BiocStyle, knitr, testthat, rmarkdown 
+Suggests: BiocStyle, knitr, testthat, rmarkdown, dplyr
 biocViews: Software, Visualization, Annotation, Coverage
 NeedsCompilation: no
 Packaged: 2020-04-08 13:23:14 UTC; emanuelaiovino

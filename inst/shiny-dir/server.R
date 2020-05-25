@@ -138,13 +138,14 @@ server <- function (input, output, session){
     )
     if(is.null(condform_table()))
       return(NULL)
-    print(head(condform_table()))
+    #print(head(condform_table()))
     condform_table() %>%
-      dplyr::select(seqnames, start, end, value, counts, REF, ALT,
-                    dbsnp, GENENAME, PROTEIN_ensembl,  MutationAssessor,SIFT,
+     dplyr::select(seqnames, start, end, value, counts, REF, ALT,
+                   dbsnp, GENENAME, PROTEIN_ensembl,  MutationAssessor,SIFT,
                     Polyphen2,M_CAP,CADD_PHED,AF_gnomAD,
                     ClinVar,clinvar_MedGen_id,clinvar_OMIM_id,HGVSc_VEP,
-                    HGVSp_VEP)})
+                  HGVSp_VEP)
+    })
 
   #download data wiht conditionalFormatting
 
@@ -153,7 +154,7 @@ server <- function (input, output, session){
       paste('download',input$file1,Sys.Date(), '.xlsx', sep='')
     },
     content = function(file){
-      wb <- createWorkbook()
+      wb <- openxlsx::createWorkbook()
       addWorksheet(wb, "Sheet1")
       negStyle <- createStyle(fontColour = "#9C0006", bgFill = "#FFC7CE")
       posStyle <- createStyle(fontColour = "#006100", bgFill = "#C6EFCE")
@@ -213,6 +214,7 @@ server <- function (input, output, session){
     on.exit(progress$close())
     progress$set(message = "table construction in progress", value = 0)
     Sys.sleep(0.1)
+
     uncover_maxaf() %>%
       dplyr::select(seqnames, start, end, value, counts,REF,
                     ALT, dbsnp, GENENAME, PROTEIN_ensembl, MutationAssessor,
@@ -228,7 +230,7 @@ server <- function (input, output, session){
       paste('download_uncover_maxAF',Sys.Date(), '.xlsx', sep='')
     },
     content = function(file){
-      wb1 <- createWorkbook()
+      wb1 <- openxlsx::createWorkbook()
       addWorksheet(wb1, "Sheet2")
       negStyle <- createStyle(fontColour = "#9C0006", bgFill = "#FFC7CE")
       posStyle <- createStyle(fontColour = "#006100", bgFill = "#C6EFCE")

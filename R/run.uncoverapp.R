@@ -47,7 +47,6 @@
 #' @importFrom  Rsamtools ScanBamParam PileupParam pileup
 #' @importFrom rlist list.append
 #' @importFrom GenomicRanges makeGRangesFromDataFrame
-#' @importFrom dplyr mutate group_by summarise arrange select
 
 #'
 #' @export

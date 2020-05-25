@@ -64,6 +64,7 @@ exon_gp<-eventReactive(input$button1,{
   exon_Id<- as.data.frame(exoncds)
   exon_table=exon_Id  %>%
     dplyr::select(1:6,8,10)
+  #exon_table=exon_Id[c(1:6,8,10)]
   colnames(exon_table)=c("number_of_transcript",
                          "type_of_transcript", "chrom", "start","end",
                          "length_of_exon", "cds_id", "exon_rank")
