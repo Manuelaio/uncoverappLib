@@ -16,6 +16,6 @@ The app is released under a [MIT license](https://github.com/Manuelaio/unCOVERAp
 
 ### about us
 
-This application was build by [Tommaso Pippucci](mailto:tommaso.pippucci@unibo.it) (Medical Genetics Unit, **Polyclinic Sant'Orsola-Malpighi University Hospital** - Bologna) and [Emanuela Iovino](mailto:emanuela.iovino@unibo.it) (Department of Medical and Surgical Sciences, [University of Bologna](https://www.unibo.it) and Computational and Chemical Biology of [IIT](https://www.iit.it) Genova).  
+This application was build by [Tommaso Pippucci](mailto:tommaso.pippucci@unibo.it) (Medical Genetics Unit, **Polyclinic Sant'Orsola-Malpighi University Hospital** - Bologna) and [Emanuela Iovino](mailto:emanuela.iovino@unibo.it) (Department of Medical and Surgical Sciences, [University of Bologna](https://www.unibo.it) .  
 
 

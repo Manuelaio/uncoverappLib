@@ -1,0 +1,1 @@
+This is a javascript that inabilitate shiny app when it is busy in a process.

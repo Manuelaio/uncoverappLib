@@ -1,19 +1,15 @@
-##intersection between dbNSFP and filtered user-defined bed file
-#ann.file<- system.file(
- # "extdata",
-  #"sorted.bed.gz",
-  #package = "uncoverappLib"
-#)
-#tbi<- system.file(
- # "extdata",
-  #"sorted.bed.gz.tbi",
-  #package = "uncoverappLib"
-#)
+filtered_low_nucl<- reactive ({
+  if (is.null(mysample()))
+    return(NULL)
+  mysample() %>%
+    dplyr::filter(chromosome == input$Chromosome,
+                  value <= as.numeric(input$coverage_co))
+})
 
 intBED<- reactive({
-  if (is.null(filtered_low()))
-   return(NULL)
-  bedA<- filtered_low()
+  if (is.null(filtered_low_nucl()))
+    return(NULL)
+  bedA<- filtered_low_nucl()
   #file.name = (ann.file)
   #ANNOTATION FILEIN THE FOLDER OF SHINY SCRITP !!!
   #second and tirth columns are hg19 positions

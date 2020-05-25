@@ -1,36 +1,35 @@
 server <- function (input, output, session){
   options(shiny.maxRequestSize=30*1024^2)
+
+
   script1 <- system.file(
     "extdata",
-    "make_bed.sh",
+    "Rpreprocessing.R",
     package = "uncoverappLib")
 
-  script2 <- system.file(
-    "extdata",
-    "preprocessing.R",
-    package = "uncoverappLib")
-
-  script3 <- system.file(
-    "extdata",
-    "uncoverappLib.config",
-    package = "uncoverappLib")
 
   #attach static scripts
 
-  output$instructionsScript= downloadHandler(filename="make_bed.sh",
-                                             content=function(file){
-                                               file.copy(script1,file)
-                                               # download static file
-                                             })
-  output$dependence = downloadHandler(filename="preprocessing.R",
+
+  output$dependence = downloadHandler(filename="Rpreprocessing.R",
                                       content=function(file){
-                                        file.copy(script2,file)
+                                        file.copy(script1,file)
                                       })
-  output$configuration_file= downloadHandler(filename = "uncoverappLib.config",
-                                             content = function(file){
-                                               file.copy(script3, file)
-                                             })
   #source script to load dataset or example file
+  source('server-preprocess.R', local= TRUE)
+  output$input1<- renderDataTable({
+    options(shiny.sanitize.errors = TRUE)
+    progress <- shiny::Progress$new()
+    on.exit(progress$close())
+    progress$set(message = "table construction in progress",
+                 detail = 'This may take a while', value = 0)
+    Sys.sleep(0.1)
+    validate(
+      need(try(!is.null(pileup_input())), "please upload a list with correct gene names and existent
+         bam paths list"))
+    pileup_input()
+  })
+
   source('server-reactiveDF.R', local= TRUE)
 
   output$text<- #DT::renderDataTable({
@@ -122,7 +121,7 @@ server <- function (input, output, session){
 
   #table output wiht Condformat pkg
 
-  output$uncover_position<- renderCondformat({
+  output$uncover_position<- condformat::renderCondformat({
     progress <- shiny::Progress$new()
     on.exit(progress$close())
     progress$set(message = "table construction in progress", value = 0)
@@ -141,7 +140,7 @@ server <- function (input, output, session){
       return(NULL)
     print(head(condform_table()))
     condform_table() %>%
-      dplyr::select(seqnames, start, end, value, REF, ALT,
+      dplyr::select(seqnames, start, end, value, counts, REF, ALT,
                     dbsnp, GENENAME, PROTEIN_ensembl,  MutationAssessor,SIFT,
                     Polyphen2,M_CAP,CADD_PHED,AF_gnomAD,
                     ClinVar,clinvar_MedGen_id,clinvar_OMIM_id,HGVSc_VEP,
@@ -196,7 +195,7 @@ server <- function (input, output, session){
 
   source('server-maxAF.R', local=TRUE)
   output$maxAF <- renderText({signif(data()[[1]],3)})
-  output$uncoverPosition <- renderCondformat ({
+  output$uncoverPosition <- condformat::renderCondformat ({
     validate(
       need(ncol(mydata()) != "0",
            "Unrecognized data set: Please load your file"),
@@ -215,7 +214,7 @@ server <- function (input, output, session){
     progress$set(message = "table construction in progress", value = 0)
     Sys.sleep(0.1)
     uncover_maxaf() %>%
-      dplyr::select(seqnames, start, end, value, REF,
+      dplyr::select(seqnames, start, end, value, counts,REF,
                     ALT, dbsnp, GENENAME, PROTEIN_ensembl, MutationAssessor,
                     SIFT,Polyphen2,M_CAP,CADD_PHED,AF_gnomAD,
                     ClinVar,clinvar_MedGen_id,clinvar_OMIM_id,

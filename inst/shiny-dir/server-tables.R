@@ -8,6 +8,8 @@ coord= eventReactive(input$button1,{
                                    columns=c("ENTREZID","GENENAME", "ENSEMBL"),
                                    keytype="ALIAS")
   ID=my_gene_name$ENTREZID
+  if (is.null(ID))
+    return(NULL)
   all_gene= data.frame(genes(txdb()))
   pre= do.call(rbind, lapply(ID, function(x) data.frame(
     subset(all_gene, all_gene$gene_id == x), stringsAsFactors = FALSE)))
@@ -32,6 +34,7 @@ observeEvent(input$button1, {
       need(HGNC_org[HGNC_org %in% input$Gene_name],
            "incorrect HGNC Gene symbol"))
     coord()
+    #print(coord())
   })
 })
 
@@ -55,12 +58,10 @@ exon_gp<-eventReactive(input$button1,{
     edb= EnsDb.Hsapiens.v86}
   eid <- OrganismDbi::select(org.Hs.eg.db,gname,
                              "ENTREZID", "SYMBOL")[["ENTREZID"]]
-  print(head(eid))
   txid <- OrganismDbi::select(txdb(), eid, "TXNAME", "GENEID")[["TXNAME"]]
   cds <- cdsBy(txdb(), by="tx", use.names=TRUE)
   exoncds <- cds[names(cds) %in% txid]
   exon_Id<- as.data.frame(exoncds)
-  print(head(exon_Id))
   exon_table=exon_Id  %>%
     dplyr::select(1:6,8,10)
   colnames(exon_table)=c("number_of_transcript",

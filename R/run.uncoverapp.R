@@ -28,6 +28,7 @@
 #' @import shinyWidgets
 #' @import shinyBS
 #' @importFrom shinyjs useShinyjs hidden enable
+#' @importFrom shinycssloaders withSpinner
 #' @import markdown
 #' @importFrom DT renderDataTable dataTableOutput
 #' @import Homo.sapiens
@@ -43,6 +44,10 @@
 #' @import EnsDb.Hsapiens.v75
 #' @import BSgenome.Hsapiens.UCSC.hg19
 #' @import OrganismDbi
+#' @importFrom  Rsamtools ScanBamParam PileupParam pileup
+#' @importFrom rlist list.append
+#' @importFrom GenomicRanges makeGRangesFromDataFrame
+#' @importFrom dplyr mutate group_by summarise arrange select
 
 #'
 #' @export
