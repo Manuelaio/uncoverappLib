@@ -10,7 +10,8 @@ intBED<- reactive({
   if (is.null(filtered_low_nucl()))
     return(NULL)
   bedA<- filtered_low_nucl()
-  #file.name = (ann.file)
+  m=uncoverappLib::getAnnotationFiles()
+  file.name = m[1]
   #ANNOTATION FILEIN THE FOLDER OF SHINY SCRITP !!!
   #second and tirth columns are hg19 positions
   query.regions <- c(input$query_Database)

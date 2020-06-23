@@ -1,0 +1,68 @@
+{
+  "input": {
+    "bam_list": {
+      "name": [
+        "bam.list"
+      ],
+      "size": [
+        81
+      ],
+      "type": [
+        ""
+      ],
+      "datapath": [
+        "0.list"
+      ]
+    },
+    "button1": 0,
+    "button5": 0,
+    "Chromosome": "chr1",
+    "close": 0,
+    "coverage_co": "1",
+    "end_genomicPosition": "",
+    "end_gp": "",
+    "exon_number": "1",
+    "file1": null,
+    "Gene_name": "",
+    "gene1": {
+      "name": [
+        "mygene.txt"
+      ],
+      "size": [
+        4
+      ],
+      "type": [
+        "text/plain"
+      ],
+      "datapath": [
+        "0.txt"
+      ]
+    },
+    "Genome": "hg19",
+    "header": true,
+    "hetA": 0.1,
+    "hetG": 1,
+    "id_t": "",
+    "inh": "monoallelic",
+    "notation": "chr",
+    "num_all": 10,
+    "p": 1e-05,
+    "pen": 0.5,
+    "pileup": 1,
+    "prev": 500,
+    "query_Database": "",
+    "remove": 0,
+    "remove5": 0,
+    "Sample": "",
+    "Start_genomicPosition": "",
+    "start_gp": "",
+    "transcript_id": "",
+    "UCSC_Genome": "hg19"
+  },
+  "output": {
+
+  },
+  "export": {
+
+  }
+}

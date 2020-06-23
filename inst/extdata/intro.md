@@ -5,22 +5,25 @@ unCOVERApp allows:
 
 
 - to display interactive plots showing sequence gene coverage down to base-pair
-resolution and annotations of functional/clinical sequence 
+resolution and functional/ clinical annotations of sequence 
 positions within coverage gaps (` Coverage Analysis` page).
 
 
-- to calculate maximum credible allele frequency 
-(http://cardiodb.org/allelefrequencyapp/) for  allele frequency
-threshold  setting to be used in variant filtering
- (` Calculate AF by allele frequency app ` page).
+- to calculate the [maximum credible population allele frequency](http://cardiodb.org/allelefrequencyapp/) (AF) to be applied as AF 
+filtering threshold tailored to the model of the disease-of-interest 
+instead of a general AF cut-off (e.g. 1 % or 0.1 %) 
+(` Calculate AF by allele frequency app ` page).
 
 
 
-- to calculate the binomial probability that coverage, over a position of 
-interest,  detect a variant that the user specifies 
-the expected allelic fraction and number of variant reads - applicable 
-especially to somatic variants
- (` Binomial distribution`page). 
+- to calculate the 95 % probability of the binomial distribution to observe at 
+least N variant-supporting reads (N is the number of successes) based on a 
+user-defined allele fraction that is expected for the variant 
+(which is the probability of success). Especially useful to obtain the 
+range of variant-supporting reads that is most likely to occur at a given 
+a depth of coverage (DoC)(which is the number of trials) for somatic variants
+with low allele fraction
+(` Binomial distribution`page). 
 
 ### Documentation 
 
@@ -35,10 +38,8 @@ input files containing a list of genes and a list of bam files, respectively:
 
 - a text file, with .txt extension, containing HGNC official gene name(s) one per 
 row and to be uploaded to ` Load a gene(s) file ` box. An example file is
-included in extdata of uncoverappLib packages, users can also download the
-file `mygene.txt` also
-[from](https://github.com/Manuelaio/unCOVERApp/blob/master/script/mygene.txt) 
-github. 
+included in extdata of uncoverappLib packages
+
 Below is an example of genes list. 
 
 
@@ -49,10 +50,10 @@ PEX10
 RPL22
 ```
 
--  a text file, with .list extension, containing absolute paths to BAM files
+- a text file, with .list extension, containing absolute paths to BAM files
 (one per row) and to be uploaded to ` Load bam file(s) list ` box.
 In the output file, sample 1,2,3.., correspond
-to the sample in the bam file bam.list file listed in row 1,2,3, … . 
+to the sample in the bam file bam.list file listed in row 1,2,3, …. 
 Below is an example of bam.list in a Unix-like OS including macOS. 
 
 ```{r}
@@ -61,13 +62,12 @@ Below is an example of bam.list in a Unix-like OS including macOS.
 /home/user/bam/smaple3.bam
 ```
 
-
 While all inputs are loading, a progress bar appears during processing phase. 
-Output generation will fail if there are incorrect HGNC official gene names in list.
-An unrecognized gene name(s) table  will be displayed. 
+unCOVERApp input file generation fails if incorrect gene names are specified. 
+An unrecognized gene name(s) table is displayed if such a case occurs.
 
 Below is a snippet of bed file output of **Preprocessing** 
-unCOVERApp. Users could find the example file [here](https://github.com/Manuelaio/unCOVERApp/blob/master/script/POLG.example.bed)
+unCOVERApp. 
 
 ```{r}
 
@@ -81,13 +81,18 @@ chr15   89859521        89859521        75      C:1;T:74
 ```
 
 
-The input BAM file(s) could be also processed on a local machine with the 
-Rscript available on unCOVERAPP **Preprocessing** page
-[here](https://github.com/Manuelaio/unCOVERApp/blob/master/script/Rpreprocessing.R) 
-or with other tools (for instance: 
+The preprocessing time depends on the size of the BAM file(s) and on the number 
+of genes to investigate. In general, if many (e.g. > 50) genes are to be analyzed, 
+we would recommend using `buildInput` function and run it in R console 
+before launching  the app.
+
+Alternatively, other tools do a similar job and can be used to generate the 
+unCOVERApp input file ( for instance:
 [bedtools](https://bedtools.readthedocs.io/en/latest/#), 
 [samtools](http://www.htslib.org/doc/samtools-depth.html), 
 [gatk](https://gatk.broadinstitute.org/hc/en-us)). 
+
+
 In this case, users can load the file directly on
 **Coverage Analysis**  page in `Select input file` box. 
 
@@ -107,10 +112,10 @@ specified in the sidebar of the **Coverage Analysis** section:
 - ` coverage threshold ` : required coverage threshold  
 
 - ` Sample  ` : sample(s) to analyze according to help text indications on the 
-App page
+    App page
 
 - ` Transcript number ` : transcript number as in first column 
-of ` Exon genomic coordinate positions from UCSC ` output App table.
+    of ` Exon genomic coordinate positions from UCSC ` output App table.
 
 - ` exon number ` and push ` Make exon ` : to zoom in a specific exon
 
@@ -140,28 +145,26 @@ in ` Exon coverage `. Related table shows the number of Low coverage positions
 annotate in ClinVar and with a high impact annotation. 
 
 - dbNSFP annotation of low coverage positions can be found in  
-`Annotation on low-coverage positions ` . Users may click on download button 
-and save the table as spreadsheet format with certain cells colored  following 
-thresholds for clinically-relevant variant parameters (gnomAD allele frequency,
-CADD, MAP_CAP, SIFT, Polyphen2, ClinVar, OMIM ID, HGVSp and HGVSc, functional
-impact of a variant score).
+`Annotation on low-coverage positions ` . By clicking on the `download` button, 
+users can save the table as spreadsheet format with certain cells colored 
+according to pre-specified thresholds for AF, 
+CADD, MAP-CAP, SIFT, Polyphen2, ClinVar, OMIM ID, HGVSp and HGVSc, ...).
 
 
+- In **Calculate maximum credible allele frequency** page, users can set 
+allele frequency cut-offs based on specific assumptions about the genetic 
+architecture of the disease. Users may click on the `download` button and 
+save the resulting table as spreadsheet format. 
 
-In **Calculate maximum credible allele frequency** page, users can set 
-allele frequency cut-offs based on assumptions about the genetic architecture 
-of the disease, if not calculated, variant allele frequency 5% will be used 
-instead for filtering
+- The **Binomial distribution** page returns the 95 % binomial probability 
+distribution of the variant supporting reads on the input genomic position 
+(`START genomic position` and `END genomic position`).
+Users should define  the expected `allele fraction`
+(the expected fraction of variant reads, probability of success) 
+and `Variant reads ` (the minimum number of variant reads required by the user to 
+support variant calling, number of successes).
 
 
-The last page **Binomial distribution** returns the 95% binomial probability 
-distribution of the variant read number on the input genomic position 
-(` START genomic position` and ` END genomic position `). 
-
-Users must specify as input the `allele fraction` (the expected fraction of
-variant reads, probability of success) and `Variant reads ` (the minimum 
-number of variant reads required by the user to support variant calling,
-number of successes). 
 
 
 

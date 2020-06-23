@@ -22,27 +22,31 @@ knitr::opts_chunk$set(
 # Introduction
 
 
-This is a package containing unCOVERApp,  a shiny graphical application for clinical assessment of sequence coverage. 
+This is a package containing unCOVERApp,  a shiny graphical application for 
+clinical assessment of sequence coverage. 
 unCOVERApp allows:
 
 
 - to display interactive plots showing sequence gene coverage down to base-pair
-resolution and annotations of functional/clinical sequence 
+resolution and functional/ clinical annotations of sequence 
 positions within coverage gaps (` Coverage Analysis` page).
 
 
-- to calculate maximum credible allele frequency 
-(http://cardiodb.org/allelefrequencyapp/) for  allele frequency
-threshold  setting to be used in variant filtering
- (` Calculate AF by allele frequency app ` page).
+- to calculate the maximum credible population allele frequency 
+(http://cardiodb.org/allelefrequencyapp/) (AF) to be applied as AF 
+filtering threshold tailored to the model of the disease-of-interest 
+instead of a general AF cut-off (e.g. 1 % or 0.1 %) 
+(` Calculate AF by allele frequency app ` page).
 
 
 
-- to calculate the binomial probability that coverage, over a position of 
-interest,  detect a variant that the user specifies 
-the expected allelic fraction and number of variant reads - applicable 
-especially to somatic variants
- (` Binomial distribution`page). 
+- to calculate the 95 % probability of the binomial distribution to observe at 
+least N variant-supporting reads (N is the number of successes) based on a 
+user-defined allele fraction that is expected for the variant 
+(which is the probability of success). Especially useful to obtain the 
+range of variant-supporting reads that is most likely to occur at a given 
+a depth of coverage (DoC)(which is the number of trials) for somatic variants with low allele fraction
+(` Binomial distribution`page). 
 
 
 # Installation and example
@@ -53,10 +57,7 @@ Install the latest version of `uncoverappLib` using `BiocManager`.
 
 - R version >= 3.5 
 - java installed
-- The annotation files must be downloaded from 
-[Zenodo](https://zenodo.org/record/3747448#.XpBmnVMzbOR) and loaded on the 
-R environment before launching app. 
-
+- Annotation files for clinical assessment of low-coverage positions. 
 
 
 ```{r  eval=F, echo=T}
@@ -64,9 +65,6 @@ R environment before launching app.
 install.packages("BiocManager")
 BiocManager::install("uncoverappLib")
 library(uncoverappLib)
-file.name='../path/sorted.bed.gz'
-tbi='.../path/sorted.bed.gz.tbi'
-run.uncoverapp()
 ```
 
 
@@ -80,50 +78,59 @@ Alternatively, it can be installed from GitHub using:
 library(devtools)
 install_github("Manuelaio/uncoverappLib")
 library(uncoverappLib)
-file.name='../path/sorted.bed.gz'
-tbi='.../path/sorted.bed.gz.tbi'
-run.uncoverapp()
+
+```
+
+When users load `uncoverappLib` for the first time, the first thing to do is a
+download of annotation files. 
+`getAnnotationFiles()` function allows to download the annotation files from [Zenodo](https://zenodo.org/record/3747448#.XpBmnVMzbOR) and parse it using 
+uncoverappLib package. The function does not return an R object but store the
+annotation files in a cache (`sorted.bed.gz` and `sorted.bed.gz.tbi`) and show  
+the cache path. 
+The local cache is managed by the `BiocFileCache` **Bioconductor** package.
+It is sufficient run the function `getAnnotationFiles()` one time after installing 
+uncoverappLib package as shown below
+
+```{r eval=F, echo=T}
+library(uncoverappLib)
+getAnnotationFiles()
+
+# "/Users/myhome/Library/Caches/uncoverappLib/sorted.bed.gz"
+# "/Users/myhome/Library/Caches/uncoverappLib/sorted.bed.gz.tbi"
 
 ```
 
 
+The preprocessing time can take few minutes. 
+
 # Input file
 
-All unCOVERApp functionalities are based on the availability of a bed file 
-containing tab-separated specification of genomic coordinates (chromosome, 
-start position, end position),  coverage value and reference: alternate 
-allele counts read for each position.
-
-
-In the first page **Preprocessing**, users prepare the bed file providing 
-input files containing a list of genes and a list of bam files, respectively: 
+All unCOVERApp functionalities are based on the availability of a BED-style 
+formatted input file containing tab-separated specifications of genomic 
+coordinates (chromosome, start position, end position), the coverage value, 
+and the reference:alternate allele counts for each position. In the first 
+page **Preprocessing**, users can prepare the input file by specifying the genes 
+to be examined and the BAM file(s) to be inspected. Users should be able to 
+provide:
 
 
 - a text file, with .txt extension, containing HGNC official gene name(s) one per 
 row and to be uploaded to ` Load a gene(s) file ` box. An example file is
-included in extdata of uncoverappLib packages, users can also download the
-file `mygene.txt` also
-[from](https://github.com/Manuelaio/uncoverappLib/blob/master/inst/extdata/mygene.txt) 
-github. 
+included in extdata of uncoverappLib packages
 
+```{r eval=F, echo=T}
+gene.list<- system.file("extdata", "mygene.txt", package = "uncoverappLib")
+```
 
 - a text file, with .list extension, containing absolute paths to BAM files
 (one per row) and to be uploaded to ` Load bam file(s) list ` box.
 In the output file, sample 1,2,3.., correspond
 to the sample in the bam file bam.list file listed in row 1,2,3, …. 
- An example 
- [BAM](https://github.com/Manuelaio/uncoverappLib/blob/master/inst/extdata/example_POLG.bam)
- is included in extdata of uncoverappLib packages. 
 Type the following command to load our example: 
 
 
 ```{r eval=F, echo=T}
 library(uncoverappLib)
-#Set your R environment with annotation files downloaded on Zenodo
-################################
-file.name='../path/sorted.bed.gz'
-tbi='.../path/sorted.bed.gz.tbi'
-################################
 
 bam_example <- system.file("extdata", "example_POLG.bam", package = "uncoverappLib")
 
@@ -134,17 +141,22 @@ write.table(bam_example, file= "./bam.list", quote= F, row.names = F, col.names 
 
 ```
 
-and launch ` run.converappLib() `  command. 
+and launch ` run.uncoverapp() `  command. 
 
 In the first page **Preprocessing** users can load `mygene.txt` in 
 ` Load a gene(s) file ` and `bam.list` in ` Load bam file(s) list `. 
+Users should also specify the reference genome in `Genome` box and the chromosome 
+notation of their BAM file(s) in `Chromosome Notation` box. In the BAM file, 
+the number option refers to 1, 2, ..., X,.M chromosome notation, while the chr 
+option refers to chr1, chr2, ... chrX, chrM chromosome notation. 
+Users can specify the `minimum mapping quality (MAPQ) ` value in box and 
+`minimum base quality (QUAL)` value in box. Default values for both mapping and 
+base qualities is 1. 
 
-Users also need to specify the reference genome in `Genome` box and the chromosome
-notation BAM in ` notation ` box.  In bam file, the `number` option 
-refers to 1, 2, ..., X,.M 
-notation chromosome, the `chr` option refers to chr1, chr2, ... chrX, chrM.
-To run our example, choose notation `chr` and `hg19` genome reference as shown 
-in following screenshot of Preprocessing page. 
+To run the example, choose *chr* chromosome notation, 
+*hg19* genome reference and leave minimum mapping and base qualities to the 
+default settings, as shown in the following screenshot of the Preprocessing page:
+
 
 
 ```{r, echo = FALSE, out.width='80%', fig.align='center', fig.cap="Screenshot of Preprocessing page."}
@@ -152,14 +164,14 @@ knitr::include_graphics("pre_file.png")
 
 ```
 
+\multiplespacing
 
-While all inputs are loading, a progress bar appears during processing phase. 
-Output generation will fail if there are incorrect HGNC official gene names in list.
-An unrecognized gene name(s) table  will be displayed. 
+unCOVERApp input file generation fails if incorrect gene names are specified. 
+An unrecognized gene name(s) table is displayed if such a case occurs.
+Below is a snippet of a the unCOVERApp input file generated as a result of
+the **preprocessing** step performed for the example
 
-Below is a snippet of bed file output of **Preprocessing** 
-unCOVERApp. Loading our example gene file and bam file,
-users get following output:
+
 
 
 ```{r eval=F, echo=T}
@@ -173,10 +185,26 @@ chr15   89859521        89859521        75      C:1;T:74
 
 ```
 
-The input BAM file(s) could be also processed on a local machine with the 
-Rscript available on unCOVERAPP **Preprocessing** page
-[here](https://github.com/Manuelaio/unCOVERApp/blob/master/script/Rpreprocessing.R) 
-or with other tools (for instance: 
+
+The preprocessing time depends on the size of the BAM file(s) and on the number 
+of genes to investigate. In general, if many (e.g. > 50) genes are to be analyzed, 
+we would recommend to use `buildInput` function and run it in R console 
+before launching  the app as shown in following example.
+
+```{r eval=F, echo=T}
+library(dplyr)
+
+gene.list<- system.file("extdata", "mygene.txt", package = "uncoverappLib")
+bam_example <- system.file("extdata", "example_POLG.bam", package = "uncoverappLib")
+cat(bam_example, file = "bam.list", sep = "\n")
+
+buildInput(geneList= gene.list, genome= "hg19", type_bam= "chr", 
+           bamList= "bam.list", outDir= "/your_directory/")
+
+```
+
+Alternatively, other tools do a similar job and can be used to generate the 
+unCOVERApp input file ( for instance:
 [bedtools](https://bedtools.readthedocs.io/en/latest/#), 
 [samtools](http://www.htslib.org/doc/samtools-depth.html), 
 [gatk](https://gatk.broadinstitute.org/hc/en-us)). 
@@ -184,8 +212,8 @@ In this case, users can load the file directly on
 **Coverage Analysis**  page in `Select input file` box. 
 
 
-Once bed file is ready, users can move to **Coverage Analysis** page for own 
-analysis and push `load prepared input file` button.
+Once pre-processing is done, users can move to the **Coverage Analysis** page 
+and push the `load prepared input file` button.
 
 
 ```{r, echo = FALSE, out.width='100%', fig.align='center', fig.cap="Screenshot of Coverage Analysis page."}
@@ -194,9 +222,9 @@ knitr::include_graphics("load_file.png")
 ```
 
 
-To assess sequence coverage of POLG example, the following
-**input parameters** must be specified in the sidebar
-of the **Coverage Analysis** section:
+
+To assess sequence coverage of the example, the following input parameters must 
+be specified in the sidebar of the **Coverage Analysis** section
 
 
 - ` Reference Genome` : reference genome (hg19 or hg38); choose hg19
@@ -205,13 +233,10 @@ of the **Coverage Analysis** section:
 
 -  ` Chromosome ` : The chromosome on which the gene is locate. Choose chr15
 
-- ` coverage threshold ` : specify coverage threshold  for example 20x
+- ` Coverage threshold ` : specify coverage threshold (e.g. 20x)
 
-- ` Sample  ` : sample to be analyzed, write 1.  In the example there is only 
-one bam file, then users can select the number 1. The number of samples 
-generally refer to position occupied in bam.list; sample 1 correspond at 
-the first listed bam, sample 2 correspond to the second listed bam and so on. 
-                
+- ` Sample` : sample to be analyzed, choose 1
+
 
 - ` Transcript number ` : transcript number. Choose 1
 
@@ -228,7 +253,7 @@ unCOVERApp generates the following **outputs** :
 
 
 - unfiltered BED file in ` bed file ` and the corresponding filtered dataset in
-` Low coverage positions ` 
+` Low-coverage positions ` 
 
 - information about POLG gene in ` UCSC gene ` table
 
@@ -241,7 +266,7 @@ knitr::include_graphics("ucsc_info.png")
 
 
 - information about POLG exons in 
-` Exon genomic coordinate positions from UCSC ` table
+` UCSC exons` table
 
 
 
@@ -252,14 +277,14 @@ knitr::include_graphics("exon_info.png")
 
 
 
-- sequence gene coverage plot in ` Gene coverage `. 
-The plot displays chromosome ideogram, genomic location and gene annotations 
-from *Ensembl*  and transcripts annotation from *UCSC*. 
-Related table shows the number of uncovered positions in each exon given a 
-user-defined transcript  number, in this case transcript number is 1,
-and a user-defined threshold coverage, in this case the coverage threshold is 20 x. 
-Processing time is few minutes. The table and the plot show that many genomic
-positions are uncovered in POLG gene.
+- sequence gene coverage plot in ` Gene coverage`  . The plot displays the 
+chromosome ideogram, the genomic location and gene annotations from **Ensembl** 
+and the transcript(s) annotation from UCSC. Processing time is few minutes. A 
+related table shows the number of uncovered positions in each exon given a 
+user-defined transcript number (here transcript number is 1), and the 
+user-defined threshold coverage (here the coverage threshold is 20x). 
+Table and plot both show the many genomic positions that display low-DoC profile
+in POLG.
 
 
 
@@ -270,13 +295,18 @@ knitr::include_graphics("all_gene.png")
 
 
 
-- plot of a specific exon.  Choose exon 10 in sidebar  
-` exon number `, push ` Make exon ` and view the plot in in ` Exon coverage `. 
+- plot of a specific exon, choose exon 10 in sidebar Exon number , 
+push `Make exon` and view the plot in ` Exon coverage ` . 
 Processing time is few minutes.
-Related table shows the number of Low coverage positions 
-present in ClinVar and with a high impact annotation. This output requires 
-the loading of *file.name* and *tbi* in R environment. The table and plot
-show that twenty-one uncovered genomic positions are annotated in ClinVar, revealing that many potential clinically relevant positions are not adequately represented.  
+A related table shows the number of low-DoC positions in **ClinVar** which have
+a high impact annotation. For this output to be generated, **sorted.bed.gz**
+and **sorted.bed.gz.tbi** are required to be downloaded with 
+`getAnnotationFiles()` function. 
+Table and plot both show that 21 low-DoC genomic positions have ClinVar 
+annotation, suggesting several clinically relevant positions that are not 
+adequately represented in this experiment. It is possible zooming at base pair 
+level choosing a few interval (20-30 bp) in `Region coordinates`
+and moving on  `Zoom to sequence`. 
 
 
 ```{r, echo = FALSE, out.width='80%', fig.align='center', fig.cap= "zoom of exon 10 "}
@@ -286,14 +316,13 @@ knitr::include_graphics("exon10tab.png")
 
 
 - dbNSFP annotation of low coverage positions can be found in  
-`Annotation on low-coverage positions `. Functional prediction and clinical 
-annotation of all potential non-synonymous single-nucleotide variants 
-are available for uncovered positions. Users can 
-compare all potential nucleotide changes of low coverage genomic coordinates and 
-allele counts read in bam file. Changes annotated as clinical, high impact
-or deleterious are highlight in yellow. This this example, an uncovered 
-position (89868687) leading an alt nucleotide is annotated with all pathogenic 
-scores and could be potential linked with disease. 
+`Annotations on low-coverage positions `. Functional and clinical annotations 
+of all potential non- synonymous single-nucleotide variants across the examined 
+low DoC sites are made available. Potential changes that have a clinical 
+annotation, a high impact or deleterious prediction are highlighted in yellow.
+In the example, a low Doc site (chr15:89868687) is predicted as 
+pathogenic and could be potentially linked to disease.
+ 
 
 
 ```{r, echo = FALSE, out.width='80%', fig.align='center', fig.cap=" Example of uncovered positions annotate with dbNSFP."}
@@ -301,27 +330,28 @@ knitr::include_graphics("annotate.png")
 
 ```
 
+By clicking on the `download` button, users can save the table as spreadsheet 
+format with certain cells colored according to pre-specified thresholds for AF, 
+CADD, MAP-CAP, SIFT, Polyphen2, ClinVar, OMIM ID, HGVSp and HGVSc, ...).
 
-Moreover, users may click on download button and
-save the table as spreadsheet format with certain cells colored  following 
-thresholds for clinically-relevant variant parameters (gnomAD allele frequency, 
-CADD, MAP_CAP, SIFT, Polyphen2, ClinVar, OMIM ID, HGVSp and HGVSc, 
-functional impact of a variant score). 
+In **Calculate maximum credible allele frequency** page, users can set 
+allele frequency cut-offs based on specific assumptions about the genetic 
+architecture of the disease. If not specified, variants with allele 
+frequency > 5 % will be instead filtered out. More details are available 
+[here](http://cardiodb.org/allelefrequencyapp/). 
+Moreover, users may click on the ”download” button and save the resulting 
+table as spreadsheet format.
 
-In **Calculate maximum credible allele frequency** page, users can set allele 
-frequency cut-offs based on assumptions about the genetic architecture of the
-disease, if not calculated, variant allele frequency 5% will be used instead 
-for filtering. more details are available 
-[here](http://cardiodb.org/allelefrequencyapp/). Moreover, users may click on 
-download button and save the table as spreadsheet format.
 
-The last page **Binomial distribution** returns the 95% binomial probability 
-distribution of the variant read number on the input genomic position 
-(` START genomic position` and ` END genomic position `). 
-Users must specify as input the `allele fraction` (the expected fraction of 
-variant reads, probability of success) and `Variant reads ` (the minimum number
-of variant reads required by the user to support variant calling, 
-number of successes). 
+
+
+The **Binomial distribution** page returns the 95 % binomial probability 
+distribution of the variant supporting reads on the input genomic position 
+(`START genomic position` and `END genomic position`).
+Users should define  the expected `allele fraction`
+(the expected fraction of variant reads, probability of success) 
+and `Variant reads ` (the minimum number of variant reads required by the user to 
+support variant calling, number of successes).
 
 
 

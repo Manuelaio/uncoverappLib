@@ -71,11 +71,7 @@ preprocess <- function() {
   shiny::tabPanel("Processing",
                   shiny::includeMarkdown(intro_processing),
                   #shiny::includeMarkdown(file.path(".", "prep_input.md")),
-                  shiny::downloadLink(outputId = "dependence",
-                                      label="Download Rscript to obtain bed.file
-                                      from large genes list",
-                                      style = "color:white ; background-color: #0067cd"),
-                  h1(strong("Preprare your input file")),
+                  h1(strong("Prepare your input file")),
                   fluidPage(
                     sidebarLayout(
                       sidebarPanel(
@@ -86,10 +82,20 @@ preprocess <- function() {
                                            selected = "UCSC genome"),
                         hr(),
                         shinyWidgets::pickerInput("notation",
-                                                  label = "Notation BAM",
+                                                  label = "Chromosome Notation",
                                                   choices = c("chr", "number"),
                                                   options = list(`actions-box` = TRUE),
                                                   multiple =FALSE),
+
+                        shinyWidgets::pickerInput("MAPQ",
+                                                  label = "minum Mapping Quality (MAPQ)",
+                                                  choices = c(1:1000),
+                                                  options = list(`actions-box` = TRUE), multiple =FALSE),
+
+                        shinyWidgets::pickerInput("base_qual",
+                                                  label = "minimum Base Quality",
+                                                  choices = c(1:1000),
+                                                  options = list(`actions-box` = TRUE), multiple =FALSE),
                         hr(),
 
                         fileInput(inputId = "gene1",
@@ -110,13 +116,13 @@ preprocess <- function() {
                                              ".gz",
                                              ".bed",
                                              "text/comma-separated-values,text/plain",
-                                             ".csv"))),
+                                             ".list"))),
                       shiny::mainPanel(
                         tabsetPanel(
-                          tabPanel("input for uncoverapp",
+                          tabPanel(title= "input for uncoverapp",
                                    shinycssloaders::withSpinner(
-                            dataTableOutput("input1"))
-                                   )
+                                     dataTableOutput("input1"))
+                          )
                         ) )
                     )))
 }
@@ -127,7 +133,7 @@ myHome <- function() {
                      annotate low-coverage positions in clinical sequencing")),
            #titlePanel("Coverage sequencing Explorer"),
            helpText(em("Note:Select input options",
-                       span("Upload your input bed.gz
+                       span("Upload your input bed
                             file with columns: chromosome, start, end, coverage
                             by sample and nucleotide count", style = "color:blue"))),
            shinyjs::useShinyjs(),
@@ -144,31 +150,30 @@ myHome <- function() {
                        label= "Gene name"),
              #actionButton("button1",label= "Apply"),
              shinyBS::bsButton("button1",label= "Apply",  icon = icon("power-off"),
-                      style = "success", size = "extra-small"),
+                               style = "success", size = "extra-small"),
              shinyjs::hidden(p(id = "text1", "Running.....")),
              #actionButton("remove",label= "Refresh"),
              shinyBS::bsButton("remove",label= "Refresh",  icon = icon("power-off"),
-                      style = "success", size = "extra-small"),
-             helpText(em("write gene name corrisponding coordinate
-                         positions and action button apply")),
+                               style = "success", size = "extra-small"),
+             helpText(em("write gene name and push apply button")),
              hr(),
 
              shinyWidgets::pickerInput("Chromosome",
-                         label = "Chromosome",
-                         choices = c("chr1", "chr2","chr3", "chr4","chr5",
-                                     "chr6","chr7","chr8","chr9","chr10",
-                                     "chr11","chr12","chr13","chr14","chr15",
-                                     "chr16","chr17",
-                                     "chr18","chr19", "chr20", "chr21",
-                                     "chr22", "chrX", "chrY","chrM",
-                                     names("file1")),
-                         options = list(`actions-box` = TRUE),
-                         multiple =FALSE),
+                                       label = "Chromosome",
+                                       choices = c("chr1", "chr2","chr3", "chr4","chr5",
+                                                   "chr6","chr7","chr8","chr9","chr10",
+                                                   "chr11","chr12","chr13","chr14","chr15",
+                                                   "chr16","chr17",
+                                                   "chr18","chr19", "chr20", "chr21",
+                                                   "chr22", "chrX", "chrY","chrM",
+                                                   names("file1")),
+                                       options = list(`actions-box` = TRUE),
+                                       multiple =FALSE),
              hr(),
              shinyWidgets::pickerInput("coverage_co",
-                         label = "Coverage threshold",
-                         choices = c(1:1000, "all",names("file1")),
-                         options = list(`actions-box` = TRUE), multiple =FALSE),
+                                       label = "Coverage threshold",
+                                       choices = c(1:1000, "all",names("file1")),
+                                       options = list(`actions-box` = TRUE), multiple =FALSE),
              helpText(em("Select minimum value as coverage threshold")),
              hr(),
              textInput(inputId = "Sample",
@@ -189,18 +194,18 @@ myHome <- function() {
 
              hr(),
              shinyWidgets::pickerInput("exon_number",
-                         label= "exon number",
-                         choices = c(1:150),
-                         options = list(`actions-box` = TRUE), multiple =FALSE),
+                                       label= "exon number",
+                                       choices = c(1:150),
+                                       options = list(`actions-box` = TRUE), multiple =FALSE),
              #actionButton("button5",label= "Make exon"),
              shinyBS::bsButton("button5",label= "Make exon",
-                      icon = icon("power-off"), style = "success",
-                      size = "extra-small"),
+                               icon = icon("power-off"), style = "success",
+                               size = "extra-small"),
              shinyjs::hidden(p(id = "text1", "Running.....")),
              #actionButton("remove5",label= "Refresh"),
              shinyBS::bsButton("remove5",label= "Refresh",
-                      icon = icon("power-off"), style = "default",
-                      size = "extra-small"),
+                               icon = icon("power-off"), style = "default",
+                               size = "extra-small"),
              helpText(em("zooming one exon")),
              hr(),
              hr(),
@@ -254,18 +259,18 @@ myHome <- function() {
                                icon = icon("file"), style = "info",
                                size = "default"),
              #shinyBS::bsButton("example_data",
-              #                 label= "load example dataset",
-               #                icon = icon("file"), style = "info",
-                #               size = "extra-small"),
+             #                 label= "load example dataset",
+             #                icon = icon("file"), style = "info",
+             #               size = "extra-small"),
              #helpText(em("load example dataset with
-              #           base coverage counts of POLG gene")),
+             #           base coverage counts of POLG gene")),
              hr(),
 
              tabsetPanel(
                tabPanel("bed file", shinycssloaders::withSpinner(
                  DT::dataTableOutput("text"))),
                tabPanel("UCSC gene",
-                 DT::dataTableOutput("ccg")),
+                        DT::dataTableOutput("ccg")),
                tabPanel("UCSC exons",
                         helpText(em("Extract protein coding positions from
                                     UCSC")), DT::dataTableOutput("exon_pos")),
@@ -273,7 +278,7 @@ myHome <- function() {
                         DT::dataTableOutput("text_cv")),
                tabPanel("Gene coverage", shinycssloaders::withSpinner(
                  plotOutput("all_gene")),
-                        DT::dataTableOutput('df.l')),
+                 DT::dataTableOutput('df.l')),
                tabPanel("Exon coverage", helpText(em("This is a Gviz function
                and it plots exon with ideogram, genome coordinates,
                coverage information, Ensembl and UCSC gene annotation.The
@@ -292,7 +297,8 @@ myHome <- function() {
                                     consequences found in VEP-defined
                                     canonical transcripts")),
                         shinycssloaders::withSpinner(
-                          condformat::condformatOutput("uncover_position")))
+                          condformat::condformatOutput("uncover_position"))),
+               id = "tabSet"
              ),
              hr(),
 
@@ -302,6 +308,7 @@ myHome <- function() {
            )
   )
 }
+
 myTab1 <- function() {
   tabPanel("Calculate AF by allele frequency app",
 

@@ -29,8 +29,8 @@ This app requires following dependencies:
 - java installed 
 
 - annotation files (`sorted.bed.gz` and `sorted.bed.gz.tbi`) that can be 
-downloaded on Zenodo at the following 
-link https://zenodo.org/record/3747448#.XpBmnVMzbOR and stored in a user folder. 
+downloaded on [Zenodo](https://zenodo.org/record/3747448#.XpBmnVMzbOR) with 
+`getAnnotationFiles()` function of *uncoverappLib*. 
 
 ## Installation
 
@@ -53,6 +53,13 @@ devtools::install_github("Manuelaio/uncoverappLib")
 ``` 
 
 
+
+Major informations about unCOVERApp R dependences are 
+[here](https://github.com/Manuelaio/test_dependence) .
+
+[![Build Status](https://travis-ci.com/Manuelaio/test_dependence.svg?branch=master)](https://travis-ci.com/Manuelaio/test_dependence)
+
+
 ## Introduction
 
 
@@ -66,7 +73,7 @@ often required to exclude that pathogenic events across the gene of interest
 may be missed due to uneven sequence coverage.
 
 
-unCOVERApp is an interactive web-application 
+**unCOVERApp** is an interactive web-application 
 for graphical inspection of sequence coverage within gene regions.
 
 
@@ -99,21 +106,16 @@ M-CAP, Polyphen2-HVAR), allele frequencies observed in
 gnomAD data, dbsnp accession number, HGVS notations and clinical annotation 
 information from ClinVar and OMIM. Loading *sorted.bed.gz* allows the annotation 
 of each low coverage genomic position user-defined. . 
-Run following commands to correctly set R environment and annotate your 
-low-genomic positions: 
+Run following commands to correctly create a unique cache for **uncoverappLib** 
+using **BiocFileCache** package.
 
 
 ``` {r}
-file.name='../userPathFolder/sorted.bed.gz'
-tbi='.../userPathFolder/sorted.bed.gz.tbi'
+library(uncoverappLib)
+getAnnotationFiles()
+
 ```
 
-
-
-Major informations about unCOVERApp R dependences are 
-[here](https://github.com/Manuelaio/test_dependence) .
-
-[![Build Status](https://travis-ci.com/Manuelaio/test_dependence.svg?branch=master)](https://travis-ci.com/Manuelaio/test_dependence)
 
 
 # Input
@@ -138,8 +140,6 @@ The way to launch unCOVERApp is *run.uncoverapp()* function.
 
 ``` {r}
 library(uncoverappLib)
-file.name='../path/sorted.bed.gz'
-tbi='.../path/sorted.bed.gz.tbi'
 run.uncoverapp()
 
 ``` 

@@ -1,0 +1,12 @@
+app <- ShinyDriver$new("../")
+app$snapshotInit("mytest")
+
+app$uploadFile(gene1 = "mygene.txt")
+app$uploadFile(bam_list = "bam.list")
+app$snapshot()
+app$setInputs(pileup = "click")
+app$snapshot()
+app$setInputs(Gene_name = "POLG")
+app$setInputs(button1 = "click")
+app$snapshot()
+app$snapshot()
