@@ -36,9 +36,9 @@
 #' bam_example <- system.file("extdata", "example_POLG.bam",
 #' package = "uncoverappLib")
 #' cat(bam_example, file = "bam.list", sep = "\n")
-#'
+#' temp_dir=tempdir()
 #' buildInput(geneList= gene.list, genome= "hg19", type_bam= "chr",
-#' bamList= "bam.list", outDir= tempdir())
+#' bamList= "bam.list", outDir= temp_dir)
 #'
 
 
@@ -188,15 +188,15 @@ buildInput<- function(geneList,genome,type_bam,bamList,outDir,
 
   ###write file
 
-  outDir=sprintf("%s//",tempdir())
+  outDir=sprintf("%s/output_",tempdir())
   myDir <- outDir
   if (file.exists(myDir)) unlink(myDir,recursive=TRUE)
   dir.create(myDir)
   #dir.create(outDir)
-  message("Write output file in directory ",myDir )
+  message("Write output file in directory ", myDir, format(Sys.time(), "%a_%b_%d_%Y"),'.bed')
   message(Sys.time())
 
-  utils::write.table(x=pp, file =paste0(outDir,format(Sys.time(), "%a_%b_%d_%X_%Y"),'.bed'),
+  utils::write.table(x=pp, file =paste0(myDir,format(Sys.time(), "%a_%b_%d_%Y"),'.bed'),
               quote=FALSE, sep="\t", eol = "\n", row.names = FALSE,
               col.names = FALSE)
 }

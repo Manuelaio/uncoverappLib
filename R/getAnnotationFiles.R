@@ -14,7 +14,7 @@
 #' low-coverage positions.
 #'
 #' @param verbose (logical) print messages
-#' @examples getAnnotationFiles()
+#' @examples getAnnotationFiles(verbose = TRUE)
 #' @return (char) Path to local cached file
 #' or initial download is required
 #' @export
@@ -53,6 +53,9 @@ getAnnotationFiles <- function(verbose = FALSE) {
   #bfcrpath(bfc, rids = c(rid,rid2))
 
   bfcrpath(bfc, rids = c(rid,rid2))
+  if( verbose )
+    message( "Rename file in cache, please wait few minutes " )
+
   path_out=base::file.path(bfcrpath(bfc, rids= rid))
 
   rename1=base::gsub('[[:digit:]].*', 'sorted.bed.gz', path_out)

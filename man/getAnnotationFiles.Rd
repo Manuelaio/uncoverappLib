@@ -19,5 +19,5 @@ download and rename sorted.bed.gz and sorted.bed.gz.tbi files for annotation of
 low-coverage positions.
 }
 \examples{
-getAnnotationFiles()
+getAnnotationFiles(verbose = TRUE)
 }
