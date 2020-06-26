@@ -21,11 +21,15 @@
 #'
 #'
 getAnnotationFiles <- function(verbose = FALSE) {
-  fileURL <- "https://zenodo.org/record/3747448/files/sorted.bed.gz"
-  fileURL2 <- "https://zenodo.org/record/3747448/files/sorted.bed.gz.tbi"
+  #fileURL <- "https://zenodo.org/record/3747448/files/sorted.bed.gz"
+  fileURL<- "https://zenodo.org/record/3909001/files/POLG.bed.gz"
+  #fileURL2 <- "https://zenodo.org/record/3747448/files/sorted.bed.gz.tbi"
+  fileURL2<- "https://zenodo.org/record/3909001/files/POLG.bed.gz.tbi"
   bfc <- .get_cache()
-  rid <- bfcquery(bfc, "sorted.bed.gz$", "rname")$rid
-  rid2 <- bfcquery(bfc, "sorted.bed.gz.tbi", "rname")$rid
+  #rid <- bfcquery(bfc, "sorted.bed.gz$", "rname")$rid
+  rid <- bfcquery(bfc, "POLG.bed.gz$", "rname")$rid
+
+  rid2 <- bfcquery(bfc, "POLG.bed.gz.tbi", "rname")$rid
   bfcrpath(bfc, rids = rid)
 
   if (!length(rid)) {

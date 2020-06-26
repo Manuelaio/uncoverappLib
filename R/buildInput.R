@@ -188,15 +188,18 @@ buildInput<- function(geneList,genome,type_bam,bamList,outDir,
 
   ###write file
 
-  outDir=sprintf("%s/output_",tempdir())
-  myDir <- outDir
+  dir_users=sprintf("%s/output",outDir)
+  myDir <- dir_users
   if (file.exists(myDir)) unlink(myDir,recursive=TRUE)
   dir.create(myDir)
-  #dir.create(outDir)
   message("Write output file in directory ", myDir, format(Sys.time(), "%a_%b_%d_%Y"),'.bed')
   message(Sys.time())
 
-  utils::write.table(x=pp, file =paste0(myDir,format(Sys.time(), "%a_%b_%d_%Y"),'.bed'),
-              quote=FALSE, sep="\t", eol = "\n", row.names = FALSE,
-              col.names = FALSE)
+  #utils::write.table(x=pp, file =paste0(myDir,format(Sys.time(), "%a_%b_%d_%Y"),'.bed'),
+   #           quote=FALSE, sep="\t", eol = "\n", row.names = FALSE,
+    #          col.names = FALSE)
+  utils::write.table(x=pp, file =file.path(myDir, paste0(format(Sys.time(), "%a_%b_%d_%Y"),'.bed')),
+                     quote=FALSE, sep="\t", eol = "\n", row.names = FALSE,
+                     col.names = FALSE)
+
 }
