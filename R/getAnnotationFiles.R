@@ -63,14 +63,14 @@ getAnnotationFiles <- function(verbose = FALSE) {
   path_tbi= base::file.path(bfcrpath(bfc, rids= rid2))
   rename2=base::gsub('[[:digit:]].*', 'sorted.bed.gz.tbi', path_tbi)
 
-  if(!file.exists(rename1)){
+  if(!file.exists(rename1[1])){
     if( verbose )
       message( "Rename file in cache, please wait few minutes" )
   base::file.copy(from = path_out, to = rename1)
 
   }
 
-  if(!file.exists(rename2)){
+  if(!file.exists(rename2[1])){
   base::file.copy(from = path_tbi, to = rename2)
     }
   return(print(c(rename1, rename2)))
