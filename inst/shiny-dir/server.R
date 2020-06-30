@@ -155,36 +155,36 @@ server <- function (input, output, session){
     },
     content = function(file){
       wb <- openxlsx::createWorkbook()
-      addWorksheet(wb, "Sheet1")
-      negStyle <- createStyle(fontColour = "#9C0006", bgFill = "#FFC7CE")
-      posStyle <- createStyle(fontColour = "#006100", bgFill = "#C6EFCE")
-      highlighted<-createStyle (fgFill = "yellow")
-      hs <- createStyle(textDecoration = "BOLD", fontColour = "#FFFFFF",
+      openxlsx::addWorksheet(wb, "Sheet1")
+      negStyle <- openxlsx::createStyle(fontColour = "#9C0006", bgFill = "#FFC7CE")
+      posStyle <- openxlsx::createStyle(fontColour = "#006100", bgFill = "#C6EFCE")
+      highlighted<-openxlsx::createStyle (fgFill = "yellow")
+      hs <- openxlsx::createStyle(textDecoration = "BOLD", fontColour = "#FFFFFF",
                         fontSize=12,
                         fontName="Arial Narrow", fgFill = "#4F80BD")
-      writeData(wb, "Sheet1",condform_table(), headerStyle = hs)
-      conditionalFormatting(wb, "Sheet1",cols=19,
+      openxlsx::writeData(wb, "Sheet1",condform_table(), headerStyle = hs)
+      openxlsx::conditionalFormatting(wb, "Sheet1",cols=19,
                             rows=(1:nrow(condform_table())+1),rule='$S2=="H"',
                             style =negStyle)
-      conditionalFormatting(wb, "Sheet1",cols=19,
+      openxlsx::conditionalFormatting(wb, "Sheet1",cols=19,
                             rows=(1:nrow(condform_table())+1),
                             rule='$S2!="H"', style =posStyle)
-      conditionalFormatting(wb, "Sheet1",cols=22,
+      openxlsx::conditionalFormatting(wb, "Sheet1",cols=22,
                             rows=(1:nrow(condform_table())+1),
                             rule='$V2=="D"', style =negStyle)
-      conditionalFormatting(wb, "Sheet1",cols=22,
+      openxlsx::conditionalFormatting(wb, "Sheet1",cols=22,
                             rows=(1:nrow(condform_table())+1),
                             rule='$V2!="D"', style =posStyle)
-      conditionalFormatting(wb, "Sheet1", cols=23,
+      openxlsx::conditionalFormatting(wb, "Sheet1", cols=23,
                             rows=(1:nrow(condform_table())+1),
                             rule=">=20", style = negStyle)
-      conditionalFormatting(wb, "Sheet1", cols=23,
+      openxlsx::conditionalFormatting(wb, "Sheet1", cols=23,
                             rows=(1:nrow(condform_table())+1),
                             rule="<20", style = posStyle)
-      conditionalFormatting(wb, "Sheet1", cols=24,
+      openxlsx::conditionalFormatting(wb, "Sheet1", cols=24,
                             rows=(1:nrow(condform_table())+1),
                             rule="<=0.05", style = negStyle)
-      conditionalFormatting(wb, "Sheet1", cols=25,
+      openxlsx::conditionalFormatting(wb, "Sheet1", cols=25,
                             rows=(1:nrow(condform_table())+1),
                             rule='!="."', style = negStyle)
       openxlsx::saveWorkbook(wb, file, overwrite = TRUE)
@@ -231,36 +231,36 @@ server <- function (input, output, session){
     },
     content = function(file){
       wb1 <- openxlsx::createWorkbook()
-      addWorksheet(wb1, "Sheet2")
-      negStyle <- createStyle(fontColour = "#9C0006", bgFill = "#FFC7CE")
-      posStyle <- createStyle(fontColour = "#006100", bgFill = "#C6EFCE")
-      highlighted<-createStyle (fgFill = "yellow")
-      hs <- createStyle(textDecoration = "BOLD", fontColour = "#FFFFFF",
+      openxlsx::addWorksheet(wb1, "Sheet2")
+      negStyle <- openxlsx::createStyle(fontColour = "#9C0006", bgFill = "#FFC7CE")
+      posStyle <- openxlsx::createStyle(fontColour = "#006100", bgFill = "#C6EFCE")
+      highlighted<-openxlsx::createStyle (fgFill = "yellow")
+      hs <- openxlsx::createStyle(textDecoration = "BOLD", fontColour = "#FFFFFF",
                         fontSize=12,
                         fontName="Arial Narrow", fgFill = "#4F80BD")
-      writeData(wb1, "Sheet2",uncover_maxaf(), headerStyle = hs)
-      conditionalFormatting(wb1, "Sheet2",cols=19,
+      openxlsx::writeData(wb1, "Sheet2",uncover_maxaf(), headerStyle = hs)
+      openxlsx::conditionalFormatting(wb1, "Sheet2",cols=19,
                             rows=(1:nrow(uncover_maxaf())+1),
                             rule='$S2=="H"', style =negStyle)
-      conditionalFormatting(wb1, "Sheet2",cols=19,
+      openxlsx::conditionalFormatting(wb1, "Sheet2",cols=19,
                             rows=(1:nrow(uncover_maxaf())+1),
                             rule='$S2!="H"', style =posStyle)
-      conditionalFormatting(wb1, "Sheet2",cols=22,
+      openxlsx::conditionalFormatting(wb1, "Sheet2",cols=22,
                             rows=(1:nrow(uncover_maxaf())+1),
                             rule='$V2=="D"', style =negStyle)
-      conditionalFormatting(wb1, "Sheet2",cols=22,
+      openxlsx::conditionalFormatting(wb1, "Sheet2",cols=22,
                             rows=(1:nrow(uncover_maxaf())+1),
                             rule='$V2!="D"', style =posStyle)
-      conditionalFormatting(wb1, "Sheet2", cols=23,
+      openxlsx::conditionalFormatting(wb1, "Sheet2", cols=23,
                             rows=(1:nrow(uncover_maxaf())+1),
                             rule=">=20", style = negStyle)
-      conditionalFormatting(wb1, "Sheet2", cols=23,
+      openxlsx::conditionalFormatting(wb1, "Sheet2", cols=23,
                             rows=(1:nrow(uncover_maxaf())+1),
                             rule="<20", style = posStyle)
-      conditionalFormatting(wb1, "Sheet2", cols=24,
+      openxlsx::conditionalFormatting(wb1, "Sheet2", cols=24,
                             rows=(1:nrow(uncover_maxaf())+1),
                             rule="<=0.05", style = negStyle)
-      conditionalFormatting(wb1, "Sheet2", cols=25,
+      openxlsx::conditionalFormatting(wb1, "Sheet2", cols=25,
                             rows=(1:nrow(uncover_maxaf())+1),
                             rule='!="."', style = negStyle)
       openxlsx::saveWorkbook(wb1, file, overwrite = TRUE)

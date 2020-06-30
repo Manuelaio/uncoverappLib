@@ -20,4 +20,5 @@ low-coverage positions.
 }
 \examples{
 getAnnotationFiles(verbose = TRUE)
+
 }

@@ -372,7 +372,7 @@ myTab2 <- function() {
                                     "Allele Fraction",
                                     min = 0,
                                     max = 1,
-                                    value = 0.00001)),
+                                    value = 0.05)),
                     hr(),
                     numericInput("num_all",
                                  "Variant reads",

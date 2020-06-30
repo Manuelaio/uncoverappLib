@@ -14,9 +14,9 @@
 #' low-coverage positions.
 #'
 #' @param verbose (logical) print messages
-#' @examples \donttest{
+#' @examples
 #' getAnnotationFiles(verbose = TRUE)
-#' }
+#'
 #' @return (char) Path to local cached file
 #' or initial download is required
 #' @export
@@ -24,12 +24,9 @@
 #'
 getAnnotationFiles <- function(verbose = FALSE) {
   fileURL <- "https://zenodo.org/record/3747448/files/sorted.bed.gz"
-  #fileURL<- "https://zenodo.org/record/3909001/files/POLG.bed.gz"
   fileURL2 <- "https://zenodo.org/record/3747448/files/sorted.bed.gz.tbi"
-  #fileURL2<- "https://zenodo.org/record/3909001/files/POLG.bed.gz.tbi"
   bfc <- .get_cache()
   rid <- bfcquery(bfc, "sorted.bed.gz$", "rname")$rid
-  #rid <- bfcquery(bfc, "POLG.bed.gz$", "rname")$rid
 
   rid2 <- bfcquery(bfc, "sorted.bed.gz.tbi", "rname")$rid
   bfcrpath(bfc, rids = rid)
@@ -38,11 +35,13 @@ getAnnotationFiles <- function(verbose = FALSE) {
     if( verbose )
       message( "Downloading GENE file" )
     rid <- names(bfcadd(bfc, "sorted.bed.gz", fileURL ))
-
+  }
+  if(length(rid)){
+    message("file ok")
   }
 
-  if (!isFALSE(bfcneedsupdate(bfc, rid)))
-    bfcdownload(bfc, rid)
+  #if (!isFALSE(bfcneedsupdate(bfc, rid)))
+   # bfcdownload(bfc, rid)
 
 
   bfcrpath(bfc, rids = rid2)
@@ -52,15 +51,10 @@ getAnnotationFiles <- function(verbose = FALSE) {
     rid2 <- names(bfcadd(bfc, "sorted.bed.gz.tbi", fileURL2 ))
   }
 
-  if (!isFALSE(bfcneedsupdate(bfc, rid2)))
-    bfcdownload(bfc, rid2)
-
-
-  #bfcrpath(bfc, rids = c(rid,rid2))
+  #if (!isFALSE(bfcneedsupdate(bfc, rid2)))
+   # bfcdownload(bfc, rid2)
 
   bfcrpath(bfc, rids = c(rid,rid2))
-  if( verbose )
-    message( "Rename file in cache, please wait few minutes " )
 
   path_out=base::file.path(bfcrpath(bfc, rids= rid))
 
@@ -69,8 +63,16 @@ getAnnotationFiles <- function(verbose = FALSE) {
   path_tbi= base::file.path(bfcrpath(bfc, rids= rid2))
   rename2=base::gsub('[[:digit:]].*', 'sorted.bed.gz.tbi', path_tbi)
 
+  if(!file.exists(rename1)){
+    if( verbose )
+      message( "Rename file in cache, please wait few minutes" )
   base::file.copy(from = path_out, to = rename1)
+
+  }
+
+  if(!file.exists(rename2)){
   base::file.copy(from = path_tbi, to = rename2)
+    }
   return(print(c(rename1, rename2)))
 
 }

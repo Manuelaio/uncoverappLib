@@ -36,7 +36,6 @@
 #' @import condformat
 #' @import stringr
 #' @import processx
-#' @import bedr
 #' @import org.Hs.eg.db
 #' @import TxDb.Hsapiens.UCSC.hg38.knownGene
 #' @import TxDb.Hsapiens.UCSC.hg19.knownGene

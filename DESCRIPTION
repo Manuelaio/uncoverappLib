@@ -1,12 +1,12 @@
 Package: uncoverappLib
 Title: Interactive graphical application for clinical assessment of
         sequence coverage at the base-pair level
-Version: 0.99.17
+Version: 0.99.18
 Authors@R: c(
     person("Emanuela","Iovino", email = "emanuela.iovino@unibo.it", role= c("cre", "aut")),
     person("Tommaso", "Pippucci", email = "tommaso.pippucci@unibo.it", role = "aut"))
 Imports: markdown, shiny, shinyjs, shinyBS, shinyWidgets,shinycssloaders, DT, 
-        Gviz, Homo.sapiens, openxlsx, condformat, stringr, bedr, 
+        Gviz, Homo.sapiens, openxlsx, condformat, stringr, 
         org.Hs.eg.db, TxDb.Hsapiens.UCSC.hg38.knownGene, BiocFileCache,rappdirs,
         TxDb.Hsapiens.UCSC.hg19.knownGene, rlist, utils,
         EnsDb.Hsapiens.v75, EnsDb.Hsapiens.v86, OrganismDbi,
