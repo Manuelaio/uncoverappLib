@@ -2,7 +2,8 @@
 % Please edit documentation in R/getAnnotationFiles.R
 \name{.get_cache}
 \alias{.get_cache}
-\title{wrapper function for getting BiocFileCache associated with uncoverapp package}
+\title{wrapper function for getting BiocFileCache associated with uncoverapp package
+wrapper function for getting BiocFileCache associated with uncoverapp package}
 \usage{
 .get_cache()
 }
@@ -10,5 +11,6 @@
 BiocFileCache object associated with uncoverappLib
 }
 \description{
+wrapper function for getting BiocFileCache associated with uncoverapp package
 wrapper function for getting BiocFileCache associated with uncoverapp package
 }

@@ -5,10 +5,12 @@
 \title{download and rename sorted.bed.gz and sorted.bed.gz.tbi files for annotation of
 low-coverage positions.}
 \usage{
-getAnnotationFiles(verbose = FALSE)
+getAnnotationFiles(verbose = FALSE, vignette = FALSE)
 }
 \arguments{
 \item{verbose}{(logical) print messages}
+
+\item{vignette}{(logical) download example annotation-file in vignette mode}
 }
 \value{
 (char) Path to local cached file
@@ -19,6 +21,6 @@ download and rename sorted.bed.gz and sorted.bed.gz.tbi files for annotation of
 low-coverage positions.
 }
 \examples{
-getAnnotationFiles(verbose = TRUE)
+getAnnotationFiles(verbose = TRUE, vignette= TRUE)
 
 }

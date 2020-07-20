@@ -1,9 +1,11 @@
+#'Build input file
+#'
+#' @description
 #' Function to build input file for unCOVERAPP when the number
 #' of genes to analyze is > 50.
 #'
 #'
-#'
-#' @return a file.bed containing tab-separated specifications of
+#' @return A file.bed containing tab-separated specifications of
 #' genomic coordinates (chromosome, start position, end position),
 #' the coverage value, and the reference:alternate allele counts for each position.
 #'
@@ -173,7 +175,8 @@ buildInput<- function(geneList,genome,type_bam,bamList,outDir,
 
   lst3<- lapply(lst2, riarrange.df)
 
-  pp=Reduce(function(...) merge(...,by= c("seqnames", "pos", "end"), all=TRUE), lst3)
+  #pp=Reduce(function(...) merge(...,by= c("seqnames", "pos", "end"), all=TRUE), lst3)
+  pp = Reduce(function(x,y) merge(x,y,by=c("seqnames", "pos", "end"),all=TRUE) ,lst3)
 
 
   pp[is.na(pp)] <- 0

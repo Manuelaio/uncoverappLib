@@ -1,6 +1,7 @@
 # functions to download annotation file from Zenodo for uncoverappLib
 
 #' wrapper function for getting BiocFileCache associated with uncoverapp package
+#' wrapper function for getting BiocFileCache associated with uncoverapp package
 #'
 #' @return BiocFileCache object associated with uncoverappLib
 #' @import BiocFileCache
@@ -13,16 +14,19 @@
 #' download and rename sorted.bed.gz and sorted.bed.gz.tbi files for annotation of
 #' low-coverage positions.
 #'
+#'
 #' @param verbose (logical) print messages
+#' @param vignette (logical) download example annotation-file in vignette mode
 #' @examples
-#' getAnnotationFiles(verbose = TRUE)
+#' getAnnotationFiles(verbose = TRUE, vignette= TRUE)
 #'
 #' @return (char) Path to local cached file
 #' or initial download is required
 #' @export
 #'
 #'
-getAnnotationFiles <- function(verbose = FALSE) {
+getAnnotationFiles <- function(verbose = FALSE, vignette= FALSE) {
+  if (vignette == FALSE){
   fileURL <- "https://zenodo.org/record/3747448/files/sorted.bed.gz"
   fileURL2 <- "https://zenodo.org/record/3747448/files/sorted.bed.gz.tbi"
   bfc <- .get_cache()
@@ -33,11 +37,12 @@ getAnnotationFiles <- function(verbose = FALSE) {
 
   if (!length(rid)) {
     if( verbose )
-      message( "Downloading GENE file" )
+      message( "Downloading annotations file, please wait few minutes if you
+      launch getAnnotationFiles() for the first time" )
     rid <- names(bfcadd(bfc, "sorted.bed.gz", fileURL ))
   }
   if(length(rid)){
-    message("file ok")
+    message("your file already exists in cache")
   }
 
   #if (!isFALSE(bfcneedsupdate(bfc, rid)))
@@ -74,6 +79,51 @@ getAnnotationFiles <- function(verbose = FALSE) {
   base::file.copy(from = path_tbi, to = rename2)
     }
   return(print(c(rename1, rename2)))
+  }else{
+    example_bfc <- .get_cache()
+
+    exampleDATA<-"https://zenodo.org/record/3909001/files/POLG.bed.gz"
+    exampleTBI<-"https://zenodo.org/record/3909001/files/POLG.bed.gz.tbi"
+    example_rid<- bfcquery(example_bfc, "POLG.bed.gz$", "rname")$rid
+    example_rid2<- bfcquery(example_bfc, "POLG.bed.gz.tbi$", "rname")$rid
+    bfcrpath(example_bfc, rids = example_rid)
+    if (!length(example_rid)) {
+      if( verbose )
+        message( "Downloading annotations file, please wait few minutes if you
+      launch getAnnotationFiles() for the first time" )
+      example_rid <- names(bfcadd(example_bfc, "POLG.bed.gz", exampleDATA ))
+    }
+    if(length(exampleDATA)){
+      message("your file already exists in cache")
+    }
+    bfcrpath(example_bfc, rids = example_rid2)
+    if (!length(example_rid2)) {
+      if( verbose )
+        message( "Downloading tbi file" )
+      example_rid2 <- names(bfcadd(example_bfc, "POLG.bed.gz.tbi", exampleTBI ))
+    }
+
+    bfcrpath(example_bfc, rids = c(example_rid,example_rid2))
+
+    example_path_out=base::file.path(bfcrpath(example_bfc, rids= example_rid))
+
+    example_rename1=base::gsub('[[:digit:]].*', 'POLG.bed.gz', example_path_out)
+
+    example_path_tbi= base::file.path(bfcrpath(example_bfc, rids= example_rid2))
+    example_rename2=base::gsub('[[:digit:]].*', 'POLG.bed.gz.tbi', example_path_tbi)
+
+    if(!file.exists(example_rename1[1])){
+      if( verbose )
+        message( "Rename file in cache, please wait few minutes" )
+      base::file.copy(from = example_path_out, to = example_rename1)
+
+    }
+
+    if(!file.exists(example_rename2[1])){
+      base::file.copy(from = example_path_tbi, to = example_rename2)
+    }
+    return(print(c(example_rename1, example_rename2)))
+  }
 
 }
 

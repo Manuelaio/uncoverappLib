@@ -2,8 +2,7 @@
 % Please edit documentation in R/buildInput.R
 \name{buildInput}
 \alias{buildInput}
-\title{Function to build input file for unCOVERAPP when the number
-of genes to analyze is > 50.}
+\title{Build input file}
 \usage{
 buildInput(
   geneList,
@@ -38,7 +37,7 @@ to be included in output file.}
 nucleotide in an alignment.}
 }
 \value{
-a file.bed containing tab-separated specifications of
+A file.bed containing tab-separated specifications of
 genomic coordinates (chromosome, start position, end position),
 the coverage value, and the reference:alternate allele counts for each position.
 }

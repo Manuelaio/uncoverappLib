@@ -140,7 +140,7 @@ server <- function (input, output, session){
       return(NULL)
     #print(head(condform_table()))
     condform_table() %>%
-     dplyr::select(seqnames, start, end, value, counts, REF, ALT,
+     dplyr::select(seqnames, start, end, coverage, counts, REF, ALT,
                    dbsnp, GENENAME, PROTEIN_ensembl,  MutationAssessor,SIFT,
                     Polyphen2,M_CAP,CADD_PHED,AF_gnomAD,
                     ClinVar,clinvar_MedGen_id,clinvar_OMIM_id,HGVSc_VEP,
@@ -216,7 +216,7 @@ server <- function (input, output, session){
     Sys.sleep(0.1)
 
     uncover_maxaf() %>%
-      dplyr::select(seqnames, start, end, value, counts,REF,
+      dplyr::select(seqnames, start, end, coverage, counts,REF,
                     ALT, dbsnp, GENENAME, PROTEIN_ensembl, MutationAssessor,
                     SIFT,Polyphen2,M_CAP,CADD_PHED,AF_gnomAD,
                     ClinVar,clinvar_MedGen_id,clinvar_OMIM_id,
@@ -314,14 +314,22 @@ server <- function (input, output, session){
     if (number2 < input$num_all) {
       print(paste("<span style=\"color:red\">According to binomial
                   probability model there is 95% probability that your
-                  variant is supported by: </span>", number, number2,
-                  "<span style=\"color:red\"> reads </span>"))
+                  variant is supported from: </span>", number,
+                  "<span style=\"color:red\">to</span>",
+                  number2,
+                  "<span style=\"color:red\"> reads.Your chosen variant reads
+                  are lower than supported intervals  .
+                  </span>"))
 
     }else{
       print(paste("<span style=\"color:blue\">According to binomial
                   probability model there is 95% probability that your
-                  variant is supported by: </span>", number, number2,
-                  "<span style=\"color:blue\"> reads </span>"))
+                  variant is supported from: </span>", number,
+                  "<span style=\"color:blue\">to</span>",
+                  number2,
+                  "<span style=\"color:blue\"> reads.
+                  Your chosen variant reads are including or greater
+                  than supported intervals .</span>"))
     }
   })
   observe({

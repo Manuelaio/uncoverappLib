@@ -3,7 +3,7 @@ filtered_low_nucl<- reactive ({
     return(NULL)
   mysample() %>%
     dplyr::filter(chromosome == input$Chromosome,
-                  value <= as.numeric(input$coverage_co))
+                  coverage <= as.numeric(input$coverage_co))
 })
 
 intBED<- reactive({

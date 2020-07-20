@@ -56,7 +56,7 @@ mysample<-reactive({
   #print(mydata())
   mydata() %>%
     dplyr:: select(chromosome, start, end,i,nucleodites) %>%
-    dplyr::rename(value=i) %>%
+    dplyr::rename(coverage=i) %>%
     dplyr::rename(counts= nucleodites)
 })
 
@@ -66,8 +66,8 @@ filtered_low<- reactive ({
     return(NULL)
   mysample() %>%
     dplyr::select(-c(counts)) %>%
-    dplyr::filter(chromosome == input$Chromosome,
-                  value <= as.numeric(input$coverage_co))
+    dplyr::filter(chromosome == Chromosome(),
+                  coverage <= as.numeric(input$coverage_co))
 
 })
 
@@ -76,6 +76,6 @@ filtered_high<- reactive ({
     return(NULL)
   mysample() %>%
     dplyr::select(-c(counts)) %>%
-    dplyr::filter(chromosome == input$Chromosome,
-                  value > as.numeric(input$coverage_co))
+    dplyr::filter(chromosome == Chromosome(),
+                  coverage > as.numeric(input$coverage_co))
 })

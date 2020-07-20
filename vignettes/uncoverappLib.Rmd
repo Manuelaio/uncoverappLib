@@ -88,15 +88,14 @@ uncoverappLib package. The function does not return an R object but store the
 annotation files in a cache (`sorted.bed.gz` and `sorted.bed.gz.tbi`) and show  
 the cache path. 
 The local cache is managed by the `BiocFileCache` **Bioconductor** package.
-It is sufficient run the function `getAnnotationFiles()` one time after installing 
-uncoverappLib package as shown below
+It is sufficient run the function `getAnnotationFiles(verbose= TRUE)` one time 
+after installing *uncoverappLib* package as shown below. The preprocessing time 
+can take few minutes, therefore during running vignette, users can provide `vignette= TRUE`
+as a parameter to download an example annotation files, as below. 
 
-```{r eval=F, echo=T}
+```{r eval=T, echo=T}
 library(uncoverappLib)
-getAnnotationFiles()
-
-# "/Users/myhome/Library/Caches/uncoverappLib/sorted.bed.gz"
-# "/Users/myhome/Library/Caches/uncoverappLib/sorted.bed.gz.tbi"
+getAnnotationFiles(verbose= TRUE, vignette= TRUE)
 
 ```
 
@@ -118,7 +117,7 @@ provide:
 row and to be uploaded to ` Load a gene(s) file ` box. An example file is
 included in extdata of uncoverappLib packages
 
-```{r eval=F, echo=T}
+```{r eval=T, echo=T}
 gene.list<- system.file("extdata", "mygene.txt", package = "uncoverappLib")
 ```
 
@@ -129,19 +128,20 @@ to the sample in the bam file bam.list file listed in row 1,2,3, ….
 Type the following command to load our example: 
 
 
-```{r eval=F, echo=T}
+```{r eval=T, echo=T}
 library(uncoverappLib)
 
 bam_example <- system.file("extdata", "example_POLG.bam", package = "uncoverappLib")
 
 print(bam_example)
-[1] "/Library/Frameworks/R.framework/Versions/3.6/Resources/library/uncoverappLib/extdata/example_POLG.bam"
+# "/Library/Frameworks/R.framework/Versions/3.6/Resources/library/uncoverappLib/extdata/example_POLG.bam"
 
 write.table(bam_example, file= "./bam.list", quote= F, row.names = F, col.names = F)
 
 ```
 
-and launch ` run.uncoverapp() `  command. 
+and launch ` run.uncoverapp() `  command. After running `run.uncoverapp()` 
+the shiny app appears in your deafult browser. 
 
 In the first page **Preprocessing** users can load `mygene.txt` in 
 ` Load a gene(s) file ` and `bam.list` in ` Load bam file(s) list `. 
@@ -191,15 +191,16 @@ of genes to investigate. In general, if many (e.g. > 50) genes are to be analyze
 we would recommend to use `buildInput` function and run it in R console 
 before launching  the app as shown in following example.
 
-```{r eval=F, echo=T}
+```{r eval=T, echo=T}
 library(dplyr)
 
 gene.list<- system.file("extdata", "mygene.txt", package = "uncoverappLib")
+
 bam_example <- system.file("extdata", "example_POLG.bam", package = "uncoverappLib")
 cat(bam_example, file = "bam.list", sep = "\n")
-
+temp_dir=tempdir()
 buildInput(geneList= gene.list, genome= "hg19", type_bam= "chr", 
-           bamList= "bam.list", outDir= "/your_directory/")
+           bamList= "bam.list", outDir= temp_dir)
 
 ```
 
@@ -231,8 +232,6 @@ be specified in the sidebar of the **Coverage Analysis** section
 
 - ` Gene name ` and push ` Apply ` button:  write the HGNC official gene name *POLG* 
 
--  ` Chromosome ` : The chromosome on which the gene is locate. Choose chr15
-
 - ` Coverage threshold ` : specify coverage threshold (e.g. 20x)
 
 - ` Sample` : sample to be analyzed, choose 1
@@ -243,7 +242,7 @@ be specified in the sidebar of the **Coverage Analysis** section
 - ` exon number `: to zoom in a specific exon. Choose 10
 
 
-Other input sections, as ` Transcript ID `, ` START genomic position `, 
+Other input sections, as ` Chromosome `, ` Transcript ID `, ` START genomic position `, 
 ` END genomic position ` and ` Region coordinate `, are dynamically filled. 
 
 

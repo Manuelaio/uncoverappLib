@@ -1,4 +1,15 @@
 #Tables
+tryObserve <- function(x) {
+  x <- substitute(x)
+  env <- parent.frame()
+  observe({
+    tryCatch(eval(x, env),
+             error = function(e) {
+               #showNotification(paste("Error: ", e$message), type = "error")
+             })
+  })
+}
+
 coord= eventReactive(input$button1,{
   disable("button1")
   shinyjs::show("text1")
@@ -34,9 +45,26 @@ observeEvent(input$button1, {
       need(HGNC_org[HGNC_org %in% input$Gene_name],
            "incorrect HGNC Gene symbol"))
     coord()
-    #print(coord())
+
   })
 })
+
+tryObserve({
+  if (is.null(input$button1) )
+    return()
+  if (is.null(coord()))
+    return(NULL)
+  x= as.data.frame(coord())
+  Chrom= as.character(x$seqnames[1])
+  updateTextInput(session, "Chromosome", value = Chrom)
+  })
+
+Chromosome<- reactive({
+  xc= as.character(input$Chromosome)
+  return(xc)
+})
+
+
 
 observeEvent(input$remove,{
   shinyjs::hide(coord())
@@ -89,22 +117,13 @@ observeEvent(input$button1, {
   })
 })
 
+
+
 observeEvent(input$remove,{
   output$exon_pos<- DT::renderDataTable({
     shinyjs::js$reset(exon_gp()) })
 })
 
-
-tryObserve <- function(x) {
-  x <- substitute(x)
-  env <- parent.frame()
-  observe({
-    tryCatch(eval(x, env),
-             error = function(e) {
-               #showNotification(paste("Error: ", e$message), type = "error")
-             })
-  })
-}
 
 tryObserve({
   if (is.null(input$exon_number) )
