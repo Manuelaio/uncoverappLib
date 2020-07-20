@@ -93,7 +93,7 @@ after installing *uncoverappLib* package as shown below. The preprocessing time
 can take few minutes, therefore during running vignette, users can provide `vignette= TRUE`
 as a parameter to download an example annotation files, as below. 
 
-```{r eval=T, echo=T}
+```{r eval=TRUE, echo=TRUE}
 library(uncoverappLib)
 getAnnotationFiles(verbose= TRUE, vignette= TRUE)
 
@@ -117,7 +117,7 @@ provide:
 row and to be uploaded to ` Load a gene(s) file ` box. An example file is
 included in extdata of uncoverappLib packages
 
-```{r eval=T, echo=T}
+```{r eval=TRUE, echo=TRUE}
 gene.list<- system.file("extdata", "mygene.txt", package = "uncoverappLib")
 ```
 
@@ -128,7 +128,7 @@ to the sample in the bam file bam.list file listed in row 1,2,3, ….
 Type the following command to load our example: 
 
 
-```{r eval=T, echo=T}
+```{r eval=TRUE, echo=TRUE}
 library(uncoverappLib)
 
 bam_example <- system.file("extdata", "example_POLG.bam", package = "uncoverappLib")
@@ -136,7 +136,8 @@ bam_example <- system.file("extdata", "example_POLG.bam", package = "uncoverappL
 print(bam_example)
 # "/Library/Frameworks/R.framework/Versions/3.6/Resources/library/uncoverappLib/extdata/example_POLG.bam"
 
-write.table(bam_example, file= "./bam.list", quote= F, row.names = F, col.names = F)
+write.table(bam_example, file= "./bam.list", quote= FALSE, row.names = FALSE, 
+            col.names = FALSE)
 
 ```
 
@@ -174,7 +175,7 @@ the **preprocessing** step performed for the example
 
 
 
-```{r eval=F, echo=T}
+```{r eval=FALSE, echo=TRUE}
 
 chr15   89859516        89859516        68      A:68
 chr15   89859517        89859517        70      T:70
@@ -191,7 +192,7 @@ of genes to investigate. In general, if many (e.g. > 50) genes are to be analyze
 we would recommend to use `buildInput` function and run it in R console 
 before launching  the app as shown in following example.
 
-```{r eval=T, echo=T}
+```{r eval=TRUE, echo=TRUE}
 library(dplyr)
 
 gene.list<- system.file("extdata", "mygene.txt", package = "uncoverappLib")
