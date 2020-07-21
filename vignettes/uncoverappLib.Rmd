@@ -129,7 +129,6 @@ Type the following command to load our example:
 
 
 ```{r eval=TRUE, echo=TRUE}
-library(uncoverappLib)
 
 bam_example <- system.file("extdata", "example_POLG.bam", package = "uncoverappLib")
 
@@ -352,8 +351,10 @@ Users should define  the expected `allele fraction`
 (the expected fraction of variant reads, probability of success) 
 and `Variant reads ` (the minimum number of variant reads required by the user to 
 support variant calling, number of successes).
-
-
+The comment color change according to binomial proportion intervals. If the 
+estimated intervals , with 95% confidence, is included or higer than user-defined 
+`Variant reads`  the color of comment appairs blue, otherwise if it is lower the 
+color appairs red. 
 
 # Session information
 

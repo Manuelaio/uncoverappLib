@@ -378,8 +378,8 @@ myTab2 <- function() {
                                     min = 0,
                                     max = 1,
                                     value = 0.05)),
-                    helpText(em("the expected fraction of variant reads,
-                    probability of success",
+                    helpText(em("the expected fraction of variant reads
+                    (probability of success)",
                     align="center",
                     style="color:gray")),
                     hr(),
@@ -401,7 +401,9 @@ myTab2 <- function() {
                     textInput(inputId = "end_gp",
                               label = "END genomic position"),
                     helpText(em("Specify start and end coordinates
-                                for your genomic region of interest gene"))),
+                                of genomic position in a interest gene. Note:
+                                start and end position must be the same value
+                                according to bed file."))),
 
 
              column(4,

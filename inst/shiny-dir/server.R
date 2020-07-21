@@ -314,22 +314,22 @@ server <- function (input, output, session){
     if (number2 < input$num_all) {
       print(paste("<span style=\"color:red\">According to binomial
                   probability model there is 95% probability that your
-                  variant is supported from: </span>", number,
+                  variant is supported from </span>", number,
                   "<span style=\"color:red\">to</span>",
                   number2,
-                  "<span style=\"color:red\"> reads.Your chosen variant reads
-                  are lower than supported intervals  .
+                  "<span style=\"color:red\"> reads.Estimate interval is lower
+                  than chosen variant reads .
                   </span>"))
 
     }else{
       print(paste("<span style=\"color:blue\">According to binomial
                   probability model there is 95% probability that your
-                  variant is supported from: </span>", number,
+                  variant is supported from </span>", number,
                   "<span style=\"color:blue\">to</span>",
                   number2,
                   "<span style=\"color:blue\"> reads.
-                  Your chosen variant reads are including or greater
-                  than supported intervals .</span>"))
+                  Estimate interval is including or greater
+                  than chosen variant reads .</span>"))
     }
   })
   observe({
