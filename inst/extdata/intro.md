@@ -107,7 +107,6 @@ specified in the sidebar of the **Coverage Analysis** section:
 
 - ` Gene name ` and push ` Apply ` button:  HGNC official gene name 
 
--  ` Chromosome ` : chromosome number
 
 - ` coverage threshold ` : required coverage threshold  
 
@@ -120,8 +119,9 @@ specified in the sidebar of the **Coverage Analysis** section:
 - ` exon number ` and push ` Make exon ` : to zoom in a specific exon
 
 
-Other input sections, as ` Transcript ID `, ` START genomic position `, 
-` END genomic position ` and ` Region coordinate `, are dynamically filled. 
+Other input sections, as ` Chromosome `, ` Transcript ID `, 
+` START genomic position `, ` END genomic position ` and ` Region coordinate `,
+are dynamically filled. 
 
 
 unCOVERApp generates the following **outputs** : 

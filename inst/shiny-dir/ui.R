@@ -390,20 +390,19 @@ myTab2 <- function() {
                                  value=10),
 
                     helpText(em("the minimum number of variant reads required
-                                by the user to support variant calling,
+                                by the user to support variant evidence,
                                 (number of successes)"),align="center",
                              style="color:gray"),
                     hr(),
 
                     textInput(inputId = "start_gp",
-                              label = "START genomic position"),
+                              label = "Genomic position"),
 
-                    textInput(inputId = "end_gp",
-                              label = "END genomic position"),
-                    helpText(em("Specify start and end coordinates
-                                of genomic position in a interest gene. Note:
-                                start and end position must be the same value
-                                according to bed file."))),
+                    #textInput(inputId = "end_gp",
+                     #         label = "END genomic position"),
+                    helpText(em("Specify a genomic position of interest gene
+                                  in which calculating the
+                                binomial distribution"))),
 
 
              column(4,

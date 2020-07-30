@@ -346,7 +346,7 @@ table as spreadsheet format.
 
 The **Binomial distribution** page returns the 95 % binomial probability 
 distribution of the variant supporting reads on the input genomic position 
-(`START genomic position` and `END genomic position`).
+(`Genomic position`).
 Users should define  the expected `allele fraction`
 (the expected fraction of variant reads, probability of success) 
 and `Variant reads ` (the minimum number of variant reads required by the user to 

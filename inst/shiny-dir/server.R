@@ -312,24 +312,20 @@ server <- function (input, output, session){
     thr= as.numeric(df_subset())
     # if (thr < input$coverage_co) {
     if (number2 < input$num_all) {
-      print(paste("<span style=\"color:red\">According to binomial
-                  probability model there is 95% probability that your
-                  variant is supported from </span>", number,
+      print(paste("<span style=\"color:red\">according to the binomial probability model,
+                  there is 95% probability to observe from </span>", number,
                   "<span style=\"color:red\">to</span>",
                   number2,
-                  "<span style=\"color:red\"> reads.Estimate interval is lower
-                  than chosen variant reads .
+                  "<span style=\"color:red\"> variant-supporting reads .
                   </span>"))
 
     }else{
-      print(paste("<span style=\"color:blue\">According to binomial
-                  probability model there is 95% probability that your
-                  variant is supported from </span>", number,
+      print(paste("<span style=\"color:blue\">according to the binomial probability model,
+                  there is 95% probability to observe from </span>", number,
                   "<span style=\"color:blue\">to</span>",
                   number2,
-                  "<span style=\"color:blue\"> reads.
-                  Estimate interval is including or greater
-                  than chosen variant reads .</span>"))
+                  "<span style=\"color:blue\"> variant-supporting reads
+                  .</span>"))
     }
   })
   observe({
