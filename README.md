@@ -24,7 +24,7 @@ target genes. Read more about unCOVERApp on [biorxiv](https://www.biorxiv.org/co
 This app requires following dependencies:
 
 
-- R >= 3.5.1 
+- R >= 4.0.0
 
 - java installed 
 
