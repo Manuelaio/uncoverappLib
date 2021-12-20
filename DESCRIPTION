@@ -1,7 +1,7 @@
 Package: uncoverappLib
 Title: Interactive graphical application for clinical assessment of
         sequence coverage at the base-pair level
-Version: 1.6.0
+Version: 1.5.0
 
 Authors@R: c(
     person("Emanuela","Iovino", email = "emanuela.iovino@unibo.it", role= c("cre", "aut")),
