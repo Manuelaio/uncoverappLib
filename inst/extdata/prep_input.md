@@ -25,8 +25,10 @@ section:
                 notation as 1, 2, ..., X,.M, `chr` refers to chr1, chr2, 
                 ... chrX, chrM.
 
--  ` Load a gene(s) file ` : loading txt file containing HGNC gene name(s)
-                             (one per row)
+-  ` Load input file ` : loading txt file containing HGNC gene name(s)
+                             (one per row) or a target bed 
+                             
+- `Choose the type of your input file` : selecting the type of input file                           
 
 - ` Load bam file(s) list ` : loading path to file with ".list" extension containing 
                               absolute paths to BAM files (one per row)
@@ -34,3 +36,12 @@ section:
 - `minimum mapping quality (MAPQ) `: default  value 1
 
 - `minimum base quality (QUAL)` :  default value 1
+
+Users can download `Statistical_Summary` report to obtain a coverage metrics per genes 
+(`List of genes name`) or per amplicons (`Target Bed`) according to uploaded input 
+file. 
+The report summarizes following information: mean, median,
+number of positions under 20x and percentage of position above 20x
+
+
+

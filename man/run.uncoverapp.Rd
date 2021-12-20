@@ -4,7 +4,11 @@
 \alias{run.uncoverapp}
 \title{run.uncoverapp}
 \usage{
-run.uncoverapp()
+run.uncoverapp(where = c("browser", "panel", "window"))
+}
+\arguments{
+\item{where}{accept `"browser`" , `"panel`"  or `"window`". The option sets
+where uncoverapp will be launched}
 }
 \value{
 This return a Shiny App. The is no value
@@ -12,21 +16,25 @@ This return a Shiny App. The is no value
 \description{
 This function launches \code{unCOVERApp}, a
 \code{Shiny} application for clinical assessment of sequence coverage.
+Setting where uncoverapp will be launched with following \code{where} option:
+`"browser`" in user default browser,  `"panel`"  RStudio viewer and `"window`"
+in a new Rstudio window.
 }
 \examples{
-\donttest{
+\dontrun{
 file.name='../path/sorted.bed.gz'
 tbi='.../path/sorted.bed.gz.tbi'
-run.uncoverapp()
+run.uncoverapp(where="window")
 }
 
 ## Only run this example in interactive R sessions
 
 if (interactive()) {
-run.uncoverapp()
+run.uncoverapp(where="window")
 }
 
-#After running `run.uncoverapp()` the shiny app appears in your browser
+#After running `run.uncoverapp(where="window")` the shiny app appears in your choosen location.
+
 
 }
 \author{

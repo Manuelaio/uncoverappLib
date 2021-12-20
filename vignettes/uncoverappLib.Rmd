@@ -12,7 +12,7 @@ vignette: >
 ---
 
 
-```{r, include = FALSE}
+```{r warning=FALSE, error=F}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -32,8 +32,7 @@ resolution and functional/ clinical annotations of sequence
 positions within coverage gaps (` Coverage Analysis` page).
 
 
-- to calculate the maximum credible population allele frequency 
-(http://cardiodb.org/allelefrequencyapp/) (AF) to be applied as AF 
+- to calculate the [maximum credible population allele frequency](http://cardiodb.org/allelefrequencyapp/) (AF) to be applied as AF 
 filtering threshold tailored to the model of the disease-of-interest 
 instead of a general AF cut-off (e.g. 1 % or 0.1 %) 
 (` Calculate AF by allele frequency app ` page).
@@ -55,7 +54,7 @@ Install the latest version of `uncoverappLib` using `BiocManager`.
 
 `uncoverappLib` requires:
 
-- R version >= 3.5 
+- R version >= 4.0
 - java installed
 - Annotation files for clinical assessment of low-coverage positions. 
 
@@ -114,17 +113,17 @@ provide:
 
 
 - a text file, with .txt extension, containing HGNC official gene name(s) one per 
-row and to be uploaded to ` Load a gene(s) file ` box. An example file is
+row and to be uploaded to ` Load input file ` box. An example file is
 included in extdata of uncoverappLib packages
 
 ```{r eval=TRUE, echo=TRUE}
 gene.list<- system.file("extdata", "mygene.txt", package = "uncoverappLib")
+
 ```
 
 - a text file, with .list extension, containing absolute paths to BAM files
 (one per row) and to be uploaded to ` Load bam file(s) list ` box.
-In the output file, sample 1,2,3.., correspond
-to the sample in the bam file bam.list file listed in row 1,2,3, …. 
+
 Type the following command to load our example: 
 
 
@@ -133,25 +132,37 @@ Type the following command to load our example:
 bam_example <- system.file("extdata", "example_POLG.bam", package = "uncoverappLib")
 
 print(bam_example)
-# "/Library/Frameworks/R.framework/Versions/3.6/Resources/library/uncoverappLib/extdata/example_POLG.bam"
 
 write.table(bam_example, file= "./bam.list", quote= FALSE, row.names = FALSE, 
             col.names = FALSE)
 
 ```
 
-and launch ` run.uncoverapp() `  command. After running `run.uncoverapp()` 
-the shiny app appears in your deafult browser. 
+and launch ` run.uncoverapp(where="browser") `  command. After running `run.uncoverapp(where="browser")` 
+the shiny app appears in your deafult browser. User can define where uncoverapp 
+will be launched wiht `where` option:
+
+ - `browser` option will open `uncoverapp` in your default browser
+ - `panel` option will open `uncoverapp` in RStudio viewer
+ - `window` option will open `uncoverapp` in RStudio RStudio
 
 In the first page **Preprocessing** users can load `mygene.txt` in 
-` Load a gene(s) file ` and `bam.list` in ` Load bam file(s) list `. 
+` Load input file ` and `bam.list` in ` Load bam file(s) list `. 
+In general, a target bed can also be used instead of genes name 
+selecting `Target Bed` option in `Choose the type of your input file`. 
 Users should also specify the reference genome in `Genome` box and the chromosome 
 notation of their BAM file(s) in `Chromosome Notation` box. In the BAM file, 
 the number option refers to 1, 2, ..., X,.M chromosome notation, while the chr 
 option refers to chr1, chr2, ... chrX, chrM chromosome notation. 
 Users can specify the `minimum mapping quality (MAPQ) ` value in box and 
-`minimum base quality (QUAL)` value in box. Default values for both mapping and 
-base qualities is 1. 
+`minimum base quality (QUAL)` value in box. 
+Default values for both mapping and 
+base qualities is 1. Users can download `Statistical_Summary` report 
+to obtain a coverage metrics per genes 
+(`List of genes name`) or per amplicons (`Target Bed`) according to uploaded input 
+file. 
+The report summarizes following information: mean, median,
+number of positions under 20x and percentage of position above 20x. 
 
 To run the example, choose *chr* chromosome notation, 
 *hg19* genome reference and leave minimum mapping and base qualities to the 
@@ -164,7 +175,6 @@ knitr::include_graphics("pre_file.png")
 
 ```
 
-\multiplespacing
 
 unCOVERApp input file generation fails if incorrect gene names are specified. 
 An unrecognized gene name(s) table is displayed if such a case occurs.
@@ -188,8 +198,9 @@ chr15   89859521        89859521        75      C:1;T:74
 
 The preprocessing time depends on the size of the BAM file(s) and on the number 
 of genes to investigate. In general, if many (e.g. > 50) genes are to be analyzed, 
-we would recommend to use `buildInput` function and run it in R console 
-before launching  the app as shown in following example.
+we would recommend to use `buildInput` function  
+in R console before launching  the app as shown in following example. This function
+also return a file with .txt estention containg statistical report of each genes/amplicon 
 
 ```{r eval=TRUE, echo=TRUE}
 library(dplyr)
@@ -199,8 +210,7 @@ gene.list<- system.file("extdata", "mygene.txt", package = "uncoverappLib")
 bam_example <- system.file("extdata", "example_POLG.bam", package = "uncoverappLib")
 cat(bam_example, file = "bam.list", sep = "\n")
 temp_dir=tempdir()
-buildInput(geneList= gene.list, genome= "hg19", type_bam= "chr", 
-           bamList= "bam.list", outDir= temp_dir)
+buildInput(geneList= gene.list, genome= "hg19", type_bam= "chr", type_input = "genes",bamList= "bam.list", outDir= temp_dir)
 
 ```
 
@@ -211,6 +221,7 @@ unCOVERApp input file ( for instance:
 [gatk](https://gatk.broadinstitute.org/hc/en-us)). 
 In this case, users can load the file directly on
 **Coverage Analysis**  page in `Select input file` box. 
+
 
 
 Once pre-processing is done, users can move to the **Coverage Analysis** page 
@@ -234,8 +245,7 @@ be specified in the sidebar of the **Coverage Analysis** section
 
 - ` Coverage threshold ` : specify coverage threshold (e.g. 20x)
 
-- ` Sample` : sample to be analyzed, choose 1
-
+- ` Sample` : sample name to be analyzed
 
 - ` Transcript number ` : transcript number. Choose 1
 

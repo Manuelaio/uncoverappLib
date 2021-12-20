@@ -10,6 +10,7 @@ buildInput(
   type_bam,
   bamList,
   outDir,
+  type_input,
   MAPQ.min = 1,
   base.quality = 1
 )
@@ -30,6 +31,9 @@ containing the absolute paths to BAM file(s) one per row.}
 
 \item{outDir}{(char) directory where pileup output will be stored}
 
+\item{type_input}{(char) type of input target. Use "target" or "genes". If
+you use a list of gene names use "genes", if you use a target bed use "target".}
+
 \item{MAPQ.min}{(integer) minimum MAPQ value for an alignment
 to be included in output file.}
 
@@ -37,9 +41,10 @@ to be included in output file.}
 nucleotide in an alignment.}
 }
 \value{
-A file.bed containing tab-separated specifications of
+Two file: a file.bed containing tab-separated specifications of
 genomic coordinates (chromosome, start position, end position),
-the coverage value, and the reference:alternate allele counts for each position.
+the coverage value, and the reference:alternate allele counts for each position
+and a file.txt with statistical summary of coverage
 }
 \description{
 Function to build input file for unCOVERAPP when the number
@@ -53,6 +58,6 @@ package = "uncoverappLib")
 cat(bam_example, file = "bam.list", sep = "\n")
 temp_dir=tempdir()
 buildInput(geneList= gene.list, genome= "hg19", type_bam= "chr",
-bamList= "bam.list", outDir= temp_dir)
+bamList= "bam.list",type_input="genes", outDir= temp_dir)
 
 }

@@ -30,6 +30,15 @@ server <- function (input, output, session){
     pileup_input()
   })
 
+  output$summary <- downloadHandler(
+    filename = function() {
+      paste('statistical_summary',input$file1,Sys.Date(), '.txt')
+    },
+    content = function(file){
+      write.table(stat_summ(), file, sep='\t', quote=F, row.names = F, col.names = T)
+
+    })
+
   source('server-reactiveDF.R', local= TRUE)
 
   output$text<- #DT::renderDataTable({

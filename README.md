@@ -136,13 +136,18 @@ For more details on working with unCOVERApp see Vignette.
 # Usage
 
 Load library and set up R environment with annotation file as following. 
-The way to launch unCOVERApp is *run.uncoverapp()* function. 
+The way to launch unCOVERApp is *run.uncoverapp(where="window")* function. 
 
 ``` {r}
 library(uncoverappLib)
-run.uncoverapp()
+run.uncoverapp(where="window")
 
 ``` 
+User can define where uncoverapp will be launched wiht `where` option:
+
+ - `browser` option will open `uncoverapp` in your default browser
+ - `panel` option will open `uncoverapp` in RStudio viewer
+ - `window` option will open `uncoverapp` in RStudio RStudio
 
 For more details on working with uncoverapp see Vignette or [Documentation.pdf](https://github.com/Manuelaio/unCOVERApp/blob/master/Documentation.pdf) on Github. 
 

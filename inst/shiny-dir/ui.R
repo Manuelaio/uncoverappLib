@@ -69,7 +69,7 @@ intro <- function() {
 }
 
 preprocess <- function() {
-  shiny::tabPanel("Processing",
+  shiny::tabPanel("Processing and Statistical Summary",
                   shiny::includeMarkdown(intro_processing),
                   #shiny::includeMarkdown(file.path(".", "prep_input.md")),
                   h1(strong("Prepare your input file")),
@@ -100,14 +100,20 @@ preprocess <- function() {
                         hr(),
 
                         fileInput(inputId = "gene1",
-                                  label = "Load a txt file with gene(s) list: one gene
-                              in one row",
+                                  label = "Load input file",
                                   accept = c("text/csv",
                                              ".zip",
                                              ".gz",
                                              ".bed",
                                              "text/comma-separated-values,text/plain",
                                              ".csv")),
+                        helpText("Choose the type of your input file"),
+                        radioButtons("type_file", "type of file",
+                                     choices = c("List of genes name" = "gene_name",
+                                                 "Target Bed "= "target_bed"),
+                                     selected = "gene_name"),
+                        br(),
+                        br(),
 
                         fileInput(inputId = "bam_list",
                                   label = "Load a bam.list file: one bam paths
@@ -117,7 +123,15 @@ preprocess <- function() {
                                              ".gz",
                                              ".bed",
                                              "text/comma-separated-values,text/plain",
-                                             ".list"))),
+                                             ".list")),
+                        hr(),
+                        hr(),
+                        downloadButton("summary", "Statistical_Summary", class = "btn-primary",
+                                       style='color: #fff; background-color: #27ae60;
+                                       border-color: #fff;
+                                       padding: 15px 14px 15px 14px;
+                                       margin: 15px 5px 5px 5px; ')
+                      ),
                       shiny::mainPanel(
                         tabsetPanel(
                           tabPanel(title= "input for uncoverapp",
@@ -183,8 +197,9 @@ myHome <- function() {
              textInput(inputId = "Sample",
                        label= "Sample"),
 
-             helpText(em("Select number of sample for coverage analysis.
-                         Example:1")),
+             helpText(em("Select name of sample for coverage analysis as reported
+             in bam list input.
+                         Example:example_POLG.bam")),
 
              hr(),
              splitLayout(cellWidths = c("30%", "70%"),

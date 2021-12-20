@@ -37,8 +37,9 @@ input files containing a list of genes and a list of bam files, respectively:
 
 
 - a text file, with .txt extension, containing HGNC official gene name(s) one per 
-row and to be uploaded to ` Load a gene(s) file ` box. An example file is
-included in extdata of uncoverappLib packages
+row and to be uploaded to ` Load input file ` box. An example file is
+included in extdata of uncoverappLib packages. Users can use also a target bed 
+with 4 columns: chromosome, start, end and gene/amplicon
 
 Below is an example of genes list. 
 
