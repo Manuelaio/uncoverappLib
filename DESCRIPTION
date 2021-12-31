@@ -1,8 +1,11 @@
 Package: uncoverappLib
 Title: Interactive graphical application for clinical assessment of
         sequence coverage at the base-pair level
-Version: 1.5.1
+Version: 1.5.2
+<<<<<<< HEAD
 
+=======
+>>>>>>> ece6bd904e5154760c738426adbce45d2ba94dfb
 Authors@R: c(
     person("Emanuela","Iovino", email = "emanuela.iovino@unibo.it", role= c("cre", "aut")),
     person("Tommaso", "Pippucci", email = "tommaso.pippucci@unibo.it", role = "aut"))
@@ -12,7 +15,7 @@ Imports: markdown, shiny, shinyjs, shinyBS, shinyWidgets,shinycssloaders, DT,
         TxDb.Hsapiens.UCSC.hg19.knownGene, rlist, utils,S4Vectors,tools,
         EnsDb.Hsapiens.v75, EnsDb.Hsapiens.v86, OrganismDbi,
         BSgenome.Hsapiens.UCSC.hg19, processx, Rsamtools, GenomicRanges
-Description: a Shiny application containing a suite of graphical and statistical tools to support clinical assessment of low coverage regions.It displays three web pages each providing a different analysis module: Coverage analysis, calculate AF by allele frequency app and binomial distribution. 
+Description: a Shiny application containing a suite of graphical and statistical tools to support clinical assessment of low coverage regions.It displays three web pages each providing a different analysis module: Coverage analysis, calculate AF by allele frequency app and binomial distribution. uncoverAPP provides a statisticl summary of coverage given target file or genes name.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

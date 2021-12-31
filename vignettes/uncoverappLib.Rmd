@@ -54,7 +54,7 @@ Install the latest version of `uncoverappLib` using `BiocManager`.
 
 `uncoverappLib` requires:
 
-- R version >= 4.0
+- R version >= 4.1.2
 - java installed
 - Annotation files for clinical assessment of low-coverage positions. 
 
@@ -139,12 +139,14 @@ write.table(bam_example, file= "./bam.list", quote= FALSE, row.names = FALSE,
 ```
 
 and launch ` run.uncoverapp(where="browser") `  command. After running `run.uncoverapp(where="browser")` 
-the shiny app appears in your deafult browser. User can define where uncoverapp 
-will be launched wiht `where` option:
+the shiny app appears in your deafult browser. RStudio user can define where 
+launching uncoverapp  using `where` option:
 
  - `browser` option will open `uncoverapp` in your default browser
  - `panel` option will open `uncoverapp` in RStudio viewer
  - `window` option will open `uncoverapp` in RStudio RStudio
+
+If option `where` is not defined uncoverapp will launch with default option of R. 
 
 In the first page **Preprocessing** users can load `mygene.txt` in 
 ` Load input file ` and `bam.list` in ` Load bam file(s) list `. 
