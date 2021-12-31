@@ -3,6 +3,7 @@
 export(buildInput)
 export(getAnnotationFiles)
 export(run.uncoverapp)
+export(uncoverAPP)
 import(BSgenome.Hsapiens.UCSC.hg19)
 import(BiocFileCache)
 import(EnsDb.Hsapiens.v75)

@@ -13,16 +13,14 @@
 #' \dontrun{
 #' file.name='../path/sorted.bed.gz'
 #' tbi='.../path/sorted.bed.gz.tbi'
-#' run.uncoverapp(where="window")
+#' app()
 #' }
 #'
 #' ## Only run this example in interactive R sessions
 #'
 #' if (interactive()) {
-#' run.uncoverapp(where="window")
+#' app()
 #' }
-#'
-#' #After running `run.uncoverapp(where="window")` the shiny app appears in your choosen location.
 #'
 #'
 #' @return
@@ -55,21 +53,56 @@
 
 #'
 #' @export
-#' @param where accept `"browser`" , `"panel`"  or `"window`". The option sets
-#' where uncoverapp will be launched
 
-run.uncoverapp <- function(where=c("browser", "panel", "window")){
-  message("uncoverapp must be called in RStudio")
-  options(shiny.launch.browser = switch(
-    match.arg(where, c("browser", "pane", "window")),
-    browser = get(".rs.invokeShinyWindowExternal", "tools:rstudio"),
-    panel = get(".rs.invokeShinyPaneViewer", "tools:rstudio"),
-    window = get(".rs.invokeShinyWindowViewer", "tools:rstudio")
-  ))
+
+uncoverAPP<- function(){
   appDir <- system.file("shiny-dir", package = "uncoverappLib")
   if (appDir == "") {
     stop("Try reinstalling uncoverappLib .", call = FALSE)
   }
-
   shiny::runApp(appDir)
 }
+
+
+#'  Location for uncoverapp in RStudio enviroment
+#'
+#' This function controls the `shiny.launch.browser` option to launch uncoverapp
+#' in an external `browser`, the RStudio viewer `"viewer"`, or a new `"window"` in
+#' RStudio.
+#' @param where accept `"browser`" , `"viewer`"  or `"window`". The option sets
+#' where uncoverapp will be launched. Using NULL, uncoverapp will use default
+#' After running `run.uncoverapp(where="window")` the shiny app appears
+#' in your chosen location.
+#'
+#' @return
+#' This return a  Shiny App. The is no value
+#'
+#' @examples
+#' ## Only run this example in interactive R sessions
+#'
+#' if (interactive()) {
+#' run.uncoverapp(where="window")
+#' }
+#'
+#'
+#' @export
+
+
+run.uncoverapp <- function(where=c("browser", "panel", "window")){
+  if(missing(where)){
+    message("uncoverapp is launching with your default option")}else{message(
+      "where function must be called in RStudio"
+    )}
+  if(missing(where)){
+    uncoverAPP()
+  }else{require(tools)
+    options(shiny.launch.browser = switch(
+      match.arg(where, c("browser", "viewer", "window")),
+      browser = get(".rs.invokeShinyWindowExternal", "tools:rstudio"),
+      viewer = get(".rs.invokeShinyPaneViewer", "tools:rstudio"),
+      window = get(".rs.invokeShinyWindowViewer", "tools:rstudio")
+    ))
+    uncoverAPP()}
+}
+
+
