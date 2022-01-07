@@ -46,7 +46,6 @@
 #' @import EnsDb.Hsapiens.v75
 #' @import BSgenome.Hsapiens.UCSC.hg19
 #' @import OrganismDbi
-#' @import tools
 #' @importFrom  Rsamtools ScanBamParam PileupParam pileup
 #' @importFrom rlist list.append
 #' @importFrom GenomicRanges makeGRangesFromDataFrame
@@ -95,7 +94,7 @@ run.uncoverapp <- function(where=c("browser", "panel", "window")){
     )}
   if(missing(where)){
     uncoverAPP()
-  }else{require(tools)
+  }else{
     options(shiny.launch.browser = switch(
       match.arg(where, c("browser", "viewer", "window")),
       browser = get(".rs.invokeShinyWindowExternal", "tools:rstudio"),

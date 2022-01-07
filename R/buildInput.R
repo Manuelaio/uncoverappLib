@@ -35,7 +35,8 @@
 #' @import TxDb.Hsapiens.UCSC.hg38.knownGene
 #' @importFrom utils write.table
 #' @import GenomicRanges
-#' @import S4Vectors
+#' @importFrom S4Vectors queryHits
+#' @importFrom S4Vectors subjectHits
 #' @examples
 #' gene.list<- system.file("extdata", "mygene.txt", package = "uncoverappLib")
 #'
