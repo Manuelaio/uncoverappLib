@@ -3,7 +3,7 @@
 #' @description This function launches \code{unCOVERApp}, a
 #' \code{Shiny} application for clinical assessment of sequence coverage.
 #' Setting where uncoverapp will be launched with following \code{where} option:
-#' `"browser`" in user default browser,  `"panel`"  RStudio viewer and `"window`"
+#' `"browser`" in user default browser,  `"viewer`"  RStudio viewer and `"window`"
 #' in a new Rstudio window.
 #'
 #' @author Emanuela Iovino
@@ -87,7 +87,7 @@ uncoverAPP<- function(){
 #' @export
 
 
-run.uncoverapp <- function(where=c("browser", "panel", "window")){
+run.uncoverapp <- function(where=c("browser", "viewer", "window")){
   if(missing(where)){
     message("uncoverapp is launching with your default option")}else{message(
       "where function must be called in RStudio"
