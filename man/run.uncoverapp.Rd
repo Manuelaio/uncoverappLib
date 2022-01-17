@@ -4,7 +4,7 @@
 \alias{run.uncoverapp}
 \title{Location for uncoverapp in RStudio enviroment}
 \usage{
-run.uncoverapp(where = c("browser", "panel", "window"))
+run.uncoverapp(where = c("browser", "viewer", "window"))
 }
 \arguments{
 \item{where}{accept `"browser`" , `"viewer`"  or `"window`". The option sets

@@ -146,7 +146,7 @@ run.uncoverapp(where="window")
 User can define where uncoverapp will be launched wiht `where` option:
 
  - `browser` option will open `uncoverapp` in your default browser
- - `panel` option will open `uncoverapp` in RStudio viewer
+ - `viewer` option will open `uncoverapp` in RStudio viewer
  - `window` option will open `uncoverapp` in RStudio RStudio
 
 For more details on working with uncoverapp see Vignette or [Documentation.pdf](https://github.com/Manuelaio/unCOVERApp/blob/master/Documentation.pdf) on Github. 

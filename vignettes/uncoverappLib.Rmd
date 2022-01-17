@@ -143,7 +143,7 @@ the shiny app appears in your deafult browser. RStudio user can define where
 launching uncoverapp  using `where` option:
 
  - `browser` option will open `uncoverapp` in your default browser
- - `panel` option will open `uncoverapp` in RStudio viewer
+ - `viewer` option will open `uncoverapp` in RStudio viewer
  - `window` option will open `uncoverapp` in RStudio RStudio
 
 If option `where` is not defined uncoverapp will launch with default option of R. 
