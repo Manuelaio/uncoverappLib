@@ -364,9 +364,9 @@ Users should define  the expected `allele fraction`
 and `Variant reads ` (the minimum number of variant reads required by the user to 
 support variant calling, number of successes).
 The comment color change according to binomial proportion intervals. If the 
-estimated intervals , with 95% confidence, is included or higer than user-defined 
-`Variant reads`  the color of comment appairs blue, otherwise if it is lower the 
-color appairs red. 
+estimated intervals , with 95% confidence, is included or higher than user-defined 
+`Variant reads`  the color of comment appears blue, otherwise if it is lower the 
+color appears red. 
 
 # Session information
 

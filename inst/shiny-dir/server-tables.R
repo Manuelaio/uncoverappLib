@@ -73,8 +73,8 @@ observeEvent(input$remove,{
 
 
 exon_gp<-eventReactive(input$button1,{
-  require(rtracklayer)
-  ucsc <- browserSession()
+  #require(rtracklayer)
+  #ucsc <- browserSession()
   gname =input$Gene_name
   if (is.null(gname))
     return(NULL)
