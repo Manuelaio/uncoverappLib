@@ -62,11 +62,15 @@ getAnnotationFiles <- function(verbose = FALSE, vignette= FALSE) {
   bfcrpath(bfc, rids = c(rid,rid2))
 
   path_out=base::file.path(bfcrpath(bfc, rids= rid))
+  bed= sub("(.*)\\..*$", replacement = "\\1", basename(path_out))
 
-  rename1=base::gsub('[[:digit:]].*', 'sorted.bed.gz', path_out)
+  #rename1=base::gsub('[[:digit:]].*', 'sorted.bed.gz', path_out)
+  rename1=base::gsub(bed, 'sorted.bed.gz', path_out)
+
 
   path_tbi= base::file.path(bfcrpath(bfc, rids= rid2))
-  rename2=base::gsub('[[:digit:]].*', 'sorted.bed.gz.tbi', path_tbi)
+  tbi_p= sub("(.*)\\..*$", replacement = "\\1", basename(path_tbi))
+  rename2=base::gsub(tbi_p, 'sorted.bed.gz.tbi', path_tbi)
 
   if(!file.exists(rename1[1])){
     if( verbose )
@@ -105,12 +109,15 @@ getAnnotationFiles <- function(verbose = FALSE, vignette= FALSE) {
 
     bfcrpath(example_bfc, rids = c(example_rid,example_rid2))
 
-    example_path_out=base::file.path(bfcrpath(example_bfc, rids= example_rid))
 
-    example_rename1=base::gsub('[[:digit:]].*', 'POLG.bed.gz', example_path_out)
+    example_path_out=base::file.path(bfcrpath(example_bfc, rids= example_rid))
+    ex_bed= sub("(.*)\\..*$", replacement = "\\1", basename(example_path_out))
+
+    example_rename1=base::gsub(ex_bed, 'POLG.bed.gz', example_path_out)
 
     example_path_tbi= base::file.path(bfcrpath(example_bfc, rids= example_rid2))
-    example_rename2=base::gsub('[[:digit:]].*', 'POLG.bed.gz.tbi', example_path_tbi)
+    ex_bed_tbi= sub("(.*)\\..*$", replacement = "\\1", basename(example_path_tbi))
+    example_rename2=base::gsub(ex_bed_tbi, 'POLG.bed.gz.tbi', example_path_tbi)
 
     if(!file.exists(example_rename1[1])){
       if( verbose )
