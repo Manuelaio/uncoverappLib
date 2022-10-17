@@ -142,7 +142,7 @@ server <- function (input, output, session){
     validate(
       need(try(!is.null(intBED())),'Unrecognized coordinates:
       Please change exon number input and be sure that input box
-      "Region coordinates" is filled.
+      "Region coordinates" is filled. This function works for only Hg19 coordinate!
            Please check your R environment has annotation file loaded.')
     )
     if(is.null(condform_table()))

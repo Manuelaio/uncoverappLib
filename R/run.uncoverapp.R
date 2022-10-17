@@ -44,8 +44,6 @@
 #' @import TxDb.Hsapiens.UCSC.hg19.knownGene
 #' @import EnsDb.Hsapiens.v86
 #' @import EnsDb.Hsapiens.v75
-#' @importFrom BSgenome.Hsapiens.UCSC.hg19 BSgenome.Hsapiens.UCSC.hg19
-#' @importFrom BSgenome.Hsapiens.UCSC.hg38 BSgenome.Hsapiens.UCSC.hg38
 #' @import OrganismDbi
 #' @importFrom  Rsamtools ScanBamParam PileupParam pileup
 #' @importFrom rlist list.append

@@ -61,8 +61,8 @@ Install the latest version of `uncoverappLib` using `BiocManager`.
 
 ```{r  eval=F, echo=T}
 
-install.packages("BiocManager")
-BiocManager::install("uncoverappLib")
+#install.packages("BiocManager")
+#BiocManager::install("uncoverappLib")
 library(uncoverappLib)
 ```
 
@@ -74,9 +74,9 @@ Alternatively, it can be installed from GitHub using:
 
 ```{r eval=F, echo=T}
 
-library(devtools)
-install_github("Manuelaio/uncoverappLib")
-library(uncoverappLib)
+#library(devtools)
+#install_github("Manuelaio/uncoverappLib")
+#library(uncoverappLib)
 
 ```
 
@@ -94,7 +94,7 @@ as a parameter to download an example annotation files, as below.
 
 ```{r eval=TRUE, echo=TRUE}
 library(uncoverappLib)
-getAnnotationFiles(verbose= TRUE, vignette= TRUE)
+#getAnnotationFiles(verbose= TRUE, vignette= TRUE)
 
 ```
 

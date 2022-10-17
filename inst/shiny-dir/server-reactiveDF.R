@@ -13,11 +13,9 @@ observeEvent(input$file1, {
   tmp <- read.table(input$file1$datapath,
                     header = input$header, stringsAsFactors = FALSE)
   colnames(tmp)[1:3]=c("chromosome","start","end")
-  n=  length(colnames(tmp)[-1:-3])
-  #a=rep(head(seq_along(tmp),-3), each=2)
-  m<-rep(name_sample(), each=2)
-  #colnames(tmp)[-1:-3]=paste0(c("sample_","nucleotide_"), a[1:n])
-  colnames(tmp)[-1:-3]=paste0(c("sample_","nucleotide_"), m[1:n])
+  #n=  length(colnames(tmp)[-1:-3])
+  #m<-rep(name_sample(), each=2)
+  #colnames(tmp)[-1:-3]=paste0(c("sample_","nucleotide_"), m[1:n])
   head(tmp)
   ## do whatever is needed to parse the data
   mydata(tmp)

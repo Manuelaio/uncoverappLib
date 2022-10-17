@@ -1,9 +1,9 @@
 
-strack<- reactive({if (input$UCSC_Genome == "hg19"){
-  Gviz::SequenceTrack(BSgenome.Hsapiens.UCSC.hg19::Hsapiens, chromosome = Chromosome())}
-  else{
-    Gviz::SequenceTrack(BSgenome.Hsapiens.UCSC.hg19::Hsapiens, chromosome = Chromosome())}
-})
+#strack<- reactive({if (input$UCSC_Genome == "hg19"){
+#  Gviz::SequenceTrack(BSgenome.Hsapiens.UCSC.hg19::Hsapiens, chromosome = Chromosome())}
+#  else{
+#    Gviz::SequenceTrack(BSgenome.Hsapiens.UCSC.hg19::Hsapiens, chromosome = Chromosome())}
+#})
 
 dtrack1<- reactive ({grcoverage <- filtered_low()
 dt1<-Gviz::DataTrack(range= grcoverage,type = "histogram", fill.histogram =  "red", col.histogram="NA",
@@ -167,7 +167,8 @@ p3<- reactive({
   gtrack <- Gviz::GenomeAxisTrack()
   ylims <- grDevices::extendrange(range(c(dtrack1()@data), dtrackHigh()@data))
   #strack<- SequenceTrack(homo, chromosome = Chromosome())
-  p3=Gviz::plotTracks(list(itrack(), gtrack, ot,grtrack(), strack()),
+  #p3=Gviz::plotTracks(list(itrack(), gtrack, ot,grtrack(), strack()),
+  p3=Gviz::plotTracks(list(itrack(), gtrack, ot,grtrack()),
                 from = as.numeric(input$Start_genomicPosition),
                 to=as.numeric(input$end_genomicPosition),
                 reverseStrand = TRUE, cex = 0.8, ylim= ylims,
