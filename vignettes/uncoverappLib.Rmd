@@ -61,8 +61,8 @@ Install the latest version of `uncoverappLib` using `BiocManager`.
 
 ```{r  eval=F, echo=T}
 
-#install.packages("BiocManager")
-#BiocManager::install("uncoverappLib")
+install.packages("BiocManager")
+BiocManager::install("uncoverappLib")
 library(uncoverappLib)
 ```
 
@@ -203,19 +203,6 @@ of genes to investigate. In general, if many (e.g. > 50) genes are to be analyze
 we would recommend to use `buildInput` function  
 in R console before launching  the app as shown in following example. This function
 also return a file with .txt estention containg statistical report of each genes/amplicon 
-
-```{r eval=TRUE, echo=TRUE}
-library(dplyr)
-
-gene.list<- system.file("extdata", "mygene.txt", package = "uncoverappLib")
-
-bam_example <- system.file("extdata", "example_POLG.bam", package = "uncoverappLib")
-cat(bam_example, file = "bam.list", sep = "\n")
-temp_dir=tempdir()
-buildInput(geneList= gene.list, genome= "hg19", type_bam= "chr", type_input = "genes",bamList= "bam.list", outDir= temp_dir)
-
-```
-
 Alternatively, other tools do a similar job and can be used to generate the 
 unCOVERApp input file ( for instance:
 [bedtools](https://bedtools.readthedocs.io/en/latest/#), 
