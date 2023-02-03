@@ -28,13 +28,13 @@
 #' you use a list of gene names use "genes", if you use a target bed use "target".
 #' @export
 #' @import rlist
-#' @import OrganismDbi
 #' @import Rsamtools
-#' @import org.Hs.eg.db
 #' @import TxDb.Hsapiens.UCSC.hg19.knownGene
 #' @import TxDb.Hsapiens.UCSC.hg38.knownGene
 #' @importFrom utils write.table
 #' @import GenomicRanges
+#' @import OrganismDbi
+#' @import org.Hs.eg.db
 #' @importFrom S4Vectors queryHits
 #' @importFrom S4Vectors subjectHits
 #' @examples
@@ -80,8 +80,9 @@ buildInput<- function(geneList,genome,type_bam,bamList,outDir,type_input,
   ###check control: stop when gene names in list are incorrect
   if (type_input == "target"){
     return=NULL}else{
-      my_gene_name<- OrganismDbi::select(org.Hs.eg.db, key= gene.List, columns="ENTREZID",
+      my_gene_name_df<- OrganismDbi::select(org.Hs.eg.db, key= gene.List, columns="ENTREZID",
                                          keytype="ALIAS")
+      my_gene_name<-my_gene_name_df[!duplicated(my_gene_name_df$ALIAS),]
       for (i in my_gene_name$ENTREZID){
         if (is.na(i)){
           s<-print(subset(my_gene_name$ALIAS,is.na(my_gene_name$ENTREZID)))
@@ -246,7 +247,8 @@ buildInput<- function(geneList,genome,type_bam,bamList,outDir,type_input,
                                    start.1, end.1, width.1, strand.1))
 
   colnames(statistiche)[1:3]<- c("chromosome","start","end")
-  merge_g<- dplyr::full_join(for_bed,statistiche, by="SYMBOL", all=TRUE)
+  #merge_g<- dplyr::full_join(for_bed,statistiche, by="SYMBOL", all=TRUE)
+  merge_g<- dplyr::full_join(for_bed,statistiche, by="SYMBOL")
   col_name<- colnames(merge_g)
 
   col.sub<- col_name[grepl("sample_", col_name)]
