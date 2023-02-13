@@ -144,6 +144,7 @@ buildInput<- function(geneList,genome,type_bam,bamList,outDir,type_input,
       }
       colnames(for_bed)<- c('chr', 'start', 'end', 'SYMBOL')
       for_bed<- unique(for_bed)
+      for_bed <- for_bed[!grepl("_", for_bed$chr),]
       if(type_bam == "number"){
         for_bed$chr<- gsub("^.{0,3}", "", for_bed$chr, perl =TRUE)}
     }
